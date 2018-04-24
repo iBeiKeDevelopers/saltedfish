@@ -18,10 +18,4 @@ Route::get('now', function() {
 
 Route::get('/', 'Home\HomePageController@index');
 
-Route::get('login','Auth\LoginController@index');
-
 Route::get('home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
