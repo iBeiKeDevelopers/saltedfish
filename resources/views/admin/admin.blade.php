@@ -33,7 +33,10 @@
                 arr = response.data
                 console.log("page: " + page)
                 console.log(arr)
-
+                if(arr == "empty") {
+                    alert("end of the list!");
+                    return
+                }
                 inner = goods.html
                 len = arr.length
                 for(i = 0; i < len; i++) {

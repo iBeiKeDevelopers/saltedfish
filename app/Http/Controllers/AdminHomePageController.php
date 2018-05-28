@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Models\Goods;
+use App\Models\Database;
+use App\Models\Goods;
 
 class AdminHomePageController extends Controller
 {
@@ -21,13 +22,19 @@ class AdminHomePageController extends Controller
                 $num = $request->input('num');
                 $page = $request->input('page');
                 $page *= $num;
-                $goods = DB::select("select * from salted_fish_goods LIMIT $page,$num");
-                $len = count($goods);
-                
-                return $res;
+
+                $DatabaseClass = new Database;
+                $goods = $DatabaseClass->select_by_limit('salted_fish_goods', $page, $num);
+
+                $GoodsClass = new Goods;
+                $res = $GoodsClass->decode_db($goods);
+                if($res == null)
+                    return "empty";
+                else
+                    return $res;
             }else if($request->input('request') == "deleteGoods") {
                 $id = $request->input('id');
-                $res = DB::delete("delete from salted_fish_goods where goods_id=$id");
+                $res = DB::table('salted_fish_goods')->where('goods_id', '=', "$id")->delete();
                 if($res == 1) return "OK";
             }
         }

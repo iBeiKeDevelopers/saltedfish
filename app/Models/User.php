@@ -3,49 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-/**  
- *  {
- *      "student_id": {
- *          "access"    :   "ACCESS",
- *          "value"     :   "STRING",
- *      },
- * 
- *      "name": {
- *          "access"    :   "ACCESS",
- *          "value"     :   "STRING",
- *      },
- * 
- *      "gender"      : {
- *          "access"    :   "ACCESS",
- *          "value"     :   "男/女",
- *      },
- * 
- *      "birthday"    : {
- *          "birthday"  :   "ACCESS",
- *          "value"     :   "19980101",
- *      },
- * 
- *      "type"        : {
- *          "access"    :   "ACCESS",
- *          "value"     :   "本科",
- *      },
- * 
- *      "nationality" : {
- *          "access"    :   "private",
- *          "value"     :   "汉族"，
- *      },
- * 
- *      @nickname   :   "STRING",
- *      @header     :   "URL",
- * 
- *      class_info  :   {
- *          "access"
- *      }
- *  }
- */
+use App\Models\Database;
+
 class User extends Model
 {
-    private function insert_users_admin() {
-        
+    //
+    public function revoke($id, $user) {
+        $res = select('salted_fish_goods', $id);
+        if($res == null) return "No such goods.";
+
+        if(intval($res->goods_owner) != $user)
+            return "access denied.";
+        else
+            DB::table('salted_fish_goods')->where('goods_id', $id)->update(['goods_status' => 'unavailable']);
+        return "OK.";
     }
 }
