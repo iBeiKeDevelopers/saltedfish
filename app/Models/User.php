@@ -45,5 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class User extends Model
 {
-    //
+    private function insert_users_admin() {
+        
+    }
 }

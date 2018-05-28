@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Notice</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,14 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    Welcome to the background manager page.
+                </div>
+                <div>
+                    <div class="col-md-6 offset-md-4">
+                        <button type="submit" class="btn btn-primary" onclick="window.location='/admin'">
+                            Admin
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

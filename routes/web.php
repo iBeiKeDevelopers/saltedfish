@@ -16,6 +16,12 @@ Route::get('now', function() {
     return date("Y-m-d H:i:s");
 });
 
-Route::get('/', 'Home\HomePageController@index');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('home', 'HomeController@index')->name('home');
+
+Route::get('/admin', 'AdminHomePageController@index');
+
+Route::post('/admin', 'AdminHomePageController@index');
+
+Route::post('/data', 'data@index');
