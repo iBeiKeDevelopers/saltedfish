@@ -71,7 +71,7 @@ class Database extends Model
     }
     
     public function search_by_user($user, $amount) {
-        //somwwhat fetch_total_pages
+        //somewhat fetch_total_pages
         $res = DB::table('salted_fish_goods')
             ->where("goods_owner", "$user")
             ->where('goods_status', 'available')
