@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
-abstract class Order extends Controller
+interface Order
 {
     //
-    abstract public function new();
-    abstract public function cancel();
-    abstract public function accept();
-    abstract public function complete();
-    abstract public function finish();
+    public function new();
+    public function cancel();
+    public function accept();
+    public function complete();
+    public function finish();
 }

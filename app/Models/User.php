@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Database;
 
-class User extends Model
+class User extends Model 
 {
     //
     public function revoke($id, $user) {

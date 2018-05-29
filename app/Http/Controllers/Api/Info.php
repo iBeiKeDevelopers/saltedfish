@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
-abstract class Info extends Controller
+interface Info
 {
     //
-    abstract public function list_orders();
+    public function list_orders();
 
-    abstract public function user_self();
-    abstract public function user_info();
-    abstract public function user_update();
-    abstract public function user_total();
-    abstract public function user_goods();
+    public function user_update();
+    public function get_user_self();
+    public function get_user_info();
+    public function get_user_total();
+    public function get_user_goods();
+
+    public function user_bind($id, $password, $old_un, $old_password);
 }

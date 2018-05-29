@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-abstract class Operation
+interface Operation
 {
     //self info update
-    abstract public function update_info();
+    public function update_info();
 
     //goods info update
-    abstract public function submit_goods();
-    abstract public function revoke_goods();
-    abstract public function edit_goods();
+    public function submit_goods();
+    public function revoke_goods();
+    public function edit_goods();
 }
