@@ -5,9 +5,9 @@ namespace App\Http\Controllers\API;
 interface Order
 {
     //
-    public function new();
-    public function cancel();
-    public function accept();
-    public function complete();
-    public function finish();
+    public function order_new($request);
+    public function order_cancel($request);
+    public function order_accept($request);
+    public function order_complete($request);
+    public function order_finish($request);
 }

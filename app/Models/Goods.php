@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Database;
 
+use App\Models\Report;
+
 //todo: try to seperate comments from goods
 
-class Goods extends Model
+class Goods extends Model implements Report
 {
     //
 
@@ -38,46 +40,81 @@ class Goods extends Model
 
         for($i = 0; $i < $len; $i++) {
             $res[$i] = $arr[$i];
+
+            $goods_tags_str = '';
+            foreach($res->goods_tags as $tag){
+                $tag = urlencode($tag);
+                $goods_tags_str = $goods_tags_str." ".$tag;
+            }
+            $res->goods_tags = $goods_tags_str;
+
             
             $res[$i]->goods_title       =       urlencode($res[$i]->goods_title);
             $res[$i]->single_cost       =       urlencode($res[$i]->single_cost);
+            $res[$i]->search_summary    =       urlencode(mb_substr($res->goods_info,0,100,"utf-8").";".$goods_type.";".$goods_title.";".$lv1.";".$lv2.";".$lv3.";".$goods_tags_str);
             $res[$i]->goods_info        =       urlencode($res[$i]->goods_info);
-            $res[$i]->search_summary    =       urlencode($res[$i]->search_summary);
             $res[$i]->comments          =       urlencode($res[$i]->comments);
             $res[$i]->goods_img         =       urlencode($res[$i]->goods_img);
             $res[$i]->cl_lv_1           =       urlencode($res[$i]->cl_lv_1);
             $res[$i]->cl_lv_2           =       urlencode($res[$i]->cl_lv_2);
             $res[$i]->cl_lv_3           =       urlencode($res[$i]->cl_lv_3);
+
+            if ($res->remain == 0)
+		        $res->status = "soldout";
         }
         return $res;
     }
 
-    public function submit($goods, $user) { //更新商品信息 && 提交商品
+    public function update_goods($goods, $user) { //更新商品信息 && 提交商品
         //before db,after json
         $now = date("Y/m/d");
-        $goods->ttm = $now;
         $goods->last_modified = $now;
-        
-        DB::table('salted_fish_goods')->insert($goods);
+        if($goods->goods_id == null) { //new
+            $goods->ttm = $now;
+            if(DB::table(config('tables.goods'))->insert($goods))
+                return [
+                    "status" => "true",
+                    "goods_id"  =>  "$id",
+                ];
+            else return Report::report(false, 'DB error');
+        }else { //update
+            $id = $this->getOwner($goods->goods_id);
+            if($id == $user) {
+                //
+                $res = DB::table(config('tables.goods'))->where('goods_id', "$id")->update($goods);
+                return Report::report($res, "DB error");
+            }else {
+                Report::report(false, "not owner");
+            }
+        }
     }
 
     public function comment($id, $comment) { //评论商品
 		$comment_ele = array(
-			'commenter'=>$commenter,
-			'comment_date'=> Date("Y-m-d"),
-			'comment' => urlencode($comment),
+			'commenter'     =>      $commenter,
+			'comment_date'  =>      Date("Y-m-d"),
+			'comment'       =>      urlencode($comment),
         );
         $res = qurey($id);
         if($res == null) return "No such goods";
 
-        //if(isset($res['comments'])) ???
         $old_comment = json_decode($res->comments);
 		array_unshift($old_comment, $comment_ele);
 		$updated_comment = json_encode($old_comment);
-        DB::table('salted_fish_goods')->where('goods_id', "$goods_id")->update(['comments' => "$updated_comment"]);
-        return json_encode([
-            "status" => "success",
-        ]);
+        $status = DB::table(config('tables.goods'))->where('goods_id', "$goods_id")->update(['comments' => "$updated_comment"]);
+        return Report::report($status);
+    }
+
+    public function revoke($id, $user) {
+        $res = select(config('tables.goods'), $id);
+        if($res == null)
+            return Report::report(false, "No such goods");
+
+        if(intval($res->goods_owner) != $user)
+            return Report::report(false, "access denied");
+        else
+            DB::table(config('tables.goods'))->where('goods_id', $id)->update(['goods_status' => 'unavailable']);
+        return Report::report(true);
     }
 
     public function remove($id, $user) { //删除商品
@@ -87,13 +124,12 @@ class Goods extends Model
     public function getGoods($id) {
         $res = select($id);
         if($res == null) return 'No such goods.';
-        $res = decode_db($res);
-        return json_encode($res);
+        return decode_db($res);
     }
 
     public function getOwner($id) { //商家
         $database = new Database;
-        $res = $database->select('salted_fish_goods', $id);
+        $res = $database->select(config('tables.goods'), $id);
         if(count($res) == 0)
             return null;
         else
@@ -102,9 +138,25 @@ class Goods extends Model
 
     public function change_remains($id, $num) { //商品数量增减
         $database = new Database;
-        $res = $database->select('salted_fish_goods', $id);
+        $res = $database->select(config('tables.goods'), $id);
         $updated_remain = $res->remain - $num;
-        if(DB::table('salted_fish_goods')->where('id', $id)->update(['remain' => "$updated_remain"]))
+        if(DB::table(config('tables.goods'))->where('id', $id)->update(['remain' => "$updated_remain"]))
             return true;
+    }
+
+    public function report($status, $error = '') {
+        return ($status) ? [
+            "status"    =>      "true",
+            "error"     =>      "",
+        ] : [
+            "ststus"    =>      "false",
+            "error"     =>      "$error",
+        ];
+    }
+
+    public function update_db($id, $arr) {
+        $res = DB::table(config('tables.goods'))
+            ->where('id', "$id")->update($arr);
+        return report($res, "DB error");
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Database;
 use App\Models\Goods;
 
-class AdminHomePageController extends Controller
+class AdminHomePageController extends Controller implements Api\Info
 {
     public function __construct()
     {
@@ -15,28 +15,60 @@ class AdminHomePageController extends Controller
     }
     
     public function index(Request $request) {
-        if($request->isMethod('get'))
+        if($request->isMethod('get')) //get
             return view('admin/admin');
-        else {
+        else { //post
             if($request->input('request') == "getGoods") {
-                $num = $request->input('num');
-                $page = $request->input('page');
-                $page *= $num;
-
-                $DatabaseClass = new Database;
-                $goods = $DatabaseClass->select_by_limit('salted_fish_goods', $page, $num);
-
-                $GoodsClass = new Goods;
-                $res = $GoodsClass->decode_db($goods);
-                if($res == null)
-                    return "empty";
-                else
-                    return $res;
+                //get goods info
+                return $this->get_goods($request);
             }else if($request->input('request') == "deleteGoods") {
-                $id = $request->input('id');
-                $res = DB::table('salted_fish_goods')->where('goods_id', '=', "$id")->delete();
-                if($res == 1) return "OK";
+                //delete goods from database
+                return $this->delete_goods($request);
             }
         }
+    }
+
+    /**
+     * @api delete_goods(Request $request)
+     * [
+     *  'request'   =>      'deleteGoods'
+     *  'id'        =>      "goods_id",
+     * ]
+     */
+    public function delete_goods($request) {
+        $id = $request->input('id');
+        $res = DB::table('salted_fish_goods')->where('goods_id', '=', "$id")->delete();
+        if($res == 1)
+            return json_encode([
+                "status" => "true",
+            ]);
+        else
+            return jason_encode([
+                "status" => "false"
+            ]);
+    }
+
+    /**
+     * @api get_gooods(Request $request)
+     * [
+     *  'request'   =>      'getGoods',
+     *  'num'       =>      number of the goods in a page,
+     *  'page'      =>      number of the pages now showed,
+     * ]
+     */
+    public function get_goods($request) {
+        $num = $request->input('num');
+            $page = $request->input('page');
+            $page *= $num;
+
+            $DatabaseClass = new Database;
+            return $goods = $DatabaseClass->select_by_limit('salted_fish_goods', $page, $num);
+
+            $GoodsClass = new Goods;
+            $res = $GoodsClass->decode_db($goods);
+            if($res == null)
+                return "empty";
+            else
+                return $res;
     }
 }

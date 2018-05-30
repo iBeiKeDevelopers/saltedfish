@@ -16,12 +16,12 @@ Route::get('now', function() {
     return date("Y-m-d H:i:s");
 });
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('home', 'UserPageController@index');
 
-Route::get('/admin', 'AdminHomePageController@index');
+Route::match(['get', 'post'], 'admin', 'AdminHomePageController@index');
 
-Route::post('/admin', 'AdminHomePageController@index');
+Route::post('api/home', 'HomeController@data');
 
-Route::post('/data', 'data@index');
+Route::post('api/user', 'UserPageController@data');

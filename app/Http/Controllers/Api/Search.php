@@ -5,6 +5,6 @@ namespace App\Http\Controllers\API;
 interface Search
 {
     //
-    public function goods_by_title();
-    public function goods_by_category();
+    public function search_goods_by_title();
+    public function search_goods_by_category();
 }

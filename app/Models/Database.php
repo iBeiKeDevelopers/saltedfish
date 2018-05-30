@@ -10,20 +10,13 @@ class Database extends Model
     //select
     public function select($table_name, $id) {
         return DB::table($table_name)
-        ->where('id', $id)
-        ->get();
+            ->where('id', $id)
+            ->get();
     }
 
     public function select_by_limit($table_name, $start, $num) {
         return DB::table($table_name)
             ->skip($start)->take($num)
-            ->get();
-    }
-
-    //query
-    private function query($table_name, $id) {
-        return DB::table($table_name)
-            ->where('goods_id', "$id")
             ->get();
     }
 

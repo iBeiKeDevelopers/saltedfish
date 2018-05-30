@@ -60,9 +60,9 @@ function post_delete(num) {
         "request": "deleteGoods",
         "id": num,
     }).then(function (response) {
-        res = response.data
+        res = response.data.status
         console.log(res)
-        if(res != "OK") alert("failed to remove the item with id: " + num)
+        if(res != "true") alert("failed to remove the item with id: " + num)
         else alert("detele an item with id: " + num + " succeed.")
     })
 }
