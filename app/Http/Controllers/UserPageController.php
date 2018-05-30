@@ -133,7 +133,9 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
         if($id == null)
             return $mOrders->report(false, "order id missing");
         
-        return $mOrders->accept($id, $user);
+        return json_encode(
+            $mOrders->accept($id, $user)
+        );
     }
 
     /**
@@ -148,7 +150,9 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
         if($id == null)
             return $mOrders->report(false, "order id missing");
         
-        return $mOrders->complete($id, $user);
+        return json_encode(
+            $mOrders->complete($id, $user)
+        );
     }
 
     /**
@@ -163,7 +167,9 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
         if($id == null)
             return $mOrders->report(false, "order id missing");
 
-        return $mOrders->finish($id, $user);
+        return json_encode(
+            $mOrders->finish($id, $user)
+        );
     }
 
     /**
@@ -178,6 +184,8 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
         if($id == null)
             return $mOrders->report(false, "order id missing");
 
-        return $mOrders->cancel($id, $user);
+        return json_encode(
+            $mOrders->cancel($id, $user)
+        );
     }
 }

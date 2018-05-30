@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Database;
 
-use App\Models\Report;
+use App\Models\Interfaces\Report;
 
 //todo: try to seperate comments from goods
 
@@ -16,7 +16,8 @@ class Goods extends Model implements Report
 
     public function decode_db($arr) {
         $len = count($arr);
-        if($len == 0) return null;
+        if($len == 0)
+            return Goods::report(false, "500 error");
 
         for($i = 0; $i < $len; $i++) {
             $res[$i] = $arr[$i];
@@ -76,15 +77,15 @@ class Goods extends Model implements Report
                     "status" => "true",
                     "goods_id"  =>  "$id",
                 ];
-            else return Report::report(false, 'DB error');
+            else return Goods::report(false, 'DB error');
         }else { //update
             $id = $this->getOwner($goods->goods_id);
             if($id == $user) {
                 //
                 $res = DB::table(config('tables.goods'))->where('goods_id', "$id")->update($goods);
-                return Report::report($res, "DB error");
+                return Goods::report($res, "DB error");
             }else {
-                Report::report(false, "not owner");
+                Goods::report(false, "not owner");
             }
         }
     }
@@ -102,19 +103,19 @@ class Goods extends Model implements Report
 		array_unshift($old_comment, $comment_ele);
 		$updated_comment = json_encode($old_comment);
         $status = DB::table(config('tables.goods'))->where('goods_id', "$goods_id")->update(['comments' => "$updated_comment"]);
-        return Report::report($status);
+        return Goods::report($status);
     }
 
     public function revoke($id, $user) {
         $res = select(config('tables.goods'), $id);
         if($res == null)
-            return Report::report(false, "No such goods");
+            return Goods::report(false, "No such goods");
 
         if(intval($res->goods_owner) != $user)
-            return Report::report(false, "access denied");
+            return Goods::report(false, "access denied");
         else
             DB::table(config('tables.goods'))->where('goods_id', $id)->update(['goods_status' => 'unavailable']);
-        return Report::report(true);
+        return Goods::report(true);
     }
 
     public function remove($id, $user) { //删除商品

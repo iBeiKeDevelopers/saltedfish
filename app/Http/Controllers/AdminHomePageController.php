@@ -37,7 +37,7 @@ class AdminHomePageController extends Controller implements Api\Info
      */
     public function delete_goods($request) {
         $id = $request->input('id');
-        $res = DB::table('salted_fish_goods')->where('goods_id', '=', "$id")->delete();
+        $res = DB::table(config('table.goods'))->where('goods_id', '=', "$id")->delete();
         if($res == 1)
             return json_encode([
                 "status" => "true",
@@ -58,17 +58,15 @@ class AdminHomePageController extends Controller implements Api\Info
      */
     public function get_goods($request) {
         $num = $request->input('num');
-            $page = $request->input('page');
-            $page *= $num;
+        $page = $request->input('page');
+        $page *= $num;
 
-            $DatabaseClass = new Database;
-            return $goods = $DatabaseClass->select_by_limit('salted_fish_goods', $page, $num);
+        $DatabaseClass = new Database;
+        $goods = $DatabaseClass->select_by_limit(config('table.goods'), $page, $num);
 
-            $GoodsClass = new Goods;
-            $res = $GoodsClass->decode_db($goods);
-            if($res == null)
-                return "empty";
-            else
-                return $res;
+        $GoodsClass = new Goods;
+        return json_encode(
+            $GoodsClass->decode_db($goods)
+        );
     }
 }

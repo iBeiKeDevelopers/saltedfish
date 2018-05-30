@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Interfaces;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-
+interface Database {
+    public function get($info = 'id');
+    public function update_db($arr = []);
+    public function delete_db($id);
+}
+/*
 class Database extends Model
 {
     //select
@@ -72,3 +75,4 @@ class Database extends Model
         return $res;
     }
 }
+*/

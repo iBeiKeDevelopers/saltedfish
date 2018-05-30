@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Goods;
-use App\Models\Report;
+use App\Models\Interfaces\Report;
+use App\Models\Interfaces\Searchable;
+use App\Models\Interfaces\Selectable;
 use App\Models\Database;
 
-class Orders extends Model implements Report
+class Orders extends Model implements Report//, Searchable, Selectable
 {
     //
     public function new($order, $user) {
@@ -17,17 +19,17 @@ class Orders extends Model implements Report
         $res = $data->select('salted_fish_goods', $order->goods_id);
         
         if($res == null)
-            return Report::report(false, "no uch goods");
+            return Orders::report(false, "no uch goods");
 
         if($res->remain < $order->purchase_amount)
 
-            return Report::report(false, "no enough goods");
+            return Orders::report(false, "no enough goods");
         else if($order->status != 'avalable')
 
-            return Report::report(false, "goods not avalable");
+            return Orders::report(false, "goods not avalable");
         
         $res = DB::table(config('tables.orders'))->insert($order);
-        return Report::report($res, 'DB error');
+        return Orders::report($res, 'DB error');
     }
 
     public function accept($id, $user) {
@@ -35,11 +37,11 @@ class Orders extends Model implements Report
         $data = new Database;
         $res = $data->select(config('tables.orders'), $id);
         if($res == null || $res->num_rows ==0)
-            return Report::report(false, "no such order");
+            return Orders::report(false, "no such order");
         else if($res->goods_owner != "$user")
-            return Report::report(false, "no permission");
+            return Orders::report(false, "no permission");
         else if($res->remain < $res->perchase_amount)
-            return Report::report(false, "no enough goods");
+            return Orders::report(false, "no enough goods");
         else {
             return $this->update_db($res);
         }
@@ -51,14 +53,14 @@ class Orders extends Model implements Report
         $res = $data->select(config('tables.orders'), $id);
         $goods = new Goods;
         if($goods->getOwner($res->goods_id) != $user)
-            return Report::report(false, "no permission");
+            return Orders::report(false, "no permission");
         switch($res->status) {
             case "waiting":
-                return Report::report(false, "not accepted");
+                return Orders::report(false, "not accepted");
             case "completed": case "finished":
-                return Report::report(false, "already completed");
+                return Orders::report(false, "already completed");
             case "accepted":
-                return Report::report(false, "already accepted");
+                return Orders::report(false, "already accepted");
         }
         return $this->update_db($id, [
             "order_status" => "$res->status",
@@ -71,15 +73,15 @@ class Orders extends Model implements Report
         $res = $data->select(config('tables.orders'), "$id");
 
         if($res == null)
-            return Report::report(false, "DB error");
+            return Orders::report(false, "DB error");
 
         if($user != $res->order_submitter)
-            return Report::report(false, "no permission");
+            return Orders::report(false, "no permission");
         switch($res->status) {
             case "waiting": case "accepted":
-                return Report::report(false, "not completed");
+                return Orders::report(false, "not completed");
             case "finished":
-                return Report::report(false, "already finished");
+                return Orders::report(false, "already finished");
         }
 
         return $this->update_db($id, [
@@ -94,15 +96,15 @@ class Orders extends Model implements Report
         $res = $data->select(config('tables.orders'), $id);
         
         if($res == null || $res->num_rows ==0)
-            return Report::report(false, "no such order");
+            return Orders::report(false, "no such order");
         else if($res->order_submitter == "$user")
-            return Report::report(false, "no permission");
+            return Orders::report(false, "no permission");
         else if($user == $goods->getOwner($res->goods_id)
             && $res->order_status != 'finished')
             //is it OK ???
-            return Report::report(false, "access denied");
+            return Orders::report(false, "access denied");
         else if($res->remain < $res->perchase_amount)
-            return Report::report(false, "no enough goods");
+            return Orders::report(false, "no enough goods");
         else {
             $amount = $res->remain - $res->purchase_amount;
             return $goods->update_db($res->goods_id, [
@@ -123,6 +125,6 @@ class Orders extends Model implements Report
 
     public function update_db($id, $arr) {
         $res = DB::table(config('tables.orders'))->where('id', "$id")->update($arr);
-        return Report::report($res, "DB error");
+        return Orders::report($res, "DB error");
     }
 }
