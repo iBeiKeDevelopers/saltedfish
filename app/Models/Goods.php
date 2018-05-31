@@ -4,17 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Models\Database;
 
 use App\Models\Interfaces\Report;
+use App\Models\Interfaces\Searchable;
+use App\Models\Interfaces\Selectable;
 
 //todo: try to seperate comments from goods
 
-class Goods extends Model implements Report
+class Goods extends Model implements Report, Database, Searchable
 {
     //
 
     public function decode_db($arr) {
+        //decode from db
         $len = count($arr);
         if($len == 0)
             return Goods::report(false, "500 error");
@@ -36,6 +38,7 @@ class Goods extends Model implements Report
     }
 
     public function encode_db($arr) {
+        //encode to db
         $len = count($arr);
         if($len == 0) return null;
 
@@ -48,7 +51,6 @@ class Goods extends Model implements Report
                 $goods_tags_str = $goods_tags_str." ".$tag;
             }
             $res->goods_tags = $goods_tags_str;
-
             
             $res[$i]->goods_title       =       urlencode($res[$i]->goods_title);
             $res[$i]->single_cost       =       urlencode($res[$i]->single_cost);
@@ -122,12 +124,6 @@ class Goods extends Model implements Report
 
     }
 
-    public function getGoods($id) {
-        $res = select($id);
-        if($res == null) return 'No such goods.';
-        return decode_db($res);
-    }
-
     public function getOwner($id) { //商家
         $database = new Database;
         $res = $database->select(config('tables.goods'), $id);
@@ -145,6 +141,7 @@ class Goods extends Model implements Report
             return true;
     }
 
+    //interface Report
     public function report($status, $error = '') {
         return ($status) ? [
             "status"    =>      "true",
@@ -155,9 +152,77 @@ class Goods extends Model implements Report
         ];
     }
 
+    //interface Database
+    public function get($id, $info = '') {
+        $res = DB::table(config('table.goods'))->where('id', $id)->get();
+        if($info = '')
+            return $res;
+        else
+            return $res[$info];
+    }
+
     public function update_db($id, $arr) {
         $res = DB::table(config('tables.goods'))
-            ->where('id', "$id")->update($arr);
-        return report($res, "DB error");
+            ->where('goods_id', "$id")->update($arr);
+        return Goods::report($res, "DB error");
+    }
+
+    public function delete_db($id) {
+        $res = DB::table(config('table.goods'))
+            ->where('goods_id', "$id")->delete();
+        return Goods::report($res, "DB error");
+    }
+
+    //interface Searchable
+
+    public function search_by($info, $arr) {
+        $page = $arr["page"] || 1;
+        $limit = $arr["limit"] || 1;
+        $start = ($page - 1) * $limit;
+
+        if($page < 1 || $limit < 0)
+            return Goods::report(false, "invalid request");
+
+        $level = 'cl_lv_' . $arr["level"] || '';
+        $category = urlencode($arr["category"]) || '';
+
+        switch($info) {
+            case "sale": {
+                $res = DB::table(config('table.goods'))
+                    ->where('goods_owner', $user)
+                    ->where('goods_status', 'available')
+                    ->skip($start)->take($limit)
+                    ->get();
+                return $res;
+            }
+
+            case "title": {
+                $res = DB::table(config('table.goods'))
+                    ->where('goods_title', 'LIKE', "'%$title%'")
+                    ->where('goods_status', 'available')
+                    ->skip($start)->take($limit)
+                    ->get();
+                return Goods::report($res, "no such goods");
+            }
+
+            case "category": {
+                $res = DB::table(config('table.goods'))
+                    ->where("$level", "$category")
+                    ->skip($start)->take($limit)
+                    ->get();
+                return Goods::report($res, "no such goods");
+            }
+
+            case "owner": {
+                $res = DB::table(config('table.goods'))
+                    ->where('goods_owner', $user)
+                    ->skip($start)->take($limit)
+                    ->get();
+                return Goods::report($res, "no such goods");
+            }
+
+            default:
+                return Goods::report(false, "invalid request");
+        }
     }
 }

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Goods;
 use App\Models\Orders;
-use App\Models\Database;
 use App\Models\Input;
 
 class UserPageController extends Controller implements Api\Operation, Api\Order

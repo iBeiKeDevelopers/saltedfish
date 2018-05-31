@@ -12,6 +12,7 @@ class AdminHomePageController extends Controller implements Api\Info
     public function __construct()
     {
         $this->middleware('auth');
+        $mGoods = new Goods;
     }
     
     public function index(Request $request) {
@@ -29,29 +30,21 @@ class AdminHomePageController extends Controller implements Api\Info
     }
 
     /**
-     * @api delete_goods(Request $request)
+     * @api/admin delete_goods(Request $request)
      * [
-     *  'request'   =>      'deleteGoods'
      *  'id'        =>      "goods_id",
      * ]
      */
     public function delete_goods($request) {
         $id = $request->input('id');
-        $res = DB::table(config('table.goods'))->where('goods_id', '=', "$id")->delete();
-        if($res == 1)
-            return json_encode([
-                "status" => "true",
-            ]);
-        else
-            return jason_encode([
-                "status" => "false"
-            ]);
+        return json_encode(
+            $mGoods->delete_db($id)
+        );
     }
 
     /**
      * @api get_gooods(Request $request)
      * [
-     *  'request'   =>      'getGoods',
      *  'num'       =>      number of the goods in a page,
      *  'page'      =>      number of the pages now showed,
      * ]
@@ -64,9 +57,8 @@ class AdminHomePageController extends Controller implements Api\Info
         $DatabaseClass = new Database;
         $goods = $DatabaseClass->select_by_limit(config('table.goods'), $page, $num);
 
-        $GoodsClass = new Goods;
         return json_encode(
-            $GoodsClass->decode_db($goods)
+            $mGoods->decode_db($goods)
         );
     }
 }

@@ -9,7 +9,6 @@ use App\Models\Goods;
 use App\Models\Interfaces\Report;
 use App\Models\Interfaces\Searchable;
 use App\Models\Interfaces\Selectable;
-use App\Models\Database;
 
 class Orders extends Model implements Report//, Searchable, Selectable
 {
