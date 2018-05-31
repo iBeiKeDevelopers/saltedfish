@@ -19,7 +19,7 @@ class Goods extends Model implements Report, Database, Searchable
         //decode from db
         $len = count($arr);
         if($len == 0)
-            return Goods::report(false, "500 error");
+            return Goods::report(false, '', "500 error");
 
         for($i = 0; $i < $len; $i++) {
             $res[$i] = $arr[$i];
@@ -79,15 +79,15 @@ class Goods extends Model implements Report, Database, Searchable
                     "status" => "true",
                     "goods_id"  =>  "$id",
                 ];
-            else return Goods::report(false, 'DB error');
+            else return Goods::report(false, '', 'DB error');
         }else { //update
             $id = $this->getOwner($goods->goods_id);
             if($id == $user) {
                 //
                 $res = DB::table(config('tables.goods'))->where('goods_id', "$id")->update($goods);
-                return Goods::report($res, "DB error");
+                return Goods::report($res, '', "DB error");
             }else {
-                Goods::report(false, "not owner");
+                Goods::report(false, '', "not owner");
             }
         }
     }
@@ -104,20 +104,28 @@ class Goods extends Model implements Report, Database, Searchable
         $old_comment = json_decode($res->comments);
 		array_unshift($old_comment, $comment_ele);
 		$updated_comment = json_encode($old_comment);
-        $status = DB::table(config('tables.goods'))->where('goods_id', "$goods_id")->update(['comments' => "$updated_comment"]);
-        return Goods::report($status);
+        $status = DB::table(config('tables.goods'))
+            ->where('goods_id', "$goods_id")
+            ->update([
+                'comments' => "$updated_comment"
+            ]);
+        return Goods::report($status, '', 'DB error');
     }
 
     public function revoke($id, $user) {
         $res = select(config('tables.goods'), $id);
         if($res == null)
-            return Goods::report(false, "No such goods");
+            return Goods::report(false, '', "No such goods");
 
         if(intval($res->goods_owner) != $user)
-            return Goods::report(false, "access denied");
+            return Goods::report(false, '', "access denied");
         else
-            DB::table(config('tables.goods'))->where('goods_id', $id)->update(['goods_status' => 'unavailable']);
-        return Goods::report(true);
+            DB::table(config('tables.goods'))
+                ->where('goods_id', $id)
+                ->update([
+                    'goods_status' => 'unavailable'
+                ]);
+        return Goods::report(true, '', '');
     }
 
     public function remove($id, $user) { //删除商品
@@ -142,10 +150,10 @@ class Goods extends Model implements Report, Database, Searchable
     }
 
     //interface Report
-    public function report($status, $error = '') {
+    public function report($status, $data = '', $error = '') {
         return ($status) ? [
             "status"    =>      "true",
-            "error"     =>      "",
+            "data"      =>      "$data",
         ] : [
             "ststus"    =>      "false",
             "error"     =>      "$error",
@@ -164,13 +172,13 @@ class Goods extends Model implements Report, Database, Searchable
     public function update_db($id, $arr) {
         $res = DB::table(config('tables.goods'))
             ->where('goods_id', "$id")->update($arr);
-        return Goods::report($res, "DB error");
+        return Goods::report($res, '', "DB error");
     }
 
     public function delete_db($id) {
         $res = DB::table(config('table.goods'))
             ->where('goods_id', "$id")->delete();
-        return Goods::report($res, "DB error");
+        return Goods::report($res, '', "DB error");
     }
 
     //interface Searchable
@@ -181,7 +189,7 @@ class Goods extends Model implements Report, Database, Searchable
         $start = ($page - 1) * $limit;
 
         if($page < 1 || $limit < 0)
-            return Goods::report(false, "invalid request");
+            return Goods::report(false, '', "invalid request");
 
         $level = 'cl_lv_' . $arr["level"] || '';
         $category = urlencode($arr["category"]) || '';
@@ -193,7 +201,7 @@ class Goods extends Model implements Report, Database, Searchable
                     ->where('goods_status', 'available')
                     ->skip($start)->take($limit)
                     ->get();
-                return $res;
+                    return Goods::report($res, $res, "no such goods");
             }
 
             case "title": {
@@ -202,7 +210,7 @@ class Goods extends Model implements Report, Database, Searchable
                     ->where('goods_status', 'available')
                     ->skip($start)->take($limit)
                     ->get();
-                return Goods::report($res, "no such goods");
+                return Goods::report($res, $res, "no such goods");
             }
 
             case "category": {
@@ -210,7 +218,7 @@ class Goods extends Model implements Report, Database, Searchable
                     ->where("$level", "$category")
                     ->skip($start)->take($limit)
                     ->get();
-                return Goods::report($res, "no such goods");
+                return Goods::report($res, $res, "no such goods");
             }
 
             case "owner": {
@@ -218,11 +226,11 @@ class Goods extends Model implements Report, Database, Searchable
                     ->where('goods_owner', $user)
                     ->skip($start)->take($limit)
                     ->get();
-                return Goods::report($res, "no such goods");
+                return Goods::report($res, $res, "no such goods");
             }
 
             default:
-                return Goods::report(false, "invalid request");
+                return Goods::report(false, '', "invalid request");
         }
     }
 }
