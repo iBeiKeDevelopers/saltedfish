@@ -132,28 +132,11 @@ class Goods extends Model implements Report, Database, Searchable
 
     }
 
-    public function getOwner($id) { //商家
-        $database = new Database;
-        $res = $database->select(config('tables.goods'), $id);
-        if(count($res) == 0)
-            return null;
-        else
-            return $res->goods_owner;
-    }
-
-    public function change_remains($id, $num) { //商品数量增减
-        $database = new Database;
-        $res = $database->select(config('tables.goods'), $id);
-        $updated_remain = $res->remain - $num;
-        if(DB::table(config('tables.goods'))->where('id', $id)->update(['remain' => "$updated_remain"]))
-            return true;
-    }
-
     //interface Report
     public function report($status, $data = '', $error = '') {
         return ($status) ? [
             "status"    =>      "true",
-            "data"      =>      "$data",
+            "data"      =>      json_encode($data),
         ] : [
             "ststus"    =>      "false",
             "error"     =>      "$error",
@@ -184,9 +167,12 @@ class Goods extends Model implements Report, Database, Searchable
     //interface Searchable
 
     public function search_by($info, $arr) {
-        $page = $arr["page"] || 1;
-        $limit = $arr["limit"] || 1;
-        $start = ($page - 1) * $limit;
+        $page   =   $arr["page"] || 1;
+        $limit  =   $arr["limit"] || 1;
+        $start  =   ($page - 1) * $limit || 0;
+
+        $user   =   $arr['user'] || '';
+        $id     =   $arr['id'] || 0;
 
         if($page < 1 || $limit < 0)
             return Goods::report(false, '', "invalid request");
@@ -195,6 +181,13 @@ class Goods extends Model implements Report, Database, Searchable
         $category = urlencode($arr["category"]) || '';
 
         switch($info) {
+            case "id": {
+                $res = DB::table(config('table.goods'))
+                    ->where('goods_id', "$id")
+                    ->get();
+                return Goods::report($res, $res, "DB error");
+            }
+
             case "sale": {
                 $res = DB::table(config('table.goods'))
                     ->where('goods_owner', $user)

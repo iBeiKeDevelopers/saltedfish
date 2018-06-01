@@ -66,7 +66,7 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
     /**
      * @api goods_revoke(Request $request)
      * [
-     *  'goods_id'  =>  goods_id
+     *  'goods_id'  =>  goods_id,
      * ]
      */
     public function goods_revoke($request) {
@@ -125,6 +125,9 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
 
     /**
      * @api order_accept(Resquest $request)
+     * [
+     *  'order_id' => order_id, 
+     * ]
      */
     public function order_accept($request) {
         $id = $request->input('order_id');

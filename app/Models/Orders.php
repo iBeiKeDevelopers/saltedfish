@@ -68,8 +68,7 @@ class Orders extends Model implements Report//, Searchable, Selectable
 
     public function finish($id, $user) {
         //expecting $status = "?" change to "finished"
-        $data = new Database;
-        $res = $data->select(config('tables.orders'), "$id");
+        $res = Orders::select(config('tables.orders'), "$id");
 
         if($res == null)
             return Orders::report(false, "DB error");
@@ -83,7 +82,7 @@ class Orders extends Model implements Report//, Searchable, Selectable
                 return Orders::report(false, "already finished");
         }
 
-        return $this->update_db($id, [
+        return Orders::update_db($id, [
             "order_status" => "finished",
         ]);
     }
@@ -98,15 +97,16 @@ class Orders extends Model implements Report//, Searchable, Selectable
             return Orders::report(false, "no such order");
         else if($res->order_submitter == "$user")
             return Orders::report(false, "no permission");
-        else if($user == $goods->getOwner($res->goods_id)
-            && $res->order_status != 'finished')
+        else if($user == Goods::search_by("id", [
+            "id" => $res->goods_id,
+            ]) && $res->order_status != 'finished')
             //is it OK ???
             return Orders::report(false, "access denied");
         else if($res->remain < $res->perchase_amount)
             return Orders::report(false, "no enough goods");
         else {
             $amount = $res->remain - $res->purchase_amount;
-            return $goods->update_db($res->goods_id, [
+            return Goods::update_db($res->goods_id, [
                 "remain" => "$amount"
             ]);
         }
