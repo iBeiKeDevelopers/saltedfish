@@ -18,17 +18,18 @@ class Orders extends Model implements Report//, Searchable, Selectable
         $res = $data->select('salted_fish_goods', $order->goods_id);
         
         if($res == null)
-            return Orders::report(false, "no uch goods");
+            return Orders::report(false, '', "no uch goods");
 
         if($res->remain < $order->purchase_amount)
 
-            return Orders::report(false, "no enough goods");
+            return Orders::report(false, '', "no enough goods");
         else if($order->status != 'avalable')
 
-            return Orders::report(false, "goods not avalable");
+            return Orders::report(false, '', "goods not avalable");
         
-        $res = DB::table(config('tables.orders'))->insert($order);
-        return Orders::report($res, 'DB error');
+        $res = DB::table(config('tables.orders'))
+            ->insertGetId($order);
+        return Orders::report($res, $res, 'DB error');
     }
 
     public function accept($id, $user) {

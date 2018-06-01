@@ -74,12 +74,8 @@ class Goods extends Model implements Report, Database, Searchable
         $goods->last_modified = $now;
         if($goods->goods_id == null) { //new
             $goods->ttm = $now;
-            if(DB::table(config('tables.goods'))->insert($goods))
-                return [
-                    "status" => "true",
-                    "goods_id"  =>  "$id",
-                ];
-            else return Goods::report(false, '', 'DB error');
+            $res = DB::table(config('tables.goods'))->insertGetId($goods);
+            return Goods::report($res, $res, 'DB error');
         }else { //update
             $id = $this->getOwner($goods->goods_id);
             if($id == $user) {

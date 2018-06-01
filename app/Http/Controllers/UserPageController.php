@@ -37,8 +37,34 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
     /**
      * @api goods_submit(Request $request)
      * [
-     * ('goods_id'          =>      goods_id,)
-     * 
+     *  'goods_id'          =>      goods_id,
+     *  'goods_title'       =>      goods_title,
+     *  'single_cost'       =>      single_cost,
+     *  'goods_status'      =>      goods_status,
+     *  'goods_type'        =>      goods_type,
+     *  'goods_remain'      =>      remain,
+     *  'goods_tags'        =>      tags,
+     *  'goods_img'         =>      goods_img,
+     *  'delevery_fee'      =>      delivery_fee,
+     *  'lv1'               =>      cl_lv_1,
+     *  'lv2'               =>      cl_lv_2,
+     *  'lv3'               =>      cl_lv_3,
+     * ]
+     */
+    public function goods_new($request) {
+        $goods = $mInput->goods($request);
+        $goods = $mGoods->encode($goods);
+        $user = $mUser->get();
+
+        return json_encode(
+            $mGoods->update_goods($goods,$user)
+        );
+    }
+
+    /**
+     * @api goods_submit(Request $request)
+     * [
+     *  'goods_id'          =>      goods_id,
      *  'goods_title'       =>      goods_title,
      *  'single_cost'       =>      single_cost,
      *  'goods_status'      =>      goods_status,
@@ -53,13 +79,16 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
      * ]
      */
     public function goods_submit($request) {
-
-        $goods = $mInput->goods($resquest);
+        $id = $request->input('goods_id');
+        if($id == null)
+            return Goods::report(false, '', 'missing id');
+        $goods = $mInput->goods($request);
+        $goods->goods_id = $id;
         $goods = $mGoods->encode($goods);
         $user = $mUser->get();
 
         return json_encode(
-            $mGoods->update($goods,$user)
+            $mGoods->update_goods($goods,$user)
         );
     }
 
@@ -79,14 +108,25 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
         else
             //
             return json_encode(
-                $mGoods->report(false, "not owner")
+                Goods::report(false, '', "not owner")
             );
     }
 
     /**
      * @api goods_edit(Request $request)
      * [
-     *  'goods_id'  =>  goods_id
+     *  'goods_id'          =>      goods_id,
+     *  'goods_title'       =>      goods_title,
+     *  'single_cost'       =>      single_cost,
+     *  'goods_status'      =>      goods_status,
+     *  'goods_type'        =>      goods_type,
+     *  'goods_remain'      =>      remain,
+     *  'goods_tags'        =>      tags,
+     *  'goods_img'         =>      goods_img,
+     *  'delevery_fee'      =>      delivery_fee,
+     *  'lv1'               =>      cl_lv_1,
+     *  'lv2'               =>      cl_lv_2,
+     *  'lv3'               =>      cl_lv_3,
      * ]
      */
     public function goods_edit($request) {
@@ -118,9 +158,8 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
      * ]
      */
     public function order_new($request) {
-        $order = $mInput->order($resquest);
-        $id = $mOrders->new($order);
-        return $mOrders->report($id);
+        $order = $mInput->order($request);
+        return $mOrders->new($order);
     }
 
     /**
