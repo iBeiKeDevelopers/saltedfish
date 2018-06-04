@@ -6,7 +6,6 @@
         <title>贝壳商城-IBuy-贝壳人的专属商城(O(∩_∩)O)</title>
     </head>
     <body>
-
         <style>
             a{color:black;text-decoration:none;}    a:hover{text-decoration:none;color:#FD9860;}
             .test{border:1px solid black;height:500px;}
@@ -77,8 +76,8 @@
                 <div class="row" style="margin-bottom:15px;">
                     <div class="col-md-3">
                         <div class="row">
-                            <div class="col-xs-4 ct"><a href="localhost:8080/login/login.php" style="color:#FD9860;">快速登录</a></div>
-                            <div class="col-xs-4 ct"><a href="localhost:8080/signin/signin.php">免费注册</a></div>
+                            <div class="col-xs-4 ct"><a href="login" style="color:#FD9860;">快速登录</a></div>
+                            <div class="col-xs-4 ct"><a href="register">免费注册</a></div>
                             <!-- <div class="col-xs-4 ct" style="padding-right:0;">手机逛商城</div> -->
                         </div>
                     </div>
@@ -218,7 +217,7 @@
                     </div>
                     <div v-if="islogin">
                         <div v-if="list.length == 0" style="text-align:center;">
-                            <img src="localhost:8080/pic/idol/idol3.png" style="width:80%;" />
+                            <img src="{{ URL::asset('pic/idol/idol3.png') }}" style="width:80%;" />
                             <div style="color:#FD9860;">
                                 <h5>吃土，是一种信仰。</h5>
                                 <h5>我们的征途是星辰大海！</h5>
@@ -249,7 +248,7 @@
                         <div class="row" style="width:186px;">
                             <div style="min-height:300px;overflow:hidden;border:1px solid #cccccc;border-radius:4px;">
                                 <div class="col-xs-12" style="text-align:center;">
-                                    <img src="localhost:8080/pic/idol/idol3.png" style="width:80%;" />
+                                    <img src="{{ URL::asset('pic/idol/idol3.png') }}" style="width:80%;" />
                                 </div>
                                 <div class="col-xs-12" style="color:#FD9860;text-align:center;">
                                     <b>登陆之后<br>世界更精彩哦！</b>
@@ -294,7 +293,7 @@
                     </div>
                     <div v-else>
                         <div class="col-xs-12" style="text-align:center;min-height:400px;">
-                            <img src="localhost:8080/pic/idol/idol3.png" style="width:22%;" />
+                            <img src="{{ URL::asset('pic/idol/idol3.png') }}" style="width:22%;" />
                             <h4>这里还没有商品哦！</h4>
                             <h5>市场很广阔，需要你来开拓！</h5>
                         </div>
@@ -338,6 +337,7 @@
             </script>
         </div>
 
+<script src="{{ URL::asset('js/vue.js') }}"></script>
         <script>
             $(document).ready(function(){
                 console.log(target);
@@ -458,8 +458,8 @@
                     template:'#left-pane',
                     methods:{
                         nav_head:function(name,isIcon,lv,isImg = false){
-                            if (isIcon==true && isImg == false) return 'localhost:8080/pic/'+ name +'.png';
-                                else if(isIcon==true && isImg == true) return 'localhost:8080/pic/image1/'+ name +'.png';
+                            if (isIcon==true && isImg == false) return "pic/"+ name +".png";
+                                else if(isIcon==true && isImg == true) return "pic/image1/"+ name +".png";
                                 else return '?category='+ name + '&level=' + lv;
                         },
                         show:function(cl1){
@@ -571,9 +571,9 @@
                         goods_list:[],
                         orders_list:[],
                         pic:[
-                            'localhost:8080/pic/image1/index_bg.png',
-                            'localhost:8080/pic/image1/chat_bg.jpg',
-                            'localhost:8080/pic/image1/摄影.png',
+                            "{{ URL::asset('pic/image1/index_bg.png') }}",
+                            "{{ URL::asset('pic/image1/chat_bg.jpg') }}",
+                            "{{ URL::asset('pic/image1/摄影.png') }}",
                         ],
                         sch_res:[],
                         total_pages:0,
