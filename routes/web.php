@@ -23,5 +23,9 @@ Route::get('home', 'UserPageController@index');
 Route::match(['get', 'post'], 'admin', 'AdminHomePageController@index');
 
 Route::post('api/home', 'HomeController@data');
+Route::post('api/get_user', 'HomeController@get_user');
+Route::post('api/goods_query', 'HomeController@goods_query');
 
-Route::post('api/user', 'UserPageController@data');
+Route::match(['get', 'post'], 'undefined', function() {
+    return "mdzz好好写前端";
+});

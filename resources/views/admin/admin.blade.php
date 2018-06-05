@@ -11,8 +11,8 @@
     
 </div>
 
-<script type="text/javascript" src="{{ URL::asset('/js/axios.min.js')}}"></script>
-<script type="text/javascript" src="{{ URL::asset('/js/vue.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/axios.min.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/vue.js')}}"></script>
 <script type="text/javascript">
     var goods = new Vue({
     el: '#show',

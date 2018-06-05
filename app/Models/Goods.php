@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Interfaces\Report;
 use App\Models\Interfaces\Searchable;
+use App\Models\Interfaces\Database;
 use App\Models\Interfaces\Selectable;
 
 //todo: try to seperate comments from goods
@@ -132,10 +133,10 @@ class Goods extends Model implements Report, Database, Searchable
     public function report($status, $data = '', $error = '') {
         return ($status) ? [
             "status"    =>      "true",
-            "data"      =>      json_encode($data),
+            "data"      =>      $data,
         ] : [
             "ststus"    =>      "false",
-            "error"     =>      "$error",
+            "error"     =>      $error,
         ];
     }
 
@@ -162,26 +163,30 @@ class Goods extends Model implements Report, Database, Searchable
 
     //interface Searchable
 
-    public function search_by($info, $arr) {
-        $page   =   $arr["page"] || 1;
-        $limit  =   $arr["limit"] || 1;
-        $start  =   ($page - 1) * $limit || 0;
+    public function search_by($info = '', $arr = []) {
+        $page   =   isset($arr["page"]) ? $arr["page"] : 1;
+        $limit  =   isset($arr["limit"])? $arr["limit"] : 1;
+        $start  =   ($page - 1) * $limit;
 
-        $user   =   $arr['user'] || '';
-        $id     =   $arr['id'] || 0;
+        $user   =   isset($arr['user']) ? $arr['user'] : '';
+        $id     =   isset($arr['id']) ? $arr['id'] : 0;
 
         if($page < 1 || $limit < 0)
             return Goods::report(false, '', "invalid request");
 
-        $level = 'cl_lv_' . $arr["level"] || '';
-        $category = urlencode($arr["category"]) || '';
+        $level = 'cl_lv_' . (isset($arr["level"]) ? $arr["level"] : '');
+        $category = isset($arr["category"]) ? urlencode($arr["category"]) : '';
 
         switch($info) {
             case "id": {
                 $res = DB::table(config('table.goods'))
                     ->where('goods_id', "$id")
                     ->get();
-                return Goods::report($res, $res, "DB error");
+                return Goods::report(
+                    $res,
+                    $this->decode_db($res),
+                    "DB error"
+                );
             }
 
             case "sale": {
@@ -190,7 +195,11 @@ class Goods extends Model implements Report, Database, Searchable
                     ->where('goods_status', 'available')
                     ->skip($start)->take($limit)
                     ->get();
-                    return Goods::report($res, $res, "no such goods");
+                    return Goods::report(
+                        $res,
+                        $this->decode_db($res),
+                        "no such goods"
+                    );
             }
 
             case "title": {
@@ -199,7 +208,11 @@ class Goods extends Model implements Report, Database, Searchable
                     ->where('goods_status', 'available')
                     ->skip($start)->take($limit)
                     ->get();
-                return Goods::report($res, $res, "no such goods");
+                    return Goods::report(
+                        $res,
+                        $this->decode_db($res),
+                        "no such goods"
+                    );
             }
 
             case "category": {
@@ -207,7 +220,11 @@ class Goods extends Model implements Report, Database, Searchable
                     ->where("$level", "$category")
                     ->skip($start)->take($limit)
                     ->get();
-                return Goods::report($res, $res, "no such goods");
+                    return Goods::report(
+                        $res,
+                        $this->decode_db($res),
+                        "no such goods"
+                    );
             }
 
             case "owner": {
@@ -215,11 +232,23 @@ class Goods extends Model implements Report, Database, Searchable
                     ->where('goods_owner', $user)
                     ->skip($start)->take($limit)
                     ->get();
-                return Goods::report($res, $res, "no such goods");
+                    return Goods::report(
+                        $res,
+                        $this->decode_db($res),
+                        "no such goods"
+                    );
             }
 
-            default:
-                return Goods::report(false, '', "invalid request");
+            default: {
+                $res = DB::table(config('table.goods'))
+                    ->skip($start)->take($limit)
+                    ->get();
+                return Goods::report(
+                    $res,
+                    $this->decode_db($res),
+                    "invalid request"
+                );
+            }
         }
     }
 }

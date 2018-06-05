@@ -15,10 +15,13 @@ class UserPageController extends Controller implements Api\Operation, Api\Order
     public function __construct()
     {
         $this->middleware('auth');
+        global $mUser;
+        global $mGoods;
+        global $mOrders;
+        global $mInput;
         $mUser      =   new User;
         $mGoods     =   new Goods;
         $mOrders    =   new Orders;
-        $mData      =   new Database;
         $mInput     =   new Input;
     }
 

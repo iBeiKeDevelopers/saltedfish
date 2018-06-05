@@ -9,7 +9,7 @@
 
 ## 2.功能（普通用户） 以 URL/ 开头
 
-### 2.1 Goods 吃的
+### 2.1 [Goods](../app/Controllers/) 吃的
 
 #### 2.1.1 goods_new 提交商品
 >返回数据：

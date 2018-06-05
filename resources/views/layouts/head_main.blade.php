@@ -1,9 +1,5 @@
 @section('head_main')
 
-<link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
-<script src="./js/jquery-latest.js"></script>
-<script src="./js/bootstrap/bootstrap.min.js"></script>
-<script src="./js/vue.js"></script>
 <style>
 	@font-face {
 		font-family: msyh;
@@ -83,7 +79,7 @@
 		},
 		methods:{
 			logout:function(){
-				$.getJSON('localhost:8080/core/api-v1.php?action=logout',function(data){
+				$.getJSON('logout',function(data){
 					console.log(data);
 					if (data.status == 'success') {
 						window.location = '/';
@@ -91,10 +87,12 @@
 				});
 			},
 		},
+		//todo:怀疑废弃
+		/*
 		created:function(){
-			$.getJSON("localhost:8080/core/api-v1.php?action=fetch_self_info",function(data){
+			$.getJSON("api/get_user",function(data){
 				if(data.status == "success"){
-					console.log(data.self_info);
+					console.log(data);
 					self_info.info = data.self_info;
 					self_info.is_login = true;
 					is_login = true;
@@ -104,6 +102,7 @@
 				}
 			});
 		},
+		*/
 	});
 </script>
 

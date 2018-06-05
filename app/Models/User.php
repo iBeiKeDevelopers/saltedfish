@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Interfaces\Database;
 
-class User extends Model implements Database
+class User extends Model
 {
     //using Auth in laravel
     //that means it is very different beyond other Models
@@ -20,8 +20,10 @@ class User extends Model implements Database
         return Auth::logout();
     }
 
-    public function get($info = 'id') {
+    public function get($info = '') {
         switch($info) {
+            case '':
+                return Auth::user();
             case 'id':
                 return Auth::user()->id;
         }

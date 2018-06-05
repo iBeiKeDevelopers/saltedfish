@@ -1,11 +1,16 @@
-@extends('layouts.head_main')
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
+        <script src="js/jquery-latest.js"></script>
+        <script src="js/bootstrap/bootstrap.min.js"></script>
+        <script src="js/axios.min.js"></script>
+        <script src="js/vue.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>贝壳商城-IBuy-贝壳人的专属商城(O(∩_∩)O)</title>
     </head>
     <body>
+        @extends('layouts.head_main')
         <style>
             a{color:black;text-decoration:none;}    a:hover{text-decoration:none;color:#FD9860;}
             .test{border:1px solid black;height:500px;}
@@ -364,36 +369,51 @@
                     ]],
                 ];
 
-                var fetch_goods = function(){
-                    $.getJSON('localhost:8080/core/api-main-goods.php',{
-                        action:"show_goods_in_main",
+                var fetch_goods = function() {
+                    axios.post('api/goods_query', {
                         rank:'new',
                         amount:12,
-                    },function(data){
-                        for (var i = 0; i < data.length; i++) {data[i] = JSON.parse(data[i]);}
-                        main_page.goods_list = data;
-                        console.log(main_page.goods_list);
-                    });
+                    }).then(function (responce) {
+                        /*for (var i = 0; i < data.length; i++) {
+                            data[i] = JSON.parse(data[i])
+                        }*/
+                        main_page.goods_list = responce.data[0]
+                        console.log("goods list:" + main_page.goods_list)
+                    })
                 };
 
-                var fetch_orders = function(){
-                    $.getJSON("localhost:8080/core/api-v1.php",{action:"list_orders",order_submitter:'self',page:"1",limit:"3"},function(data){
+                var fetch_orders = function() {
+                    axios.post("localhost:8080/core/api-v1.php", {
+                        action:"list_orders",
+                        order_submitter:'self',
+                        page:"1",
+                        limit:"3",
+                    }).then(function(data){
                         if(data.status == 'success'){
                             main_page.orders_list = data.orders;
                         }
 					})
-                };
+                }
 
                 var search_goods = function(target){
                     if(target.type=="search"){
-                        $.getJSON('localhost:8080/core/api-v1.php',{action:'search_goods_by_title',goods_title:target.search,page:target.page},function(data){
-                            if(data.status == 'success'){
+                        axios.post('localhost:8080/core/api-v1.php', {
+                            action:'search_goods_by_title',
+                            goods_title:target.search,
+                            page:target.page
+                        }).then(function(data){
+                            if(data.status == 'success') {
                                 main_page.sch_res = data.goods;
                                 main_page.total_pages = data.total;
                             }
-                        });
-                    }else if(target.type=="category"){
-                        $.getJSON('localhost:8080/core/api-v1.php',{action:'search_goods_by_category',category:target.category,level:target.level,page:target.page},function(data){
+                        })
+                    }else if(target.type=="category") {
+                        axios.post('localhost:8080/core/api-v1.php', {
+                            action:'search_goods_by_category',
+                            category:target.category,
+                            level:target.level,
+                            page:target.page
+                        }).then(function(data) {
                             if(data.status == 'success'){
                                 main_page.sch_res = data.goods;
                                 main_page.total_pages = data.total;
