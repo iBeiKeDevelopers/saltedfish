@@ -6,19 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Goods;
-use App\Models\Interfaces\Report;
-use App\Models\Interfaces\Searchable;
-use App\Models\Interfaces\Selectable;
+use App\Models\Report;
+use App\Models\Interfaces\Database;
 
-class Orders extends Model implements Report//, Searchable, Selectable
+class Orders extends Model implements Database
 {
-    //
+    private $goods;
+    private $data;
+    public function __construct() {
+        $this->goods = new Goods;
+        $this->data = new Database;
+    }
     public function new($order, $user) {
-        $data = new Database;
         $res = $data->select('salted_fish_goods', $order->goods_id);
         
         if($res == null)
-            return Orders::report(false, '', "no uch goods");
+            return Report::report(false, '', "no uch goods");
 
         if($res->remain < $order->purchase_amount)
 
@@ -111,16 +114,6 @@ class Orders extends Model implements Report//, Searchable, Selectable
                 "remain" => "$amount"
             ]);
         }
-    }
-
-    public function report($status, $error = '') {
-        return ($status) ? [
-            "status"    =>      "true",
-            "error"     =>      "",
-        ] : [
-            "ststus"    =>      "false",
-            "error"     =>      "$error",
-        ];
     }
 
     public function update_db($id, $arr) {

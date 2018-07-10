@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Interfaces\Report;
-use App\Models\Interfaces\Searchable;
 use App\Models\Interfaces\Database;
-use App\Models\Interfaces\Selectable;
 
 //todo: try to seperate comments from goods
 
-class Goods extends Model implements Report, Database, Searchable
+class Goods extends Model implements Database
 {
     //
 
@@ -20,7 +18,10 @@ class Goods extends Model implements Report, Database, Searchable
         //decode from db
         $len = count($arr);
         if($len == 0)
-            return Goods::report(false, '', "500 error");
+            return Goods::report(false, '', [
+                'code'  =>  500,
+                'message' =>  "nothing to decode",
+            ]);
 
         for($i = 0; $i < $len; $i++) {
             $res[$i] = $arr[$i];
@@ -135,7 +136,7 @@ class Goods extends Model implements Report, Database, Searchable
             "status"    =>      "true",
             "data"      =>      $data,
         ] : [
-            "ststus"    =>      "false",
+            "status"    =>      "false",
             "error"     =>      $error,
         ];
     }
@@ -244,9 +245,12 @@ class Goods extends Model implements Report, Database, Searchable
                     ->skip($start)->take($limit)
                     ->get();
                 return Goods::report(
-                    $res,
+                    ($res==null),
                     $this->decode_db($res),
-                    "invalid request"
+                    [
+                        "code" => 404,
+                        "message" => "no such goods",
+                    ]
                 );
             }
         }

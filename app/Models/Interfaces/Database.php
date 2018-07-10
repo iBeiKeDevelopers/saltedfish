@@ -3,7 +3,9 @@
 namespace App\Models\Interfaces;
 
 interface Database {
-    public function get($id, $info = '');
-    public function update_db($id, $arr);
-    public function delete_db($id);
+    function get($id, $info = '');
+    function update_db($id, $arr);
+    function delete_db($id);
+
+    function search_by();
 }

@@ -7,20 +7,20 @@
 - 管理员
 ---
 
-## 2.功能（普通用户） 以 URL/ 开头
+## 2.功能（[普通用户](../app/Http/Controllers/UserPageController.php)） 以 URL/ 开头
 
-### 2.1 [Goods](../app/Controllers/) 吃的
+### 2.1 Goods 吃的
 
 #### 2.1.1 goods_new 提交商品
 >返回数据：
->```
+>```php
 >[
 >   'goods_id'          =>      goods_id,
 >]
 >```
 >
 >POST 数据格式：
->```
+>```php
 >[
 >   'goods_title'       =>      goods_title,
 >   'single_cost'       =>      single_cost,
@@ -40,14 +40,14 @@
 #### 2.1.2 goods_submit 修改商品信息
 >
 >返回数据：
->```
+>```php
 >[
 >   'goods_id'          =>      goods_id,
 >]
 >```
 >
 >POST 数据格式：
->```
+>```php
 >[
 >   'goods_id'          =>      goods_id,
 >   'goods_title'       =>      goods_title,
@@ -167,14 +167,14 @@
 >```
 >
 >POST 数据格式：
->```
+>```aaa
 >[
 >   'order_id'          =>      order_id, 
 >]
 >```
 ---
 
-## 3.功能(管理员) 以 URL/admin/ 开头
+## 3.功能([管理员](../app/Http/Controllers/AdminHomePageController.php)) 以 URL/admin/ 开头
 ---
 
 ## 4.返回数据格式 (json)

@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
-interface Message
+use Illuminate\Http\Request;
+
+class Message extends Controller
 {
     //
-    public function send();
-    public function fetch();
-    public function count();
+    public function send() {
+
+    }
+    
+    public function fetch() {
+
+    }
+
+    public function count() {
+
+    }
 }

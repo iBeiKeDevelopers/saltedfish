@@ -1,6 +1,7 @@
 <?php
 return [
-    'goods'     =>  'salted_fish_goods',
+    'users'     =>  'users',
+    'goods'     =>  'goods',
     'users'     =>  'salted_fish_users',
     'orders'    =>  'orders',
 ];

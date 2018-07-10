@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Interfaces\Database;
 
-class User extends Model
+class Users extends Model
 {
     //using Auth in laravel
-    //that means it is very different beyond other Models
+    
     public function ckeck() {
         return Auth::check();
     }
@@ -27,6 +27,17 @@ class User extends Model
             case 'id':
                 return Auth::user()->id;
         }
+    }
+
+    //interface Report
+    public function report($status, $data = '', $error = '') {
+        return ($status) ? [
+            "status"    =>      "true",
+            "data"      =>      $data,
+        ] : [
+            "status"    =>      "false",
+            "error"     =>      $error,
+        ];
     }
 
     //obligate interfaces

@@ -8,7 +8,7 @@ use Auth;
 
 use App\Http\Controllers\Api\Info;
 
-use App\Models\User;
+use App\Models\Users;
 use App\Models\Goods;
 
 class HomeController extends Controller
@@ -63,6 +63,16 @@ class HomeController extends Controller
      */
     public function get_user() {
         global $mUser;
-        return $mUser->get();
+        $user_info = $mUser->get();
+        return json_encode(
+            $mUser->report(
+                ($user_info != null),
+                $user_info,
+                [
+                    "code" => "404",
+                    "message" => "without login",
+                ]
+            )
+        );
     }
 }

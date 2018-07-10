@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
-interface Operation
+use Illuminate\Http\Request;
+
+class Operation extends Controller
 {
     //goods info update
-    public function goods_submit($request);
-    public function goods_revoke($request);
-    public function goods_edit($request);
+    public function goods_submit(Request $request) {
+
+    }
+
+    public function goods_revoke(Request $request) {
+
+    }
+
+    public function goods_edit(Request $request) {
+
+    }
 }

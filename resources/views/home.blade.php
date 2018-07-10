@@ -1,16 +1,10 @@
+@extends('layouts.head_main')
 <html>
     <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
-        <script src="js/jquery-latest.js"></script>
-        <script src="js/bootstrap/bootstrap.min.js"></script>
-        <script src="js/axios.min.js"></script>
-        <script src="js/vue.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>贝壳商城-IBuy-贝壳人的专属商城(O(∩_∩)O)</title>
     </head>
     <body>
-        @extends('layouts.head_main')
         <style>
             a{color:black;text-decoration:none;}    a:hover{text-decoration:none;color:#FD9860;}
             .test{border:1px solid black;height:500px;}

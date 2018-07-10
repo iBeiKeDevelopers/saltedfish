@@ -2,12 +2,28 @@
 
 namespace App\Http\Controllers\API;
 
-interface Order
+use Illuminate\Http\Request;
+
+class Order extends Controller
 {
     //
-    public function order_new($request);
-    public function order_cancel($request);
-    public function order_accept($request);
-    public function order_complete($request);
-    public function order_finish($request);
+    public function order_new(Request $request) {
+
+    }
+    
+    public function order_cancel(Request $request) {
+
+    }
+    
+    public function order_accept(Request $request) {
+
+    }
+    
+    public function order_complete(Request $request) {
+
+    }
+
+    public function order_finish(Request $request) {
+
+    }
 }

@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-interface Search
+class Search extends Controller
 {
     //
-    public function search_goods_by_title();
-    public function search_goods_by_category();
+    public function search_goods_by_title() {
+
+    }
+
+    public function search_goods_by_category() {
+
+    }
 }

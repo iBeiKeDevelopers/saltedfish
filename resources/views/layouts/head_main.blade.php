@@ -1,5 +1,9 @@
 @section('head_main')
-
+<link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
+<script src="js/jquery-latest.js"></script>
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="js/axios.min.js"></script>
+<script src="js/vue.js"></script>
 <style>
 	@font-face {
 		font-family: msyh;
@@ -34,8 +38,8 @@
 	<div class="collapse navbar-collapse" id="navi-item">
 		<ul class="nav navbar-nav">
 			<li><a href="/">商城</a></li>
-			<li v-if="is_login"><a href="./users/index.php">个人中心</a></li>
-			<li v-if="is_login"><a @click="logout">注销</a></li>
+			<li v-if="is_login"><a href="home">个人中心</a></li>
+			<li v-if="is_login"><a href="logout">注销</a></li>
 		</ul>
 		<ul v-if="!is_login" class="nav navbar-nav navbar-right">
 			<li><a href="login">登陆</a></li>
@@ -77,23 +81,13 @@
 		computed:{
 			bg:function(){return bg_ch(this.info.header);},
 		},
-		methods:{
-			logout:function(){
-				$.getJSON('logout',function(data){
-					console.log(data);
-					if (data.status == 'success') {
-						window.location = '/';
-					}
-				});
-			},
-		},
-		//todo:怀疑废弃
-		/*
 		created:function(){
-			$.getJSON("api/get_user",function(data){
-				if(data.status == "success"){
-					console.log(data);
-					self_info.info = data.self_info;
+			axios.get("api/get_user")
+			.then(function(responce) {
+				console.log(responce.data)
+				data = responce.data
+				if(data.status == "true"){
+					self_info.info = data.data;
 					self_info.is_login = true;
 					is_login = true;
 				}else{
@@ -102,7 +96,6 @@
 				}
 			});
 		},
-		*/
 	});
 </script>
 
