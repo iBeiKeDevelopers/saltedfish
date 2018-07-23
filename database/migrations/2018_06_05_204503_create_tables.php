@@ -15,17 +15,17 @@ class CreateTables extends Migration
     {
         //users
         Schema::create('users', function(Blueprint $table) {
-            $table->increments('id');
-            $table->char('account_number', 16)->nullable();
+            //$table->increments('id');
+            //$table->char('account_number')->nullable();
             //from Auth in laravel
-            $table->char('name', 32);
-            $table->string('email', 128);
+            //$table->char('name');
+            //$table->string('email');
             
-            $table->char('password', 64);
+            //$table->char('password');
             $table->text('info')->nullable();
-            $table->char('info_hash', 64)->nullable();
-            $table->string('account_header', 64)->nullable();
-            $table->char('bbs_id', 32)->nullable();
+            $table->char('info_hash')->nullable();
+            $table->string('account_header')->nullable();
+            $table->char('bbs_id')->nullable();
 
             $table->timestamps();
             $table->rememberToken();
@@ -66,7 +66,7 @@ class CreateTables extends Migration
     public function down()
     {
         //
-        Schema::drop('users');
-        Schema::drop('goods');
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('goods');
     }
 }

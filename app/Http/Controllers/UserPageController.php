@@ -4,30 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\User;
-use App\Models\Goods;
-use App\Models\Orders;
-use App\Models\Input;
-
-class UserPageController extends Controller implements Api\Operation, Api\Order
+class UserPageController extends Controller
 {
     //
     public function __construct()
     {
         $this->middleware('auth');
-
-        global $mUser;
-        global $mGoods;
-        global $mOrders;
-        global $mInput;
-        $mUser      =   new User;
-        $mGoods     =   new Goods;
-        $mOrders    =   new Orders;
-        $mInput     =   new Input;
     }
 
     public function index(Request $request) {
-        return view("user");
+        return "UserPage";
+        //return view("user");
     }
 
     //goods

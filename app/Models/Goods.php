@@ -10,9 +10,10 @@ use App\Models\Interfaces\Database;
 
 //todo: try to seperate comments from goods
 
-class Goods extends Model implements Database
+class Goods extends Data
 {
     //
+    protected $table = 'goods';
 
     public function decode_db($arr) {
         //decode from db
@@ -161,8 +162,6 @@ class Goods extends Model implements Database
             ->where('goods_id', "$id")->delete();
         return Goods::report($res, '', "DB error");
     }
-
-    //interface Searchable
 
     public function search_by($info = '', $arr = []) {
         $page   =   isset($arr["page"]) ? $arr["page"] : 1;

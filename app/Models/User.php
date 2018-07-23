@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Interfaces\Database;
 
-class Users extends Model
+class User extends Model
 {
     //using Auth in laravel
     
@@ -26,6 +26,8 @@ class Users extends Model
                 return Auth::user();
             case 'id':
                 return Auth::user()->id;
+            case 'group':
+                return Auth::user()->group;
         }
     }
 

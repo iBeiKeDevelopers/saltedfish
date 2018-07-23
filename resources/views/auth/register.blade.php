@@ -12,14 +12,14 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                            <label for="nick_name" class="col-md-4 col-form-label text-md-right">{{ __('Nick Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="nick_name" type="text" class="form-control{{ $errors->has('nick_name') ? ' is-invalid' : '' }}" name="nick_name" value="{{ old('nick_name') }}" required autofocus>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('nick_name'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('nick name') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -34,6 +34,20 @@
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback">
                                         <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="stucent_id" class="col-md-4 col-form-label text-md-right">{{ __('Student id') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="student_id" type="text" class="form-control{{ $errors->has('student_id') ? ' is-invalid' : '' }}" name="student_id" value="{{ old('student_id') }}" required autofocus>
+
+                                @if ($errors->has('student_id'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('student_id') }}</strong>
                                     </span>
                                 @endif
                             </div>

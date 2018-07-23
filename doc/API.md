@@ -5,9 +5,9 @@
 ### 1.1 Auth
 
 ```javascript
-api/login
-api/logout
-api/forget
+login
+logout
+password/reset
 ```
 
 ### 1.2 Info

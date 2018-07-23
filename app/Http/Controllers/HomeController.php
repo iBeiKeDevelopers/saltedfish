@@ -8,44 +8,32 @@ use Auth;
 
 use App\Http\Controllers\Api\Info;
 
-use App\Models\Users;
-use App\Models\Goods;
+use App\Models\Users as UserModel;
+use App\Models\Goods as GoodModel;
 
 class HomeController extends Controller
 {
     //
+    private $mUser;
+    private $mGoods;
+    
     public function __construct()
     {
         //$this->middleware('auth');
-        global $mUser;
-        global $mGoods;
-        $mUser = new User;
-        $mGoods = new Goods;
+        $mUser = new UserModel;
+        $mGoods = new GoodModel;
     }
 
     public function index()
     {
-        if($this->isAdmin())
-            return view('admin');
-        else
-            return view('home');
-    }
-
-    private function isAdmin() {
-        return false;
+        return "HomePage";
+        //return view('home');
     }
 
     //goods
 
-    /**
-     * @api goods_show(Request $request)
-     * [
-     *  'rank'              =>      rank,
-     *  'amount'            =>      amount,
-     * ]
-     */
     public function goods_query(Request $request) {
-        global $mGoods;
+         $mGoods;
         $rank = $request->input('rank');
         $limit = $request->input('amount');
         return json_encode(
@@ -58,11 +46,8 @@ class HomeController extends Controller
 
     //user
 
-    /**
-     * @api get_user()
-     */
     public function get_user() {
-        global $mUser;
+         $mUser;
         $user_info = $mUser->get();
         return json_encode(
             $mUser->report(
