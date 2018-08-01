@@ -53,11 +53,10 @@ Route::post('comment/submit', 'Api\Operation@comment');
 //todo not tested yet
 /**
  * @param \App\Enum PictureType
- * @param integer userProfile
- * @param integer goodsProfile
+ * @param string
+ * userProfile | goodsProfile
  */
-Route::post('pic/upload/{type?}', 'PictureUploadController@picture_upload')
-    ->where('type', '');
+Route::post('pic/upload/{type?}', 'PictureUploadController@picture_upload');
 Route::post('pic/update', 'PictureUploadController@picture_upadate');
 
 Route::get('test', function () {

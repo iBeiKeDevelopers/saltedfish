@@ -18,7 +18,7 @@ class Picture extends Data
             return null;
     }
 
-    public function get_path($pic, $type = 'user_profile') {
+    public function get_path($pic, $type = 'userProfile') {
         $type = new PictureType($type);
         switch($type) {
             case PictureType::goodsProfile:

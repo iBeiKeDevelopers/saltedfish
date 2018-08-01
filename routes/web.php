@@ -12,9 +12,7 @@
 */
 Auth::routes();
 
-Route::get('now', function() {
-    return date("Y-m-d H:i:s");
-});
+Route::get('test', 'TestController@index');
 
 Route::get('/', 'HomeController@index');
 Route::get('home', 'UserPageController@index');

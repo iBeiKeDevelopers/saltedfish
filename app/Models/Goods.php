@@ -25,17 +25,9 @@ class Goods extends Data
             ]);
 
         for($i = 0; $i < $len; $i++) {
-            $res[$i] = $arr[$i];
-            
-            $res[$i]->goods_title       =       urldecode($res[$i]->goods_title);
-            $res[$i]->single_cost       =       urldecode($res[$i]->single_cost);
-            $res[$i]->goods_info        =       urldecode($res[$i]->goods_info);
-            $res[$i]->search_summary    =       urldecode($res[$i]->search_summary);
-            $res[$i]->comments          =       urldecode($res[$i]->comments);
-            $res[$i]->goods_img         =       urldecode($res[$i]->goods_img);
-            $res[$i]->cl_lv_1           =       urldecode($res[$i]->cl_lv_1);
-            $res[$i]->cl_lv_2           =       urldecode($res[$i]->cl_lv_2);
-            $res[$i]->cl_lv_3           =       urldecode($res[$i]->cl_lv_3);
+            $res = get_object_vars($arr[$i]);
+            foreach($res as $r)
+                $r = urldecode($r);
         }
         return $res;
     }
@@ -129,17 +121,6 @@ class Goods extends Data
 
     public function remove($id, $user) { //删除商品
 
-    }
-
-    //interface Report
-    public function report($status, $data = '', $error = '') {
-        return ($status) ? [
-            "status"    =>      "true",
-            "data"      =>      $data,
-        ] : [
-            "status"    =>      "false",
-            "error"     =>      $error,
-        ];
     }
 
     //interface Database

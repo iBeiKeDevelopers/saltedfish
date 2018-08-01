@@ -19,19 +19,29 @@ class Operation
 
     public function __construct() {
         $this->goods = new GoodsModel;
+        $this->orders = new OrderModel;
+        $this->$user = new UserModel;
     }
+
     /**
-     * submit goods and return an id
      * @api
-     * 
+     * submit goods and return an id
      * @param Illuminate\Http\Request $request
-     * @return integer
+     * @return integer id
      */
     public function goods_submit(Request $request) {
         $input = new InputController;
         $arr = $input->get_from($request,'Goods');
         return GoodsModel::insertGetId($arr);
     }
+
+    /**
+     * @api
+     * privillage admin required
+     * revoke and make the goods in status of 404
+     * @param integer id
+     * @return 
+     */
     public function goods_revoke(Request $request) {
         $id = $request->input('id');
         return GoodsModel::destroy($id);
