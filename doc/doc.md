@@ -1,4 +1,4 @@
-# ShangShou Document
+# ShangShou JiaoXue
 
 This is the document of the basic operations of a user.
 
@@ -28,6 +28,8 @@ This is the document of the basic operations of a user.
 
 ### [3.4 revoke a good](course/goods_revoke.md)
 
+### [3.5 accept an order](course/order_accept.md)
+
 ## 4 Buy a good
 
-### [4.1 ]()
+### [4.1 make an order](course/order.md)
