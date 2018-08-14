@@ -12,18 +12,19 @@
 */
 Auth::routes();
 
-Route::get('test', 'TestController@index');
-
 Route::get('/', 'HomeController@index');
 Route::get('home', 'UserPageController@index');
-Route::match(['get', 'post'], 'admin', 'AdminHomePageController@index');
 
 Route::middleware('auth:api')->get('logout', function (Request $request) {
     Auth::logout();
     return redirect('login');
 });
 
-// error
-Route::match(['get', 'post'], 'undefined', function() {
-    return "mdzz好好写前端";
-});
+
+Route::resource('picture','Resource\PictureController', ['except'  =>  [
+    'edit'
+],]);
+
+Route::resource('goods', 'Resource\GoodsController');
+
+Route::resource('order', 'Resource\OrderController');

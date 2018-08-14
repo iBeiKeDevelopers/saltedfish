@@ -36,6 +36,7 @@ class CreateGoodsTable extends Migration
             $table->integer('heat')->default(0);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

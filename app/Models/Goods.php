@@ -3,18 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-
-use App\Models\Interfaces\Report;
-use App\Models\Interfaces\Database;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 //todo: try to seperate comments from goods
 
 class Goods extends Data
 {
     //
+    use SoftDeletes;
     protected $table = 'goods';
 
+    protected $dates = ['deleted_at'];
+
+    /**
+     * decode a goods list from db
+     * @param stdclass
+     * @return array
+     */
     public function decode_db($arr) {
         //decode from db
         $len = count($arr);
@@ -24,18 +29,26 @@ class Goods extends Data
                 'message' =>  "nothing to decode",
             ]);
 
-        for($i = 0; $i < $len; $i++) {
-            $res = get_object_vars($arr[$i]);
+        foreach($arr as $a) {
+            $res = get_object_vars($a);
             foreach($res as $r)
                 $r = urldecode($r);
         }
         return $res;
     }
 
+    /**
+     * encode a gods list to db: array
+     * @param array
+     * @return array
+     */
     public function encode_db($arr) {
-        //encode to db
         $len = count($arr);
-        if($len == 0) return null;
+        if($len == 0)
+            return Goods::report(false, '', [
+                'code'  =>  500,
+                'message' =>  "nothing to encode",
+            ]);
 
         for($i = 0; $i < $len; $i++) {
             $res[$i] = $arr[$i];
@@ -46,17 +59,6 @@ class Goods extends Data
                 $goods_tags_str = $goods_tags_str." ".$tag;
             }
             $res->goods_tags = $goods_tags_str;
-            
-            $res[$i]->goods_title       =       urlencode($res[$i]->goods_title);
-            $res[$i]->single_cost       =       urlencode($res[$i]->single_cost);
-            $res[$i]->search_summary    =       urlencode(mb_substr($res->goods_info,0,100,"utf-8").";".$goods_type.";".$goods_title.";".$lv1.";".$lv2.";".$lv3.";".$goods_tags_str);
-            $res[$i]->goods_info        =       urlencode($res[$i]->goods_info);
-            $res[$i]->comments          =       urlencode($res[$i]->comments);
-            $res[$i]->goods_img         =       urlencode($res[$i]->goods_img);
-            $res[$i]->cl_lv_1           =       urlencode($res[$i]->cl_lv_1);
-            $res[$i]->cl_lv_2           =       urlencode($res[$i]->cl_lv_2);
-            $res[$i]->cl_lv_3           =       urlencode($res[$i]->cl_lv_3);
-
             if ($res->remain == 0)
 		        $res->status = "soldout";
         }
@@ -83,26 +85,6 @@ class Goods extends Data
         }
     }
 
-    public function comment($id, $comment) { //评论商品
-		$comment_ele = array(
-			'commenter'     =>      $commenter,
-			'comment_date'  =>      Date("Y-m-d"),
-			'comment'       =>      urlencode($comment),
-        );
-        $res = qurey($id);
-        if($res == null) return "No such goods";
-
-        $old_comment = json_decode($res->comments);
-		array_unshift($old_comment, $comment_ele);
-		$updated_comment = json_encode($old_comment);
-        $status = DB::table(config('tables.goods'))
-            ->where('goods_id', "$goods_id")
-            ->update([
-                'comments' => "$updated_comment"
-            ]);
-        return Goods::report($status, '', 'DB error');
-    }
-
     public function revoke($id, $user) {
         $res = select(config('tables.goods'), $id);
         if($res == null)
@@ -117,122 +99,5 @@ class Goods extends Data
                     'goods_status' => 'unavailable'
                 ]);
         return Goods::report(true, '', '');
-    }
-
-    public function remove($id, $user) { //删除商品
-
-    }
-
-    //interface Database
-    public function get($id, $info = '') {
-        $res = DB::table(config('table.goods'))->where('id', $id)->get();
-        if($info = '')
-            return $res;
-        else
-            return $res[$info];
-    }
-
-    public function update_db($id, $arr) {
-        $res = DB::table(config('tables.goods'))
-            ->where('goods_id', "$id")->update($arr);
-        return Goods::report($res, '', "DB error");
-    }
-
-    public function delete_db($id) {
-        $res = DB::table(config('table.goods'))
-            ->where('goods_id', "$id")->delete();
-        return Goods::report($res, '', "DB error");
-    }
-
-    public function search_by($info = '', $arr = []) {
-        $page   =   isset($arr["page"]) ? $arr["page"] : 1;
-        $limit  =   isset($arr["limit"])? $arr["limit"] : 1;
-        $start  =   ($page - 1) * $limit;
-
-        $user   =   isset($arr['user']) ? $arr['user'] : '';
-        $id     =   isset($arr['id']) ? $arr['id'] : 0;
-
-        if($page < 1 || $limit < 0)
-            return Goods::report(false, '', "invalid request");
-
-        $level = 'cl_lv_' . (isset($arr["level"]) ? $arr["level"] : '');
-        $category = isset($arr["category"]) ? urlencode($arr["category"]) : '';
-
-        switch($info) {
-            case "id": {
-                $res = DB::table(config('table.goods'))
-                    ->where('goods_id', "$id")
-                    ->get();
-                return Goods::report(
-                    $res,
-                    $this->decode_db($res),
-                    "DB error"
-                );
-            }
-
-            case "sale": {
-                $res = DB::table(config('table.goods'))
-                    ->where('goods_owner', $user)
-                    ->where('goods_status', 'available')
-                    ->skip($start)->take($limit)
-                    ->get();
-                    return Goods::report(
-                        $res,
-                        $this->decode_db($res),
-                        "no such goods"
-                    );
-            }
-
-            case "title": {
-                $res = DB::table(config('table.goods'))
-                    ->where('goods_title', 'LIKE', "'%$title%'")
-                    ->where('goods_status', 'available')
-                    ->skip($start)->take($limit)
-                    ->get();
-                    return Goods::report(
-                        $res,
-                        $this->decode_db($res),
-                        "no such goods"
-                    );
-            }
-
-            case "category": {
-                $res = DB::table(config('table.goods'))
-                    ->where("$level", "$category")
-                    ->skip($start)->take($limit)
-                    ->get();
-                    return Goods::report(
-                        $res,
-                        $this->decode_db($res),
-                        "no such goods"
-                    );
-            }
-
-            case "owner": {
-                $res = DB::table(config('table.goods'))
-                    ->where('goods_owner', $user)
-                    ->skip($start)->take($limit)
-                    ->get();
-                    return Goods::report(
-                        $res,
-                        $this->decode_db($res),
-                        "no such goods"
-                    );
-            }
-
-            default: {
-                $res = DB::table(config('table.goods'))
-                    ->skip($start)->take($limit)
-                    ->get();
-                return Goods::report(
-                    ($res==null),
-                    $this->decode_db($res),
-                    [
-                        "code" => 404,
-                        "message" => "no such goods",
-                    ]
-                );
-            }
-        }
     }
 }

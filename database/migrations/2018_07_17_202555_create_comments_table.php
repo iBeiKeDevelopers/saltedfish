@@ -20,7 +20,6 @@ class CreateCommentsTable extends Migration
             $table->integer('after')->default(0);
             $table->integer('user');
             $table->string('user_name');
-            //todoooooooooooooooo oooo oooo oo o
             $table->string('avatar_path')->nullable();
             $table->text('content');
             $table->timestamps();
