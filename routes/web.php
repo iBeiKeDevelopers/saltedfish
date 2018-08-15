@@ -12,19 +12,16 @@
 */
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
-Route::get('home', 'UserPageController@index');
-
-Route::middleware('auth:api')->get('logout', function (Request $request) {
+Route::middleware('auth:api')->get('logout', function () {
     Auth::logout();
     return redirect('login');
 });
 
+Route::get('/', 'HomeController@index');
+Route::get('home', 'UserPageController@index');
 
 Route::resource('picture','Resource\PictureController', ['except'  =>  [
     'edit'
 ],]);
-
 Route::resource('goods', 'Resource\GoodsController');
-
 Route::resource('order', 'Resource\OrderController');

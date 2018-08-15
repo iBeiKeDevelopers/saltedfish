@@ -15,6 +15,8 @@ class GoodsOwner
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if(true)
+            return $next($request);
+        else return false;
     }
 }

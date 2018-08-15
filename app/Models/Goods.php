@@ -9,11 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Goods extends Data
 {
-    //
     use SoftDeletes;
-    protected $table = 'goods';
 
-    protected $dates = ['deleted_at'];
+    protected $table = 'goods';
 
     /**
      * decode a goods list from db
@@ -63,41 +61,5 @@ class Goods extends Data
 		        $res->status = "soldout";
         }
         return $res;
-    }
-
-    public function update_goods($goods, $user) { //更新商品信息 && 提交商品
-        //before db,after json
-        $now = date("Y/m/d");
-        $goods->last_modified = $now;
-        if($goods->goods_id == null) { //new
-            $goods->ttm = $now;
-            $res = DB::table(config('tables.goods'))->insertGetId($goods);
-            return Goods::report($res, $res, 'DB error');
-        }else { //update
-            $id = $this->getOwner($goods->goods_id);
-            if($id == $user) {
-                //
-                $res = DB::table(config('tables.goods'))->where('goods_id', "$id")->update($goods);
-                return Goods::report($res, '', "DB error");
-            }else {
-                Goods::report(false, '', "not owner");
-            }
-        }
-    }
-
-    public function revoke($id, $user) {
-        $res = select(config('tables.goods'), $id);
-        if($res == null)
-            return Goods::report(false, '', "No such goods");
-
-        if(intval($res->goods_owner) != $user)
-            return Goods::report(false, '', "access denied");
-        else
-            DB::table(config('tables.goods'))
-                ->where('goods_id', $id)
-                ->update([
-                    'goods_status' => 'unavailable'
-                ]);
-        return Goods::report(true, '', '');
     }
 }

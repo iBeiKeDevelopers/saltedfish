@@ -25,17 +25,17 @@ Route::middleware('auth:api')->get('user', function (Request $request) {
 Route::get('user/info/{user}', function (App\User $user) {
     return $user;
 });
-Route::get('list/goods/page/{page}/{num?}', function (App\Goods $goods) {
-    return $goods->list($page, $num);
-})
-    ->where('page', '[0-9]+')
-    ->where('num', '[0-9]+');
-Route::get('list/order/page/{page}/{num?}')
-    ->where('page', '[0-9]+')
-    ->where('num', '[0-9]+');
 
 Route::apiResource('picture','API\PictureController', ['except'  =>  [
     'index',
 ],]);
-Route::apiResource('goods', 'API\GoodsController');
-Route::apiResource('order', 'API\OrderController');
+
+Route::get('goods/list', 'API\GoodsController@list');
+Route::apiResource('goods', 'API\GoodsController', ['except' => [
+    'store',
+],]);
+
+Route::get('order/list', 'API\OrderController@list');
+Route::apiResource('order', 'API\OrderController', ['except' => [
+    'store',
+]]);

@@ -10,7 +10,7 @@ class GoodsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @api
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -23,22 +23,31 @@ class GoodsController extends Controller
     }
 
     /**
+     * list goods of the same owner
+     * @api
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        $uid = $request->input('uid');
+        return Goods::where('owner', $uid)->get();
+    }
+
+    /**
      * Store a newly created resource in storage.
-     *
+     * @api
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->middleware('Auth');
-
-        $arr = $request->input();
-        Goods::create($arr);
+        //
     }
 
     /**
      * Display the specified resource.
-     *
+     * @api
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -49,21 +58,21 @@ class GoodsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * @api
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $this->middleware('Owner');
+        $this->middleware('GoodsOwner');
         $arr = $request->input();
         Goods::where('id', $id)->update();
     }
 
     /**
      * Remove the specified resource from storage.
-     *
+     * @api
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

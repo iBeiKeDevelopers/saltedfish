@@ -28,7 +28,6 @@ class CreateGoodsTable extends Migration
             $table->string('fee');
             //$table->text('search_summary')->nullable();
             $table->text('info')->nullable();
-            //$table->text('comments')->nullable();
             $table->string('tags')->nullable();
             $table->string('cl_lv_1')->nullable();
             $table->string('cl_lv_2')->nullable();

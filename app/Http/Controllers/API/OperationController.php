@@ -4,14 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-use App\Http\Controllers\InputController;
-
-use App\Models\Goods as GoodsModel;
-use App\Models\Orders as OrderModel;
-use App\Models\User as UserModel;
-
-class Operation
+class OperationController extends Controller
 {
     private $goods;
     private $orders;

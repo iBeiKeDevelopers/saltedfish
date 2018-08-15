@@ -21,12 +21,8 @@ class GoodsTableSeeder extends Seeder
             'single_cost'   =>      str_random(4),
             'remain'        =>      random_int(20,100),
             'owner'         =>      str_random(),
-            //'ttm'           =>      now(),
             'delivery_fee'  =>      str_random(4),
             'info'          =>      str_random(10),
-            //'comments'      =>     
-            //'tags'
-            //'cl'
         ]);
     }
 }

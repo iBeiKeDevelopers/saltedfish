@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\OrderType;
+use App\Models\Orders;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +16,23 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $page = $request->input('page', 1);
+        $num = $request->input('num', 12);
+        $page = ($page - 1) * $num;
+        return Orders::skip($page)->take($num)->get();
+    }
+
+    /**
+     * list orders of the same user
+     * @api
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        $uid = $request->input('uid');
+        $type = $request->input('type');
+        return Orders::where(OrderType($type), $uid)->get();
     }
 
     /**
