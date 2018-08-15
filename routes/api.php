@@ -35,7 +35,6 @@ Route::apiResource('goods', 'API\GoodsController', ['except' => [
     'store',
 ],]);
 
-Route::get('order/list', 'API\OrderController@list');
 Route::apiResource('order', 'API\OrderController', ['except' => [
-    'store',
+    'index', 'store',
 ]]);

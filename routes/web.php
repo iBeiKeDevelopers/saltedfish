@@ -12,6 +12,10 @@
 */
 Auth::routes();
 
+Route::get('user/info', function () {
+    return Auth::user();
+});
+
 Route::middleware('auth:api')->get('logout', function () {
     Auth::logout();
     return redirect('login');

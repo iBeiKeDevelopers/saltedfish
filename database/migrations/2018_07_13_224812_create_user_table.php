@@ -16,7 +16,7 @@ class CreateUserTable extends Migration
         Schema::dropIfExists('users');
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nick_name')->unique()->nullable();
+            $table->string('nick_name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
 
