@@ -11,8 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-        for($i = 0; $i < 50; $i++) {
+        for($i = 0; $i < 200; $i++) {
             $this->call(GoodsTableSeeder::class);
         }
 
@@ -20,8 +19,8 @@ class DatabaseSeeder extends Seeder
             $this->call(OrderTableSeeder::class);
         }
 
-        for($i = 0; $i < 50; $i++) {
-            $this->call(CommentTableSeeder::class);
+        for($i = 0; $i < 100; $i++) {
+            $this->call(UserTableSeeder::class);
         }
     }
 }

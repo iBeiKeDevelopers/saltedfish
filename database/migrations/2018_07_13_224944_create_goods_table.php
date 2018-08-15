@@ -13,29 +13,50 @@ class CreateGoodsTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('goods');
-        Schema::create('goods', function (Blueprint $table) {
+        Schema::create('goods_common', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('title');
-            $table->string('img');
-            $table->integer('status');
+            $table->string('owner');
             $table->integer('type');
-            $table->char('single_cost');
+            $table->integer('status');
+            $table->float('cost');
+            $table->float('fee');
             $table->integer('remain');
-            $table->char('owner');
-            //$table->dateTime('ttm')->nullable();
-            $table->string('fee');
-            //$table->text('search_summary')->nullable();
-            $table->text('info')->nullable();
-            $table->string('tags')->nullable();
-            $table->string('cl_lv_1')->nullable();
-            $table->string('cl_lv_2')->nullable();
-            $table->string('cl_lv_3')->nullable();
-            $table->integer('heat')->default(0);
+            $table->text('description');
+            $table->string('category');
 
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::create('goods_image', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->integer('gid');
+            $table->string('src');
+        });
+
+        Schema::create('goods_comments', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->integer('gid');
+            $table->integer('uid');
+            $table->string('uname');
+            $table->string('avatar');
+            $table->text('content');
+        });
+
+        Schema::create('goods_tags', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('heat')->default(0);
+        });
+
+        Schema::create('goods_browse', function (Blueprint $table) {
+            $table->integer('id');
+            $table->integer('heat');
+            $table->integer('view');
         });
     }
 
@@ -46,6 +67,10 @@ class CreateGoodsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goods');
+        Schema::dropIfExists('goods_common');
+        Schema::dropIfExists('goods_image');
+        Schema::dropIfExists('goods_comments');
+        Schema::dropIfExists('goods_tags');
+        Schema::dropIfExists('goods_browse');
     }
 }

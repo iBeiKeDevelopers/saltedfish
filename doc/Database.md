@@ -27,7 +27,11 @@
 
 ```php
 [
-
+    'id'            =>          integer(unique),
+    'college'       =>          string,
+    'domitory'      =>          integer,
+    'room'          =>          integer,
+    'phone'         =>          string,
 ]
 ```
 
@@ -37,20 +41,19 @@
 [
     'id'            =>          integer(unique),
     'birthday'      =>          date,
-    'college'       =>          string,
-    'domitory'      =>          integer,
-    'room'          =>          integer,
-    'phone'         =>          string,
+    'credit'        =>          integer default 60,
 ]
 ```
 
 ## 2 Goods
 
-### 2.1 ibuy_goods
+### 2.1 ibuy_goods_common
 
 ```php
 [
+    'id'            =>          increments,
     'title'         =>          string,
+    'owner'         =>          integer,
     'type'          =>          integer(enum),
     'status'        =>          integer(enum),
     'cost'          =>          float(money),
@@ -61,14 +64,58 @@
 ]
 ```
 
-### 2.3 ibuy_goods_image
+### 2.2 ibuy_goods_image
 
-### 2.4 ibuy_goods_comments
+```php
+[
+    'id'            =>          increments,
+    'gid'           =>          integer,
+    'src'           =>          string,
+]
+```
 
-### 2.5 ibuy_goods_tags
+### 2.3 ibuy_goods_comments
 
-### 2.6 ibuy_goods_browse
+```php
+[
+    'id'            =>          increments,
+    'gid'           =>          integer,
+    'uid'           =>          integer,
+    'uname'         =>          string,
+    'avatar'        =>          string,
+    'content'       =>          text,
+]
+```
+
+### 2.4 ibuy_goods_tags
+
+```php
+[
+    'id'            =>          increments,
+    'name'          =>          string,
+    'heat'          =>          integer default 0,
+]
+```
+
+### 2.5 ibuy_goods_browse
+
+```php
+[
+    'id'            =>          integer,
+    'heat'          =>          integer,
+    'view'          =>          integer,
+]
+```
 
 ## 3 Orders
 
-### 3.1 ibuy_orders
+### 3.1 ibuy_orders_common
+
+```php
+[
+    'id'            =>          incremment,
+    'gid'           =>          integer,
+    'uid'           =>          integer,
+    'status'        =>          integer,
+]
+```
