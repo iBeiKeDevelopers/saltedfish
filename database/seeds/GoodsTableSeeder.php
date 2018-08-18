@@ -26,7 +26,7 @@ class GoodsTableSeeder extends Seeder
 
         DB::table('goods_image')->insert([
             'gid'           =>      $gid,
-            'src'           =>      'storage/none.jpg',
+            'src'           =>      'storage/none.png',
         ]);
 
         DB::table('goods_comments')->insert([
@@ -38,8 +38,8 @@ class GoodsTableSeeder extends Seeder
         ]);
 
         DB::table('goods_browse')->insert([
-            'id'            =>      $gid,
-            'heat'          =>      random_int(0,50),
+            'gid'            =>      $gid,
+            'like'          =>      random_int(0,50),
             'view'          =>      random_int(50,500),
         ]);
     }

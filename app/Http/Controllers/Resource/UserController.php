@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Resource;
 
-use App\Models\Goods;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class GoodsController extends Controller
+class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +29,7 @@ class GoodsController extends Controller
      */
     public function create()
     {
-        echo view('navbar');
-        echo view('goods.create');
-        echo view('copyright');
+        //
     }
 
     /**
@@ -44,51 +46,44 @@ class GoodsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Goods  $goods
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Goods $goods)
+    public function show(User $user)
     {
-        return $goods;
-        echo view('navbar');
-        echo view('goods.show');
-        echo view('copyright');
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Goods  $goods
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        echo view('navbar');
-        echo view('goods.edit');
-        echo view('copyright');
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Goods  $goods
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, User $user)
     {
-        echo view('navbar');
-        echo view('goods.update');
-        echo view('copyright');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Goods  $goods
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function destroy(User $user)
     {
         //
     }

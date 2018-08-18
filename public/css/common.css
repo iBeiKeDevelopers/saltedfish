@@ -1,0 +1,13 @@
+.navbar {
+    background-color: #ff945c;
+    height: 50px;
+}
+
+.nav-img {
+    width: 40px;
+    float: left;
+}
+
+.nav-menu {
+    padding: 20px;
+}

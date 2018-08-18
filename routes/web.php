@@ -24,8 +24,6 @@ Route::middleware('auth:api')->get('logout', function () {
 Route::get('/', 'HomeController@index');
 Route::get('home', 'UserPageController@index');
 
-Route::resource('picture','Resource\PictureController', ['except'  =>  [
-    'edit'
-],]);
-Route::resource('goods', 'Resource\GoodsController');
-Route::resource('order', 'Resource\OrderController');
+Route::resource('goods', 'Resource\GoodsController')->middleware('auth');
+Route::resource('order', 'Resource\OrderController')->middleware('auth');
+Route::resource('user', 'Resource\OrderController')->middleware('auth');

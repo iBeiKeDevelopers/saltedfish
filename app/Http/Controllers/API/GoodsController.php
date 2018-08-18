@@ -19,7 +19,13 @@ class GoodsController extends Controller
         $page = $request->input('page', 1);
         $num = $request->input('num', 12);
         $page = ($page - 1) * $num;
-        return Goods::skip($page)->take($num)->get();
+        
+        $goods = Goods::skip($page)->take($num)->get();
+        foreach($goods as $g) {
+            $g->thumbnail;
+            $g->browse;
+        }
+        return $goods;
     }
 
     /**
@@ -28,10 +34,14 @@ class GoodsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request)
+    public function list(int $uid)
     {
-        $uid = $request->input('uid');
-        return Goods::where('owner', $uid)->get();
+        $goods = Goods::where('owner', $uid)->get();
+        foreach($goods as $g) {
+            $g->thumbnail;
+            $g->browse;
+        }
+        return $goods;
     }
 
     /**
@@ -53,7 +63,11 @@ class GoodsController extends Controller
      */
     public function show($id)
     {
-        return Goods::findOrFail($id);
+        //return Auth::auth();
+        $good = Goods::findOrFail($id);
+        $good->images;
+        $good->comments;
+        return $good;
     }
 
     /**
@@ -70,7 +84,7 @@ class GoodsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @api
+     * @api admin
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

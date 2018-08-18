@@ -26,15 +26,9 @@ Route::get('user/info/{user}', function (App\User $user) {
     return $user;
 });
 
-Route::apiResource('picture','API\PictureController', ['except'  =>  [
-    'index',
-],]);
+Route::middleware('admin')->get('goods/list/{uid}', 'API\GoodsController@list');
 
-Route::get('goods/list/{uid}', 'API\GoodsController@list');
 Route::apiResource('goods', 'API\GoodsController', ['except' => [
-    'store',
+    'store', 'update', 'destroy'
 ],]);
 
-Route::apiResource('order', 'API\OrderController', ['except' => [
-    'index', 'store',
-]]);

@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Avatar extends Model
 {
     //
-    protected $table = "orders_common";
 }

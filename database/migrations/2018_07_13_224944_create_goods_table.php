@@ -56,8 +56,8 @@ class CreateGoodsTable extends Migration
         });
 
         Schema::create('goods_browse', function (Blueprint $table) {
-            $table->integer('id');
-            $table->integer('heat')->default(0);
+            $table->integer('gid');
+            $table->integer('like')->default(0);
             $table->integer('view');
 
             $table->timestamps();

@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class Comments extends Model
 {
     //
-    protected $table = "orders_common";
+    protected $table = "goods_comments";
 }
