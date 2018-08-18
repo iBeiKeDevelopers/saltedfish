@@ -30,7 +30,7 @@ Route::apiResource('picture','API\PictureController', ['except'  =>  [
     'index',
 ],]);
 
-Route::get('goods/list', 'API\GoodsController@list');
+Route::get('goods/list/{uid}', 'API\GoodsController@list');
 Route::apiResource('goods', 'API\GoodsController', ['except' => [
     'store',
 ],]);

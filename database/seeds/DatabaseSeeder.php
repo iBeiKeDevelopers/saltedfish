@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         }
 
         for($i = 0; $i < 50; $i++) {
-            $this->call(OrderTableSeeder::class);
+            //$this->call(OrderTableSeeder::class);
         }
 
         for($i = 0; $i < 100; $i++) {

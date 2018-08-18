@@ -43,8 +43,10 @@ class CreateGoodsTable extends Migration
             $table->integer('gid');
             $table->integer('uid');
             $table->string('uname');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->text('content');
+
+            $table->timestamps();
         });
 
         Schema::create('goods_tags', function (Blueprint $table) {
@@ -55,8 +57,10 @@ class CreateGoodsTable extends Migration
 
         Schema::create('goods_browse', function (Blueprint $table) {
             $table->integer('id');
-            $table->integer('heat');
+            $table->integer('heat')->default(0);
             $table->integer('view');
+
+            $table->timestamps();
         });
     }
 

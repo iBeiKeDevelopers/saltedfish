@@ -65,9 +65,7 @@ class GoodsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->middleware('GoodsOwner');
-        $arr = $request->input();
-        Goods::where('id', $id)->update();
+        //
     }
 
     /**
@@ -78,7 +76,6 @@ class GoodsController extends Controller
      */
     public function destroy($id)
     {
-        $this->middleware('Admin');
-        return Goods::dstroy($id);
+        //
     }
 }

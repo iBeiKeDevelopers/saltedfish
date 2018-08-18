@@ -18,31 +18,36 @@ class CreateUserTable extends Migration
             $table->string('nick_name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->integer('group')->default(1);
             
             $table->rememberToken();
             $table->timestamps();
         });
 
-        Schema::create('users_identify', function (Blueprint $table) {
+        Schema::create('users_identity', function (Blueprint $table) {
             $table->integer('id')->unique();
+            $table->integer('degree');
             $table->string('student_id');
-            $table->integer('degree')->nullable();
+
+            $table->timestamps();
         });
 
         Schema::create('users_contact', function (Blueprint $table) {
             $table->integer('id')->unique();
-            $table->string('college')->nullable();
-            $table->integer('domitory')->nullable();
-            $table->integer('room')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('college');
+            $table->integer('domitory');
+            $table->integer('room');
+            $table->string('phone');
 
-            $table->integer('group')->default(1);
+            $table->timestamps();
         });
 
         Schema::create('users_extend', function (Blueprint $table) {
             $table->integer('id')->unique();
             $table->date('birthday')->nullable();
             $table->integer('credit')->default(60);
+
+            $table->timestamps();
         });
     }
 
@@ -54,7 +59,7 @@ class CreateUserTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users_common');
-        Schema::dropIfExists('users_identify');
+        Schema::dropIfExists('users_identity');
         Schema::dropIfExists('users_contact');
         Schema::dropIfExists('users_extend');
     }

@@ -11,6 +11,6 @@ class Goods extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'goods';
+    protected $table = 'goods_common';
 
 }

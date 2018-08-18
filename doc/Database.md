@@ -2,7 +2,7 @@
 
 ## 1 Users
 
-### 1.1 ibuy_user_common
+### 1.1 ibuy_users_common
 
 ```php
 [
@@ -10,10 +10,11 @@
     'nick_name'     =>          string,
     'email'         =>          string(unique),
     'password'      =>          string,
+    'group'         =>          integer,
 ]
 ```
 
-### 1.2 ibuy_user_identify
+### 1.2 ibuy_users_identify
 
 ```php
 [
@@ -23,7 +24,7 @@
 ]
 ```
 
-### 1.3 ibuy_user_contact
+### 1.3 ibuy_users_contact
 
 ```php
 [
@@ -35,7 +36,7 @@
 ]
 ```
 
-### 1.4 ibuy_user_extend
+### 1.4 ibuy_users_extend
 
 ```php
 [
