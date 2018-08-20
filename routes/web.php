@@ -30,5 +30,5 @@ Route::resource('goods', 'Resource\GoodsController');
 Route::get('orders/list/{type}/{num?}', 'Resource\OrderController@list');
 Route::resource('orders', 'Resource\OrderController')->middleware('auth');
 
-Route::get('profile', 'UserPageController@index');
+Route::get('profile', 'UserPageController@profile');
 Route::resource('users', 'Resource\UserController')->middleware('admin');

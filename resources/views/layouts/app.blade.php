@@ -29,7 +29,7 @@
             
             <div class="container">
                 <a href="{{ url('/') }}" class="hidden-xs">
-                    <img src="storage/app/beikelogo.png" class="img-responsive" alt="logo">
+                    <img src="/storage/app/beikelogo.png" class="img-responsive" alt="logo">
                 </a>
                 <a class="navbar-brand mr-auto" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -64,7 +64,7 @@
                                     骚操作
                                 </a> 
                                 <a id="navbarDropdown" class="nav-link dropdown hidden-xs" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
-                                    <img src="storage/none.png" class="img-circle img-thumbnail" style="width:90px;">
+                                    <img src="/storage/none.png" class="img-circle img-thumbnail" style="width:90px;">
                                 </a>
 
 
