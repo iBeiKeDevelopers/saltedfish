@@ -13,6 +13,6 @@ class UserPageController extends Controller
     }
 
     public function index(Request $request) {
-        return view("user");
+        return view("profile");
     }
 }

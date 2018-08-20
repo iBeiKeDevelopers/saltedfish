@@ -14,7 +14,7 @@
 ]
 ```
 
-### 1.2 ibuy_users_identify
+### 1.2 ibuy_users_identity
 
 ```php
 [

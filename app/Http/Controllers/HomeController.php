@@ -23,11 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        echo view('home.normal');
     }
 
     public function search()
     {
-        return "aaa";
+        echo view('home');
+        echo view('home.search');
     }
 }

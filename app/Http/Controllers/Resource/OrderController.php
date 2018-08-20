@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Resource;
 
+use Auth;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,29 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('order');
+    }
+
+    public function list($type = 'buy', $num = '0')
+    {
+        if($type == 'buy') {
+            $orders = Order::where('uid', Auth::id())->where('status', '<', '2');
+        }else if($type != 'order') {
+            $orders = Order::where('owner', Auth::id());
+        }else
+            abort(404);
+
+        if($num == 0)
+            $orders = $orders->get();
+        else
+            $orders = $orders->take($num)->get();
+        
+        foreach($orders as $ord) {
+            $ord->thumbnail;
+        }
+        
+        return $orders;
+        
     }
 
     /**

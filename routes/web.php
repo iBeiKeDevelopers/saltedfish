@@ -24,6 +24,11 @@ Route::middleware('auth:api')->get('logout', function () {
 Route::get('/', 'HomeController@index');
 Route::get('home', 'UserPageController@index');
 
-Route::resource('goods', 'Resource\GoodsController')->middleware('auth');
-Route::resource('order', 'Resource\OrderController')->middleware('auth');
-Route::resource('user', 'Resource\OrderController')->middleware('auth');
+Route::get('goods/list/{type}/{uid}', 'Resource\GoodsController@list');
+Route::resource('goods', 'Resource\GoodsController');
+
+Route::get('orders/list/{type}/{num?}', 'Resource\OrderController@list');
+Route::resource('orders', 'Resource\OrderController')->middleware('auth');
+
+Route::get('profile', 'UserPageController@index');
+Route::resource('users', 'Resource\UserController')->middleware('admin');

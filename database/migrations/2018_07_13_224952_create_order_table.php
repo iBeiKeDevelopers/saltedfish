@@ -17,10 +17,14 @@ class CreateOrderTable extends Migration
             $table->increments('id');
 
             $table->integer('gid');
+            $table->string('title');
+            $table->integer('owner');
             $table->integer('uid');
+            $table->float('cost');
             $table->integer('status');
 
             $table->timestamps();
+            $table->softdeletes();
         });
     }
 

@@ -26,7 +26,7 @@ Route::get('user/info/{user}', function (App\User $user) {
     return $user;
 });
 
-Route::middleware('admin')->get('goods/list/{uid}', 'API\GoodsController@list');
+Route::get('goods/list/{uid}/', 'API\GoodsController@list');
 
 Route::apiResource('goods', 'API\GoodsController', ['except' => [
     'store', 'update', 'destroy'

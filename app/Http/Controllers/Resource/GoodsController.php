@@ -8,6 +8,11 @@ use App\Http\Controllers\Controller;
 
 class GoodsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +21,29 @@ class GoodsController extends Controller
     public function index()
     {
         //
+    }
+
+    /**
+     * Show a list of the goods of the same type of a user
+     * 
+     * @param 
+     * @return \Illuminate\Http\Response
+     */
+    public function list($type, $uid)
+    {
+        if($type == 'sell'){
+            $goods = Goods::where('type', 0);
+        }else if($type == 'rent') {
+            $goods = Goods::where('type', 1);
+        }else abort(404);
+
+        $goods = $goods->where('owner', $uid)->orderBy('remain', 'desc')->get();
+        
+        foreach($goods as $g) {
+            $g->thumbnail;
+        }
+
+        return $goods;
     }
 
     /**

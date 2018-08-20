@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
             $this->call(GoodsTableSeeder::class);
         }
 
-        for($i = 0; $i < 50; $i++) {
-            //$this->call(OrderTableSeeder::class);
+        for($i = 0; $i < 500; $i++) {
+            $this->call(OrderTableSeeder::class);
         }
 
         for($i = 0; $i < 100; $i++) {

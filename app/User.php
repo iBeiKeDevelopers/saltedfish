@@ -20,7 +20,6 @@ class User extends Authenticatable
         'nick_name',
         'email',
         'password',
-        'student_id',
     ];
 
     /**
@@ -31,4 +30,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function identity() {
+        return $this->hasOne('App\User\Identity', 'id');
+    }
+
+    public function contact() {
+        return $this->hasOne('App\User\Contact', 'id');
+    }
+
+    public function extend() {
+        return $this->hasOne('App\User\Extend', 'id');
+    }
 }

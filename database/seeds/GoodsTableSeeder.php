@@ -15,7 +15,7 @@ class GoodsTableSeeder extends Seeder
         $gid = DB::table('goods_common')->insertGetId([
             'title'         =>      str_random(),
             'owner'         =>      random_int(1,50),
-            'type'          =>      random_int(0,3),
+            'type'          =>      random_int(0,1),
             'status'        =>      random_int(0,3),
             'cost'          =>      random_int(100,1000) / random_int(1,10),
             'fee'           =>      random_int(100,1000) / random_int(1,10),
@@ -26,7 +26,7 @@ class GoodsTableSeeder extends Seeder
 
         DB::table('goods_image')->insert([
             'gid'           =>      $gid,
-            'src'           =>      'storage/none.png',
+            'src'           =>      'storage/'.random_int(1,3).'.jpg',
         ]);
 
         DB::table('goods_comments')->insert([
