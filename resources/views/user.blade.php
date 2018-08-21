@@ -3,17 +3,14 @@
 @section('title', '个人中心')
 
 @section('dropdown')
-<a class="dropdown-item hidden-xs" href="/profile">个人信息</a>
-<a class="dropdown-item visible-xs" style="text-align:center;" href="/profile">个人信息</a>
-
 <a class="dropdown-item hidden-xs" href="/orders">我的订单</a>
 <a class="dropdown-item visible-xs" style="text-align:center;" href="/orders">我的订单</a>
 
 <a class="dropdown-item hidden-xs" href="/goods">我的商品</a>
 <a class="dropdown-item visible-xs" style="text-align:center;" href="/goods">我的商品</a>
 
-<a class="dropdown-item hidden-xs" href="password/reset">修改密码</a>
-<a class="dropdown-item visible-xs" style="text-align:center;" href="/password/reset">修改密码</a>
+<a class="dropdown-item hidden-xs" href="">修改密码</a>
+<a class="dropdown-item visible-xs" style="text-align:center;" href="">修改密码</a>
 @endsection
 
 @section('content')

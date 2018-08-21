@@ -20,7 +20,7 @@
 <head>
 <body>
     <div class="container">
-        <img src="storage/404.png" class="img-responsive" alt="404.png">
+        <img src="/storage/404.png" class="img-responsive" alt="404.png">
         <div><h1 style="text-align:center;font-family:" class="">404~ Not Found~</h1></div>
     </div>
 </body>

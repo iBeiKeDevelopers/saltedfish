@@ -18,9 +18,14 @@ class GoodsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id = 0)
     {
-        //
+        if($id == 0)
+            return view('goods.home');
+        else
+            return view('goods.index', [
+                'id' => $id,
+            ]);
     }
 
     /**
@@ -53,9 +58,7 @@ class GoodsController extends Controller
      */
     public function create()
     {
-        echo view('navbar');
-        echo view('goods.create');
-        echo view('copyright');
+        return view('goods.create');
     }
 
     /**
