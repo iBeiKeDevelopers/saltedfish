@@ -28,6 +28,22 @@ class GoodsController extends Controller
             ]);
     }
 
+    public function category($cat = 'all')
+    {
+        switch($cat) {
+            case 'all':
+                $goods = 0;
+            case '食品':
+                return "aaa";
+            default:
+                return redirect('/goods/all');
+        }
+
+        return view('goods.index', [
+            'goods'     =>      $goods,
+        ]);
+    }
+
     /**
      * Show a list of the goods of the same type of a user
      * 

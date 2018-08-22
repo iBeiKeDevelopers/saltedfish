@@ -4,13 +4,19 @@
 
 @section('button')
 <a class="navbar-brand mr-auto hidden-xs" data-toggle="dropdown" href="#">
-    所有商品<span class="caret"></span>
+    商品分类<span class="caret"></span>
 </a>
 <div class="dropdown-menu"  aria-labelledby="navbarDropdown">
-	<a class="dropdown-item -xs" href="#">aaa</a>
-	<a class="dropdown-item hidden-xs" href="#">bbb</a>
-	<a class="dropdown-item hidden-xs" href="#">ccc</a>
-	<a class="dropdown-item hidden-xs" href="#">ddd</a>
+	<a class="dropdown-item" href="/goods/category/食品">食&nbsp;&nbsp;&nbsp;&nbsp;品</a>
+	<a class="dropdown-item" href="/goods/category/服饰">服&nbsp;&nbsp;&nbsp;&nbsp;饰</a>
+	<a class="dropdown-item" href="/goods/category/生活用品">生活用品</a>
+	<a class="dropdown-item" href="/goods/category/学习用品">学习用品</a>
+	<a class="dropdown-item" href="/goods/category/电子产品">电子产品</a>
+	<a class="dropdown-item" href="/goods/category/体育用品">体育用品</a>
+	<a class="dropdown-item" href="/goods/category/音乐器材">音乐器材</a>
+	<a class="dropdown-item" href="/goods/category/非实体商品">非实体商品</a>
+	<li class="divider"></li>
+	<a class="dropdown-item" href="/goods/all">所有商品</a>
 </div>
 @endsection
 
@@ -44,28 +50,31 @@
 	    <!-- carousel item -->
 	    <div class="carousel-inner">
 		    <div class="item active">
-			    <img src="storage/banner/beijing.png" class="img-responsive" style="width:100%;" alt="First slide">
+			    <img src="storage/banner/1.jpg" class="img-responsive" style="width:100%;" alt="First slide">
 		    </div>
 		    <div class="item img-responsive">
-			    <img src="storage/banner/chat_bg.jpg" class="img-responsive" style="width:100%;" alt="Second slide">
+			    <img src="storage/banner/2.jpg" class="img-responsive" style="width:100%;" alt="Second slide">
 		    </div>
 		    <div class="item img-responsive">
-			    <img src="storage/banner/ustb.png" class="img-responsive" style="width:100%;" alt="Third slide">
+			    <img src="storage/banner/3.jpg" class="img-responsive" style="width:100%;" alt="Third slide">
 		    </div>
 	    </div>
-	    <!-- carousel guide -->
-	    <a class="left carousel-control" href="#banner" data-slide="prev">
-	        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-	        <span class="sr-only">Previous</span>
-	    </a>
-	    <a class="right carousel-control" href="#banner" data-slide="next">
-	        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	        <span class="sr-only">Next</span>
-	    </a>
     </div> 
 </div>
+<script>
+	$('.carousel').carousel('cycle')
+</script>
 
 <!-- goods -->
+<style>
+	.img-wrapper {
+		background-size: cover;
+		background-position: center center;
+		background-repeat: no-repeat;
+		width: 100%;
+		height: 12em;
+	}
+</style>
 <div style="padding-top:5%;"></div>
 <div id="goodsCards">
 <div  class="container">
@@ -73,8 +82,7 @@
         <div class="col-md-12">
             <div class="card">
 				<div class="card-header">
-					<div class="float-left">分类一</div>
-					<div class="rounded float-right"><a href="/goods/category/fenleiyi">更多</a></div>
+					<div class="float-left">最近上架</div>
 				</div>
 				<div class="card-body" v-html="cards[0].content"></div>
 			</div>
@@ -87,8 +95,7 @@
         <div class="col-md-12">
             <div class="card">
 				<div class="card-header">
-					<div class="float-left">分类二</div>
-					<div class="rounded float-right"><a href="/goods/category/fenleiyi">更多</a></div>
+					<div class="float-left">热门商品</div>
 				</div>
 				<div class="card-body" v-html="cards[1].content"></div>
 			</div>
@@ -101,8 +108,7 @@
         <div class="col-md-12">
             <div class="card">
 				<div class="card-header">
-					<div class="float-left">分类三</div>
-					<div class="rounded float-right"><a href="/goods/category/fenleiyi">更多</a></div>
+					<div class="float-left">随机推荐</div>
 				</div>
 				<div class="card-body" v-html="cards[2].content"></div>
 			</div>
@@ -121,13 +127,13 @@ new Vue({
 	el: "#goodsCards",
 	data: {
 		cards: [{
-			url: "/api/goods?num=4",
+			url: "/api/goods/new",
 			content: "",
 		},{
-			url: "/api/goods?num=4",
+			url: "/api/goods/hot",
 			content: "",
 		},{
-			url: "/api/goods?num=4",
+			url: "/api/goods/random",
 			content: "",
 		}],
 	},
@@ -141,10 +147,7 @@ new Vue({
 					.then(function (content) {
 						item.content = content
 					})
-					.catch(errorCallback())
 			})
-
-			function errorCallback() {}
 		},
 	},
 })
@@ -153,19 +156,23 @@ async function getListCallback(url) {
 	await axios.get(url)
 		.then(function (res) {
 			content=""
+			if(!res.data.length)
+				return content = emptyCallback()
 			res.data.forEach(function (item) {
-				content += "<div class='img-wrapper'><div class='thumbnail col-md-3 col-xs-6  float-left'><img src="+item.thumbnail.src+" style='height:10em;max-width:100%'><div class='caption'><h3>aaa</h3></div></div>"
+				content += "<div class='thumbnail col-md-3 col-xs-6  float-left'><a href='/goods/"+item.id+"'><div class='img-wrapper' style='background-image: url(" +"\""+ item.thumbnail.src +"\""+ ");'></div><div class='caption'><h4 style='max-height:1em;width:100%;overflow:hidden;text-overflow:ellipsis;'>"+item.title+"</h4><p>￥"+item.cost+"</p></div></div>"
 			})
 		})
-		.catch(errorCallback())
+		.catch(function() {
+			content = errorCallback()
+		})
 	return content
 
 	function errorCallback () {
-
+		return "<div class='text-info'>网络出了点小问题，刷新试试～</div>"
 	}
 
 	function emptyCallback () {
-
+		return "<div class='img-wrapper' style='height:22em;background-image: url(\"/storage/404.png\")'></div>"
 	}
 }
 </script>

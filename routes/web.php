@@ -24,8 +24,9 @@ Route::middleware('auth:api')->get('logout', function () {
 Route::get('/', 'HomeController@index');
 Route::get('home', 'UserPageController@index');
 
-Route::get('goods/list/{type}/{uid}', 'Resource\GoodsController@list');
 Route::get('goods/{id?}', 'Resource\GoodsController@index');
+Route::get('goods/category/{cat?}', 'Resource\GoodsController@category');
+Route::get('goods/list/{type}/{uid}', 'Resource\GoodsController@list');
 Route::resource('goods', 'Resource\GoodsController');
 
 Route::get('orders/list/{type}/{num?}', 'Resource\OrderController@list')
@@ -34,3 +35,7 @@ Route::resource('orders', 'Resource\OrderController')->middleware('auth');
 
 Route::get('profile', 'UserPageController@profile');
 Route::resource('users', 'Resource\UserController')->middleware('admin');
+
+Route::get('info', function () {
+    return Auth::user();
+});

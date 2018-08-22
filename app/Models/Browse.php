@@ -9,4 +9,8 @@ class Browse extends Model
     protected $table = "goods_browse";
 
     protected $primaryKey = "gid";
+
+    public function goods() {
+        return $this->belongsTo('App\Models\Goods', 'gid', 'id');
+    }
 }

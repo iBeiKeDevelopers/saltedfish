@@ -13,8 +13,8 @@ class GoodsTableSeeder extends Seeder
     public function run()
     {
         $gid = DB::table('goods_common')->insertGetId([
-            'title'         =>      str_random(),
-            'owner'         =>      random_int(1,50),
+            'title'         =>      str_random(random_int(8,32)),
+            'owner'         =>      random_int(3001,3101),
             'type'          =>      random_int(0,1),
             'status'        =>      random_int(0,3),
             'cost'          =>      random_int(100,1000) / random_int(1,10),

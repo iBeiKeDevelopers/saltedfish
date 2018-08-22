@@ -39,11 +39,11 @@
                 </button>
 
 
-                <div class="container" style="margin-top:1em;">
-                    <div class="navbar-nav">
-                        <ul class="dropdown">
+                <div class="container col-md-8" style="margin-top:1em;">
+                    <div class="navbar-nav col-md-2 float-left">
+                        <div class="dropdown">
                             @yield('button')
-                        </ul>
+                        </div>
                     </div>
                     @yield('form')
                 </div>
@@ -66,14 +66,14 @@
                         @else
                             <li class="nav-item dropdown">
                             
-                                <a class="nav-link justify-content-center visible-xs" style="text-align:center;" href="#">
+                                <a class="nav-link justify-content-center visible-xs" style="text-align:center;" href="/goods/category/all">
                                     所有商品
                                 </a>
                                 <a class="nav-link dropdown justify-content-center visible-xs" style="text-align:center;" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
                                     骚操作
                                 </a>
                                 <a class="nav-link dropdown hidden-xs" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
-                                    <img src="/storage/none.png" class="img-circle img-thumbnail" style="width:8em;">
+                                    <img src="{{ Auth::user()->avatar ?? '/storage/null.png' }}" class="img-circle img-thumbnail" style="width:8em;">
                                 </a>
 
 
@@ -106,6 +106,12 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="container-fluid foot-wrap">
+            <div class="container">
+                <p style="text-align:center;">&copy;&nbsp;2018&nbsp;ibeike&nbsp;team</p>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

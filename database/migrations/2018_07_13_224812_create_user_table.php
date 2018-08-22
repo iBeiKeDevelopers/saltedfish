@@ -18,11 +18,19 @@ class CreateUserTable extends Migration
             $table->string('nick_name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('avatar')->nullable();
             $table->integer('group')->default(1);
             
             $table->rememberToken();
             $table->timestamps();
         });
+        DB::update('ALTER TABLE ibuy_users_common AUTO_INCREMENT = 3001');
+        App\User::create([
+            'nick_name' => 'ibuy管理员',
+            'email' => '4447967@qq.com',
+            'avatar' => '/storage/admin.png',
+            'password' => Hash::make('123456'),
+        ]);
 
         Schema::create('users_identity', function (Blueprint $table) {
             $table->integer('id')->unique();

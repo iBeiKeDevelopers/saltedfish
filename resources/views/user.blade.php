@@ -28,7 +28,7 @@
 					<div class="rounded float-right"><a href="profile">编辑</a></div>
 				</div>
 				<div class="card-body">
-					<img class="float-left img-thumbnail" src="/storage/none.png" style="max-width:30%;">
+					<img class="float-left img-thumbnail" src="{{ Auth::user()->avatar ?? '/storage/null.png' }}" style="max-width:30%;">
 					<div id="profile" class="" style="padding-left:40%">
 						<table class="table">
   							<tbody>
@@ -60,7 +60,7 @@
         <div class="col-md-8">
             <div id="list" class="card">
 				<div class="card-header">
-					<div class="float-left">我的订单</div>
+					<div class="float-left">最近订单</div>
 					<div class="float-right"><a href="orders">更多</a></div>
 				</div>
 				<div class="card-body">

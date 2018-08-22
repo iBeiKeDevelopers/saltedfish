@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Goods;
+use App\Models\Browse as GoodsBrowse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -40,6 +41,38 @@ class GoodsController extends Controller
         foreach($goods as $g) {
             $g->thumbnail;
             $g->browse;
+        }
+        return $goods;
+    }
+
+    public function new($num = 4)
+    {
+        $goods = Goods::latest()->take(4)->get();
+        foreach($goods as $g) {
+            $g->thumbnail;
+        }
+        return $goods;
+    }
+
+    public function hot($num = 4)
+    {
+        $goods = [];
+        $idList = GoodsBrowse::orderBy('view', 'desc')
+            ->take(4)->pluck('gid');
+        foreach($idList as $id) {
+            $g = Goods::find($id);
+            $g->thumbnail;
+            array_push($goods, $g);
+        }
+        return $goods;
+    }
+
+    public function random($num = 4)
+    {
+        $goods = Goods::inRandomOrder()
+            ->take(4)->get();
+        foreach($goods as $g) {
+            $g->thumbnail;
         }
         return $goods;
     }
