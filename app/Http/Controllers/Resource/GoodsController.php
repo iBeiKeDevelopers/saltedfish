@@ -129,11 +129,13 @@ class GoodsController extends Controller
                 foreach($raw['uploadList'] as $name) {
                     $content = Cache::pull($name);
                     Storage::put("public/tmp/$name.tmp", $content);
+                    
                     $path = Storage::putFile($dir, new File("./storage/tmp/$name.tmp"));
+                    Storage::delete("public/tmp/$name.tmp");
 
                     $res = Image::insert([
                         'gid'       =>      $id,
-                        'src'       =>      $path,
+                        'src'       =>      Storage::url($path),
                     ]);
                     if(!$res) return [
                         'status'    =>      false,
@@ -242,7 +244,7 @@ class GoodsController extends Controller
 
                 $res = Image::insert([
                     'gid'       =>      $id,
-                    'src'       =>      $path,
+                    'src'       =>      Storage::url($path),
                 ]);
                 if(!$res) return [
                     'status'    =>      false,
@@ -322,8 +324,15 @@ function isValid($goods) {
     if(!is_numeric($goods["cost"]))
         return "cost is not a number";
 
-        if(!is_numeric($goods["type"]))
+    if($goods["cost"] > 99999)
+        return "number is no larger than 100 000!";
+
+    if(!is_numeric($goods["type"]))
         return "type is not in format";
+
+    if($goods["type"] > 99999)
+    return "number is no larger than 100 000!";
+
 
     //todo: tags
     return true;
