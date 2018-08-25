@@ -27,9 +27,9 @@ class CreateUserTable extends Migration
         DB::update('ALTER TABLE ibuy_users_common AUTO_INCREMENT = 3001');
         App\User::create([
             'nick_name' => 'ibuy管理员',
-            'email' => '4447967@qq.com',
+            'email' => 'admin@admin.com',
             'avatar' => '/storage/admin.png',
-            'password' => Hash::make('123456'),
+            'password' => Hash::make('aaaaaaaa'),
         ]);
 
         Schema::create('users_identity', function (Blueprint $table) {

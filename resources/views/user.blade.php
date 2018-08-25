@@ -9,15 +9,16 @@
 <a class="dropdown-item hidden-xs" href="/goods">我的商品</a>
 <a class="dropdown-item visible-xs" style="text-align:center;" href="/goods">我的商品</a>
 
+<a class="dropdown-item hidden-xs" href="/goods/create">上传商品</a>
+<a class="dropdown-item visible-xs" style="text-align:center;" href="/goods/create">上传商品</a>
+
 <a class="dropdown-item hidden-xs" href="">修改密码</a>
 <a class="dropdown-item visible-xs" style="text-align:center;" href="">修改密码</a>
 @endsection
 
 @section('content')
-<link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
 <script type="text/javascript" src="js/axios.min.js"></script>
 <script type="text/javascript" src="js/vue.js"></script>
-<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.js"></script>
 
 <div class="container">
     <div class="row justify-content-center">

@@ -12,19 +12,19 @@
 */
 Auth::routes();
 
-Route::get('user/info', function () {
+Route::get('/user/info', function () {
     return Auth::user();
 });
 
-Route::middleware('auth:api')->get('logout', function () {
+Route::middleware('auth:api')->get('/logout', function () {
     Auth::logout();
-    return redirect('login');
+    return redirect('/login');
 });
 
 Route::get('/', 'HomeController@index');
 Route::get('home', 'UserPageController@index');
 
-Route::get('goods/{id?}', 'Resource\GoodsController@index');
+Route::get('goods/id/{id?}', 'Resource\GoodsController@index');
 Route::get('goods/category/{cat?}', 'Resource\GoodsController@category');
 Route::get('goods/list/{type}/{uid}', 'Resource\GoodsController@list');
 Route::resource('goods', 'Resource\GoodsController');
@@ -36,6 +36,8 @@ Route::resource('orders', 'Resource\OrderController')->middleware('auth');
 Route::get('profile', 'UserPageController@profile');
 Route::resource('users', 'Resource\UserController')->middleware('admin');
 
-Route::get('info', function () {
+//Route::resource('image', 'Resource\ImageController');
+
+Route::get('/info', function () {
     return Auth::user();
 });

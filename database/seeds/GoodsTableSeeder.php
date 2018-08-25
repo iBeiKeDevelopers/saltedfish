@@ -18,15 +18,17 @@ class GoodsTableSeeder extends Seeder
             'type'          =>      random_int(0,1),
             'status'        =>      random_int(0,3),
             'cost'          =>      random_int(100,1000) / random_int(1,10),
-            'fee'           =>      random_int(100,1000) / random_int(1,10),
+            //'fee'           =>      random_int(100,1000) / random_int(1,10),
             'remain'        =>      random_int(20,100),
             'description'   =>      str_random(random_int(20,256)),
             'category'      =>      str_random(),
         ]);
 
+        $name = random_int(1,3) . '.jpg';
         DB::table('goods_image')->insert([
             'gid'           =>      $gid,
-            'src'           =>      'storage/'.random_int(1,3).'.jpg',
+            //'name'          =>      $name,
+            'src'           =>      'storage/'.$name,
         ]);
 
         DB::table('goods_comments')->insert([

@@ -20,6 +20,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/common.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap/bootstrap-theme.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap/bootstrap.css') }}" rel="stylesheet">
 </head>
@@ -28,18 +30,15 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             
             <div class="container">
-                <a href="{{ url('/') }}" class="hidden-xs">
-                    <img src="/storage/app/beikelogo.png" class="img-responsive" alt="logo">
-                </a>
-                <a class="navbar-brand mr-auto" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a href="{{ url('/') }}">
+                    <img src="/storage/app/ibuy_logo.png" class="img-responsive" style="height:70px;" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
 
-                <div class="container col-md-8" style="margin-top:1em;">
+                <div class="container col-md-8 col-lg-9">
                     <div class="navbar-nav col-md-2 float-left">
                         <div class="dropdown">
                             @yield('button')
@@ -73,10 +72,8 @@
                                     骚操作
                                 </a>
                                 <a class="nav-link dropdown hidden-xs" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
-                                    <img src="{{ Auth::user()->avatar ?? '/storage/null.png' }}" class="img-circle img-thumbnail" style="width:8em;">
+                                    <img src="{{ Auth::user()->avatar ?? '/storage/null.png' }}" class="img-circle img-thumbnail" style="height:50px;">
                                 </a>
-
-
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @yield('dropdown')

@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('user', function (Request $request) {
 });
 
 //model bind
-Route::get('user/info/{user}', function (App\User $user) {
+Route::get('/user/info/{user}', function (App\User $user) {
     return $user;
 });
 
@@ -33,4 +33,9 @@ Route::get('goods/random/{num?}', 'API\GoodsController@random');
 Route::apiResource('goods', 'API\GoodsController', ['except' => [
     'store', 'update', 'destroy'
 ],]);
+
+Route::post('image', 'API\ImageController@store');
+Route::get('image/delete/{key}', 'API\ImageController@destroy');
+Route::get('image/{key}', 'API\ImageController@show');
+
 

@@ -11,6 +11,16 @@ class Goods extends Model
 
     protected $table = 'goods_common';
 
+    protected $fillable = [
+        'title',
+        'description',
+        'owner',
+        'cost',
+        'remain',
+        'type',
+        'category',
+    ];
+
     public function thumbnail() {
         return $this->hasOne('App\Models\Image', 'gid');
     }
