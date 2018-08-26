@@ -40,7 +40,9 @@
                             </i-input>
                         </form-item>
                         <form-item label="库存" prop="remain" class="col-lg-6 col-md-6 float-left">
-                            <i-input v-model="formValidate.remain"></i-input>
+                            <i-input v-model="formValidate.remain">
+                                <Icon type="md-filing" slot="prepend"></Icon>
+                            </i-input>
                         </form-item>
 
                         <form-item label="类型" prop="type" class="col-lg-6 col-md-6 float-left">

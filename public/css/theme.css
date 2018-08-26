@@ -1,0 +1,24 @@
+.main {
+    background-color: #FF9A3B;
+    color: #FFFFFF;
+}
+
+.main-content {
+    color: #FF9A3B;
+}
+
+.main-light {
+    background-color: #FFB333;
+}
+
+.main-dark {
+    background-color: #FF9207;
+}
+
+.main-background {
+    background-color: #F4F4F4;
+}
+
+.main-default {
+    background-color: #FFDCC0;
+}

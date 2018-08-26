@@ -68,10 +68,10 @@
 					<div>
 						<ul class="nav nav-tabs">
 							<li :class="flag==0?'active':''">
-								<a @click="showOrderBuy">我买的</a>
+								<a href="#" @click="showOrderBuy">我买的</a>
 							</li>
 							<li :class="flag==1?'active':''">
-								<a @click="showOrderSell">我卖的</a>
+								<a href="#" @click="showOrderSell">我卖的</a>
 							</li>
 						</ul>
 					</div>

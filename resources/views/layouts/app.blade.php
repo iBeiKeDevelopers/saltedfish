@@ -27,11 +27,11 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel main">
             
             <div class="container">
                 <a href="{{ url('/') }}">
-                    <img src="/storage/app/ibuy_logo.png" class="img-responsive" style="height:70px;" alt="logo">
+                    <img id="logo" src="/storage/app/ibuy_logo.png" class="img-responsive" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -104,7 +104,7 @@
             @yield('content')
         </main>
 
-        <footer class="container-fluid foot-wrap">
+        <footer class="container-fluid foot-wrap main-content">
             <div class="container">
                 <p style="text-align:center;">&copy;&nbsp;2018&nbsp;ibeike&nbsp;team</p>
             </div>

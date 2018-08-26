@@ -47,7 +47,8 @@ class GoodsController extends Controller
 
     public function new($num = 4)
     {
-        $goods = Goods::latest()->take(4)->get();
+        $num = 
+        $goods = Goods::latest()->take($num)->get();
         foreach($goods as $g) {
             $g->thumbnail;
         }
@@ -58,7 +59,7 @@ class GoodsController extends Controller
     {
         $goods = [];
         $idList = GoodsBrowse::orderBy('view', 'desc')
-            ->take(4)->pluck('gid');
+            ->take($num)->pluck('gid');
         foreach($idList as $id) {
             $g = Goods::find($id);
             $g->thumbnail;
@@ -70,7 +71,7 @@ class GoodsController extends Controller
     public function random($num = 4)
     {
         $goods = Goods::inRandomOrder()
-            ->take(4)->get();
+            ->take($num)->get();
         foreach($goods as $g) {
             $g->thumbnail;
         }

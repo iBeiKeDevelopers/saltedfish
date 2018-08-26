@@ -68,65 +68,101 @@
 
 <!-- goods -->
 <div id="goodsCards">
-	<template v-for="card in goodsList">
-		<div class="container home-padding">
-    		<div class="row justify-content-center">
-        		<div class="col-md-12">
-					<div class="card">
-						<div class="card-header card-header-center">
-							@{{ card.header }}
-						</div>
-						<div class="card-body main-background">
-							<!-- normalCallback -->
-							<template v-if="card.status === true">
-								<template v-for="item in card.content">
-									<div class="thumbnail col-md-3 col-xs-6 float-left">
-										<a :href="'/goods'+'/'+item.id">
-											<div class='img-wrapper'
-												:style="'background-image: url('+item.thumbnail.src+')'">
-											</div>
-										</a>
-										<div class='caption'>
-											<h4 class='goods-title'>
-												@{{ item.title }}
-											</h4>
-											<h5 class='goods-cost main-content'>
-												￥ @{{ item.cost }}
-											</h5>
-										</div>
-									</div>
-								</template>
-							</template>
-							<!-- emptyCallback -->
-							<template v-else-if="card.status === false">
-								<div class='text-info'>
-									网络出了点小问题，刷新试试～
-								</div>
-							</template>
-							<!-- errorCallback -->
-							<template v-else-if="card.content === []">
-								<div class="img-wrapper"
-									style="height:22em;
-										background-image: url('/storage/404.png')">
-								</div>
-							</template>
-							<template v-else>
-								<div class='text-info'>
-									喊后端工程师来修！
-								</div>
-							</template>
-						</div>
-					</div>
+<div  class="container home-padding">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+				<div class="card-header card-header-center">
+					最近上架
 				</div>
-			</template>
+				<div class="card-body main-background" v-html="cards[0].content"></div>
+			</div>
 		</div>
-	</template>
+	</div>
+</div>
+<div class="container home-padding">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+				<div class="card-header card-header-center">
+					热门商品
+				</div>
+				<div class="card-body main-background" v-html="cards[1].content"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container home-padding">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+				<div class="card-header card-header-center">
+					随机推荐
+				</div>
+				<div class="card-body main-background" v-html="cards[2].content"></div>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 
 <!-- scripts -->
-<script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/goodsCards.js') }}"></script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
 <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.js"></script>
 
+<script>
+new Vue({
+	el: "#goodsCards",
+	data: {
+		cards: [{
+			url: "/api/goods/new/8",
+			content: "",
+		},{
+			url: "/api/goods/hot/8",
+			content: "",
+		},{
+			url: "/api/goods/random",
+			content: "",
+		}],
+	},
+	mounted: function () {
+		this.showGoods(getListCallback)
+	},
+	methods: {
+		showGoods: function (getList) {
+			this.cards.forEach(function (item) {
+				getList(item.url)
+					.then(function (content) {
+						item.content = content
+					})
+			})
+		},
+	},
+})
+
+async function getListCallback(url) {
+	await axios.get(url)
+		.then(function (res) {
+			content=""
+			if(!res.data.length)
+				return content = emptyCallback()
+			res.data.forEach(function (item) {
+				content += "<div class='thumbnail col-md-3 col-xs-6 float-left'><a href='/goods/"+item.id+"'><div class='img-wrapper' style='background-image: url(" +"\""+ item.thumbnail.src +"\""+ ");'></div><div class='caption'><h4 class='goods-title'>"+item.title+"</h4><h5 class='goods-cost main-content'>￥"+item.cost+"</h5></div></div>"
+			})
+		})
+		.catch(function() {
+			content = errorCallback()
+		})
+	return content
+
+	function errorCallback () {
+		return "<div class='text-info'>网络出了点小问题，刷新试试～</div>"
+	}
+
+	function emptyCallback () {
+		return "<div class='img-wrapper' style='height:22em;background-image: url(\"/storage/404.png\")'></div>"
+	}
+}
+</script>
 @endsection

@@ -1,0 +1,63 @@
+#logo {
+    height: 70px;
+}
+
+.navbar-form {
+    padding: 10px;
+    background-color: #FFFFFF;
+}
+
+.img-wrapper {
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 8em;
+}
+
+.card {
+    border: 0;
+}
+
+.card-header {
+    border: 0;
+}
+
+.home-padding {
+    padding-top: 5%;
+}
+
+.card-header-center {
+    background-color: #FFFFFF;
+    padding-bottom: 1em;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.goods-title {
+    height: 1em;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.goods-cost {
+    font-size: 1.5em;
+}
+
+.img-carousel {
+    height: 30em;
+}
+
+.image-slide {
+    width:50%;
+}
+
+@media (max-width: 992px) {
+    .image-slide {
+        width:100%;
+    }
+    .img-carousel {
+        height:40em;
+    }
+}

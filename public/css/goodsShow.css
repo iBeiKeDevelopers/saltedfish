@@ -1,0 +1,7 @@
+.goods-title {
+    text-align: center;
+    font-size: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 2em;
+}
