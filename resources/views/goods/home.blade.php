@@ -11,6 +11,7 @@
 @endsection
 
 @section('content')
+<meta name="goods_id" content="{{ $id }}">
 <link href="http://unpkg.com/iview/dist/styles/iview.css" rel="stylesheet">
 <link href="{{ asset('css/goodsShow.css') }}" rel="stylesheet">
 <div id="singleItem">
@@ -20,9 +21,9 @@
             <div class="card">
                 <div class="card-header">
                     <breadcrumb separator=">">
-                    <breadcrumb-item to="/">{{ 'cat1' }}</breadcrumb-item>
-                    <breadcrumb-item to="/components/breadcrumb">{{ 'cat2' }}</breadcrumb-item>
-                    <breadcrumb-item>{{ 'title' }}</breadcrumb-item>
+                    <breadcrumb-item to="/">{{ $cat1 }}</breadcrumb-item>
+                    <breadcrumb-item to="/components/breadcrumb">{{ $cat2 }}</breadcrumb-item>
+                    <breadcrumb-item>{{ $title }}</breadcrumb-item>
                     </breadcrumb>
                 </div>
                 <div class="card-body">
@@ -32,6 +33,7 @@
                                 <template v-for="item in imageList">
                                     <carousel-item>
                                         <div class="img-wrapper img-carousel"
+                                            style="background-size:contain;"
                                             :style="'background-image: url('+item.src+')'">
                                         </div>
                                     </carousel-item>
@@ -39,21 +41,23 @@
                             </Carousel>
                         </div>
                         <div class="col-xs-12 col-lg-6">
-                            <div class="goods-title col-xs-12 col-lg-6">
-                                <h1>{{ '01020304050102030405010203040501020304050102030405' }}</h1>
+                            <div class="goods-title col-xs-12">
+                                <h1>{{ $title }}</h1>
                             </div>
-                            <div class="col-xs-6">
-                                {{ 'type' }}
-                            </div>
-                            <div class="col-xs-6">
-                                {{ 'cost' }}
-                            </div>
-                            <div class="col-xs-12">
-                                {{ 'remain' }}
-                            </div>
-                            <div class="col-xs-12">
-                                <i-button type="success" class="float-right">创建订单</i-button>
-                                <i-button type="info" class="float-right">联系卖家</i-button>
+                            <div class="home-padding col-xs-12">
+                                <div class="goods-info col-xs-6">
+                                    <h3>类型：{{ $type?'出售':'租赁' }}</h3>
+                                </div>
+                                <div class="goods-info col-xs-6">
+                                    <h3>价格：{{ $cost }}</h3>
+                                </div>
+                                <div class="goods-info col-xs-12">
+                                    <h3>库存：{{ $remain }}</h3>
+                                </div>
+                                <div class="col-xs-12">
+                                    <i-button type="success" class="float-right">创建订单</i-button>
+                                    <i-button type="info" class="float-right">联系卖家</i-button>
+                                </div>
                             </div>
                         </div>
                 </div>
@@ -67,7 +71,7 @@
                         <div class="col-xs-4">
                             <img class="img-circle img-thumbnail" src="/storage/admin.png" alt="avatar">
                         </div class="col-xs-8">
-                        <h3 class="goods-description">{{ 'description' }}</h3>
+                        <h3 class="goods-description">{{ $description }}</h3>
                     </div>
                 </div>
             </div>
@@ -76,6 +80,39 @@
                     <div>商品评论</div>
                 </div>
                 <div class="card-body">
+                    <template v-for="card in commentList">
+                        <ul class="list-group">
+                        <template v-if="card.uid">
+                            <li class="list-group-item comment col-xs-12">
+                                <div class="col-xs-4">
+                                    <div class="img-wrapper"
+                                        style="background-size: contain;"
+                                        :style="'background-image: url('+card.avatar+')'">
+                                    </div>
+                                    <h5>@{{ card.uname }}</h5>
+                                </div>
+                                <div>@{{ card.content }}</div>
+                                <div class="goods-meta">@{{ card.created_at }}</div>
+                            </li>
+                        </template>
+                        </ul>
+                    </template>
+                    <div>
+                        <i-form>
+                        <i-col span="2">评论</i-col>
+                        <i-col span="16">
+                            <form-item>
+                                <i-input placeholder="说些什么..."></i-input>
+                            </form-item>
+                        </i-col>
+                        <i-col span="2">&nbsp;</i-col>
+                        <i-col span="4">
+                            <form-item>
+                                <i-button type="primary">提交</i-button>
+                            </form-item>
+                        </i-col>
+                        </i-form>
+                    </div>
                 </div>
             </div>
             <div style="padding-top:5%;"></div>

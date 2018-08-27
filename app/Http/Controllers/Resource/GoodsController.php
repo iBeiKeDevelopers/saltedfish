@@ -78,6 +78,10 @@ class GoodsController extends Controller
         return $goods;
     }
 
+    public function listComments($id) {
+        return Goods::find($id)->comments;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -118,7 +122,8 @@ class GoodsController extends Controller
                 'cost' => $raw['cost'],
                 'remain' => $raw['remain'],
                 'description' => $raw['description'],
-                'category' => "{cat1:'".$raw['cat1']."',cat2:'".$raw['cat2']."'}",
+                'cat1' => $raw['cat1'],
+                'cat2' => $raw['cat2'],
             ];
             $goodsModel = new Goods($goods);
             $goodsModel->save();
@@ -135,6 +140,7 @@ class GoodsController extends Controller
 
                     $res = Image::insert([
                         'gid'       =>      $id,
+                        'path'      =>      $path,
                         'src'       =>      Storage::url($path),
                     ]);
                     if(!$res) return [
@@ -165,9 +171,8 @@ class GoodsController extends Controller
      */
     public function show($id)
     {
-        return view('goods.home',[
-            'common'     =>      Goods::find($id),
-        ]);
+        $goods = Goods::find($id);
+        return view('goods.home',$goods);
     }
 
     /**
@@ -191,17 +196,14 @@ class GoodsController extends Controller
         $list = [];
         foreach($images as $img) {
             $key = uniqid();
-            $content = Storage::get($img->src);
+            $content = Storage::get($img->path);
             cache([$key => $content], 30);
             array_push($list, [
-                'url'       =>          Storage::url($img->src),
+                'url'       =>          $img->src,
                 'name'      =>          $key,
             ]);
         }
-        $category = getCatIn($goods->category);
         $goods->list = $list;
-        $goods->cat1 = $category[0];
-        $goods->cat2 = $category[1];
         $goods->tags = '';
         $goods->url  = "/goods/$id";
         return view('goods.form', $goods);
@@ -232,7 +234,8 @@ class GoodsController extends Controller
             $goodsModel->cost = $raw['cost'];
             $goodsModel->remain = $raw['remain'];
             $goodsModel->description = $raw['description'];
-            $goodsModel->category = "{cat1:'".$raw['cat1']."',cat2:'".$raw['cat2']."'}";
+            $goodsModel->cat1 = $raw['cat1'];
+            $goodsModel->cat2 = $raw['cat2'];
             
             $goodsModel->save();
             
@@ -244,6 +247,7 @@ class GoodsController extends Controller
 
                 $res = Image::insert([
                     'gid'       =>      $id,
+                    'path'      =>      $path,
                     'src'       =>      Storage::url($path),
                 ]);
                 if(!$res) return [
@@ -336,19 +340,4 @@ function isValid($goods) {
 
     //todo: tags
     return true;
-}
-
-function getCatIn($string) {
-    $start = strpos($string, ':');
-    $end = strpos($string, ',');
-    $len = $end - $start - 3;
-    $cat1 = substr($string, $start+2, $len);
-    $start = strrpos($string, ':');
-    $end = strrpos($string, '}');
-    $len = $end - $start - 3;
-    $cat2 = substr($string, $start+2, $len);
-    return [
-        $cat1,
-        $cat2,
-    ];
 }

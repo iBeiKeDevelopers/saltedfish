@@ -27,6 +27,7 @@ Route::get('home', 'UserPageController@index');
 Route::get('goods/id/{id?}', 'Resource\GoodsController@index');
 Route::get('goods/category/{cat?}', 'Resource\GoodsController@category');
 Route::get('goods/list/{type}/{uid}', 'Resource\GoodsController@list');
+Route::get('goods/comments/{id}', 'Resource\GoodsController@listComments');
 Route::resource('goods', 'Resource\GoodsController');
 
 Route::get('orders/list/{type}/{num?}', 'Resource\OrderController@list')

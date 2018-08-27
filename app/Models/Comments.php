@@ -8,4 +8,12 @@ class Comments extends Model
 {
     //
     protected $table = "goods_comments";
+
+    protected $fillable = [
+        'avatar',
+        'content',
+        'gid',
+        'uid',
+        'uname',
+    ];
 }

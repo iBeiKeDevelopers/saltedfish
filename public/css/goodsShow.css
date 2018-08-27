@@ -3,5 +3,13 @@
     font-size: 1.5em;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 2em;
+    height: 2.5em;
+}
+
+.goods-info {
+    font-size: 1em;
+}
+
+.comment-meta {
+    bottom: 0;
 }

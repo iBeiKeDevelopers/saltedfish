@@ -40,7 +40,7 @@
 
 @section('content')
 <!-- banner -->
-<div class="container" style="height:25%;">
+<div class="container">
     <div id="banner" class="carousel slide">
 	    <!-- carousel indicators -->
 	    <ol class="carousel-indicators">
@@ -51,13 +51,13 @@
 	    <!-- carousel item -->
 	    <div class="carousel-inner">
 		    <div class="item active">
-			    <img src="storage/banner/1.jpg" class="img-responsive" alt="First slide">
+			    <img src="storage/banner/1.jpg" class="img-carousel img-responsive" alt="First slide">
 		    </div>
 		    <div class="item img-responsive">
-			    <img src="storage/banner/2.jpg" class="img-responsive" alt="Second slide">
+			    <img src="storage/banner/2.jpg" class="img-carousel img-responsive" alt="Second slide">
 		    </div>
 		    <div class="item img-responsive">
-			    <img src="storage/banner/3.jpg" class="img-responsive" alt="Third slide">
+			    <img src="storage/banner/3.jpg" class="img-carousel img-responsive" alt="Third slide">
 		    </div>
 	    </div>
     </div> 

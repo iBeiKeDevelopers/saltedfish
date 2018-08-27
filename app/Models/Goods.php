@@ -18,7 +18,8 @@ class Goods extends Model
         'cost',
         'remain',
         'type',
-        'category',
+        'cat1',
+        'cat2',
     ];
 
     public function thumbnail() {

@@ -7,8 +7,12 @@
     background-color: #FFFFFF;
 }
 
+.img-carousel {
+    width:100%;
+}
+
 .img-wrapper {
-	background-size: contain;
+	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
 	width: 100%;
@@ -43,10 +47,6 @@
 
 .goods-cost {
     font-size: 1.5em;
-}
-
-.img-carousel {
-    height: 30em;
 }
 
 .image-slide {

@@ -23,7 +23,8 @@ class CreateGoodsTable extends Migration
             $table->float('cost');
             $table->integer('remain');
             $table->text('description');
-            $table->string('category');
+            $table->string('cat1');
+            $table->string('cat2');
 
             $table->timestamps();
             $table->softDeletes();
@@ -33,6 +34,7 @@ class CreateGoodsTable extends Migration
             $table->increments('id');
 
             $table->integer('gid');
+            $table->string('path');
             $table->string('src');
         });
 
@@ -45,7 +47,7 @@ class CreateGoodsTable extends Migration
             $table->string('avatar')->nullable();
             $table->text('content');
 
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
 
         Schema::create('goods_tags', function (Blueprint $table) {
