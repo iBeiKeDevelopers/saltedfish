@@ -5,27 +5,25 @@ new Vue({
             carouselValue: 0,
             page: 1,
             num: 5,
-            imageList: [
-                {
-                    src: "/storage/1.jpg",
-                },
-                {
-                    src: "/storage/2.jpg",
-                },
-                {
-                    src: "/storage/3.jpg",
-                },
-            ],
+            imageList: [],
             commentList: [],
         }
     },
     mounted() {
-        this.showComments()
+        id = document.getElementsByTagName('meta')['goods_id'].content
+        this.getImages(id)
+        this.showComments(id)
     },
     methods: {
-        showComments() {
+        getImages(id) {
             self = this
-            id = document.getElementsByTagName('meta')['goods_id'].content
+            axios.get('/api/image/id/'+id)
+                .then(function (res) {
+                    self.imageList = res.data
+                })
+        },
+        showComments(id) {
+            self = this
             axios.get('/goods/comments/' + id)
                 .then(function (res) {
                     self.commentList = res.data

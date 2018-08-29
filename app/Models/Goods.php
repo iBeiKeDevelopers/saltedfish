@@ -30,8 +30,8 @@ class Goods extends Model
         return $this->hasMany('App\Models\Image', 'gid');
     }
 
-    public function comments() {
-        return $this->hasMany('App\Models\Comments', 'gid');
+    public function comment() {
+        return $this->hasMany('App\Models\Comment', 'gid');
     }
 
     public function browse() {

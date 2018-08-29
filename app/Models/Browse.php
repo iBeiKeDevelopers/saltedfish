@@ -10,6 +10,10 @@ class Browse extends Model
 
     protected $primaryKey = "gid";
 
+    protected $fillable = [
+        'gid', 'like', 'view'
+    ];
+
     public function goods() {
         return $this->belongsTo('App\Models\Goods', 'gid', 'id');
     }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Resource;
 
+use Auth;
 use App\User;
+use App\User\Contact;
+use App\User\Identity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,7 +13,8 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('auth');
+        //$this->middleware('admin');
     }
     /**
      * Display a listing of the resource.
@@ -19,8 +23,36 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+
     }
+
+    public function common()
+    {
+        return Auth::user();
+    }
+
+    public function identity()
+    {
+        $user = Auth::user();
+        $identity = $user->identity;
+        return $identity ?? [
+            'degree'        =>      '',
+            'student_id'    =>      '',
+        ];
+    }
+
+    public function contact()
+    {
+        $user = Auth::user();
+        $contact = $user->contact;
+        return $contact ?? [
+            'college'       =>      '',
+            'domitory'      =>      '',
+            'room'          =>      '',
+            'phone'         =>      '',
+        ];
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -74,7 +106,41 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        if(Auth::id() != $user->id)
+            abort(403);
+        
+        $raw = $request->input();
+        $raw->id = Auth::id();
+
+        $word = $request->input('_word', '');
+        switch($word) {
+            case 'common':
+                if($user->update($request->input()))
+                    return [
+                        'status'    =>      true
+                    ];
+            case 'identity':
+                if(!$identity = Identity::find($user->id))
+                    $res = Identity::create($request->input());
+                else
+                    $res = $identity->update($request->input());
+                if($res)
+                    return [
+                        'status'    =>      true
+                    ];
+            case 'contact':
+                $conatct = Contact::find($user->id);
+                if($contact->updateOrCreate($request->input()))
+                    return [
+                        'status'    =>      true
+                    ];
+            default: abort(405);
+        }
+
+        return [
+            'status'    =>      false,
+            'error'     =>      'db error',
+        ];
     }
 
     /**

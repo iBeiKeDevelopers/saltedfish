@@ -25,6 +25,7 @@ class CreateGoodsTable extends Migration
             $table->text('description');
             $table->string('cat1');
             $table->string('cat2');
+            $table->string('tags')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -59,8 +60,8 @@ class CreateGoodsTable extends Migration
         Schema::create('goods_browse', function (Blueprint $table) {
             $table->integer('gid');
             $table->integer('like')->default(0);
-            $table->integer('view');
-
+            $table->integer('view')->default(0);
+            
             $table->timestamps();
         });
     }

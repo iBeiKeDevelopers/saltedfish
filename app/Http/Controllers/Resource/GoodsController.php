@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Resource;
 use Auth;
 use App\Models\Goods;
 use App\Models\Image;
+use App\Models\Browse;
 use App\Models\Comment;
 
 use App\Http\Controllers\Controller;
@@ -79,7 +80,7 @@ class GoodsController extends Controller
     }
 
     public function listComments($id) {
-        return Goods::find($id)->comments;
+        return Comment::where('gid', $id)->get();
     }
 
     /**
@@ -122,12 +123,13 @@ class GoodsController extends Controller
                 'cost' => $raw['cost'],
                 'remain' => $raw['remain'],
                 'description' => $raw['description'],
-                'cat1' => $raw['cat1'],
-                'cat2' => $raw['cat2'],
+                'cat1' => $raw['category'][0],
+                'cat2' => $raw['category'][1],
             ];
             $goodsModel = new Goods($goods);
             $goodsModel->save();
             $id = $goodsModel->id;
+            Browse::create(['gid' => $id]);
             
             if($id) {
                 $dir = 'public/'.date('Y/M');
@@ -172,6 +174,10 @@ class GoodsController extends Controller
     public function show($id)
     {
         $goods = Goods::find($id);
+        $browse = Browse::find($id);
+        //return $goods;
+        $browse->view++;
+        $browse->save();
         return view('goods.home',$goods);
     }
 
@@ -234,10 +240,11 @@ class GoodsController extends Controller
             $goodsModel->cost = $raw['cost'];
             $goodsModel->remain = $raw['remain'];
             $goodsModel->description = $raw['description'];
-            $goodsModel->cat1 = $raw['cat1'];
-            $goodsModel->cat2 = $raw['cat2'];
+            $goodsModel->cat1 = $raw['category'][0];
+            $goodsModel->cat2 = $raw['category'][1];
             
             $goodsModel->save();
+
             
             $dir = 'public/'.date('Y/M');
             foreach($raw['uploadList'] as $name) {
@@ -281,10 +288,12 @@ class GoodsController extends Controller
 }
 
 function isValid($goods) {
+    if($goods['uploadList'] == [])
+        return "please upload at list one image!";
     if(!is_string($goods["title"]))
         return "title is not a string";
     else if(strlen($goods["title"]) > 20)
-        return "title is no more than 20 letters";
+        return "title is too long";
     
     if(!is_string($goods["description"]))
         return "description is not a string";
@@ -319,7 +328,10 @@ function isValid($goods) {
         ],
     ];
 
-    if(!isset($arr_cat[$goods["cat1"]]) || !in_array($goods["cat2"], $arr_cat[$goods["cat1"]]))
+    $cat1 = $goods['category'][0];
+    $cat2 = $goods['category'][1];
+
+    if(!isset($arr_cat[$cat1]) || !in_array($cat2, $arr_cat[$cat1]))
         return "category does not exist";
 
     if(!is_numeric($goods["remain"]))

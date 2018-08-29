@@ -25,101 +25,37 @@
 				<div class="card-header">要上传啥赶紧填，麻溜利索的！</div>
                 <div id="form" class="card-body">
                     <i-form ref="formValidate" :model="formValidate" :rules="ruleValidate" >
-                        <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="col-xs-12" style="z-index:1">
                             <form-item label="商品名称" prop="title">
-                                <i-input v-model="formValidate.title"></i-input>
+                                <i-input v-model="formValidate.title" clearable></i-input>
                             </form-item>
                             <form-item label="商品描述" prop="description">
                                 <i-input v-model="formValidate.description" type="textarea" :autosize="{minRows: 5, maxRows: 8}"></i-input>
                             </form-item>
                         </div>
-
                         <form-item label="价格" prop="cost" class="col-lg-6 col-md-6 float-left">
-                            <i-input v-model="formValidate.cost">
+                            <i-input v-model="formValidate.cost" clearable>
                                 <Icon type="logo-yen" slot="prepend"></Icon>
                             </i-input>
                         </form-item>
-                        <form-item label="库存" prop="remain" class="col-lg-6 col-md-6 float-left">
-                            <i-input v-model="formValidate.remain">
+                        <form-item label="库存" prop="remain" class="col-md-6 float-left">
+                            <i-input v-model="formValidate.remain" clearable>
                                 <Icon type="md-filing" slot="prepend"></Icon>
                             </i-input>
                         </form-item>
-
-                        <form-item label="类型" prop="type" class="col-lg-6 col-md-6 float-left">
+                        <form-item label="类型" prop="type" class="col-md-6 float-left">
                             <i-select v-model="formValidate.type">
-                                <i-option value="0">租赁</i-option>
-                                <i-option value="1">出售</i-option>
+                                <i-option value="0">出售</i-option>
+                                <i-option value="1">租赁</i-option>
                             </i-select>
                         </form-item>
-                        <form-item label="分类" prop="cat1" class="col-lg-6 col-md-6 float-left">
-                            <i-select v-model="formValidate.cat1" placeholder="一级分类">
-                                <i-option value="sp">食品</i-option>
-                                <i-option value="fs">服饰</i-option>
-                                <i-option value="shyp">生活用品</i-option>
-                                <i-option value="xxyp">学习用品</i-option>
-                                <i-option value="dzcp">电子产品</i-option>
-                                <i-option value="tyyp">体育用品</i-option>
-                                <i-option value="yyqc">音乐器材</i-option>
-                                <i-option value="fstsp">非实体商品</i-option>
-                            </i-select>
-                            <i-select v-model="formValidate.cat2" placeholder="二级分类">
-                                <template v-if="formValidate.cat1 === 'shyp'">
-                                    <i-option value="csyp">床上用品</i-option>
-                                    <i-option value="xxyp">洗漱用品</i-option>
-                                    <i-option value="rcyp">日常用品</i-option>
-                                    <i-option value="qtshyp">其他</i-option>
-                                </template>
-                                <template v-else-if="formValidate.cat1 === 'xxyp'">
-                                    <i-option value="xjjc">新旧教材</i-option>
-                                    <i-option value="xbbj">学霸笔记</i-option>
-                                    <i-option value="fxzl">复习资料</i-option>
-                                    <i-option value="sjzz">书籍杂志</i-option>
-                                    <i-option value="cgyy">出国英语</i-option>
-                                    <i-option value="qtxxyp">其他</i-option>
-                                </template>
-                                <template v-else-if="formValidate.cat1 === 'sp'">
-                                    <i-option value="ls">零食</i-option>
-                                    <i-option value="tc">特产</i-option>
-                                    <i-option value="yp">饮品</i-option>
-                                    <i-option value="qtsp">其他</i-option>
-                                </template>
-                                <template v-else-if="formValidate.cat1 === 'fs'">
-                                    <i-option value="fsxm">服装鞋帽</i-option>
-                                    <i-option value="dzfz">定制服装</i-option>
-                                    <i-option value="gj">挂件</i-option>
-                                    <i-option value="qtfs">其他</i-option>
-                                </template>
-                                <template v-else-if="formValidate.cat1 === 'dzcp'">
-                                    <i-option value="sj">手机</i-option>
-                                    <i-option value="dn">电脑</i-option>
-                                    <i-option value="sjpj">手机配件</i-option>
-                                    <i-option value="dnpj">电脑配件</i-option>
-                                    <i-option value="qtdzcp">其他</i-option>
-                                </template>
-                                <template v-else-if="formValidate.cat1 === 'tyyp'">
-                                    <i-option value="qlxg">球类相关</i-option>
-                                    <i-option value="jsqc">健身器材</i-option>
-                                    <i-option value="qttyyp">其他</i-option>
-                                </template>
-                                <template v-else-if="formValidate.cat1 === 'yyqc'">
-                                    <i-option value="xyyq">西洋乐器</i-option>
-                                    <i-option value="mzyq">民族乐器</i-option>
-                                    <i-option value="yqpj">乐器配件</i-option>
-                                    <i-option value="qtyyqc">其他</i-option>
-                                </template>
-                                <template v-else-if="formValidate.cat1 === 'fstsp'">
-                                    <i-option value="hpjh">轰趴聚会</i-option>
-                                    <i-option value="bjzby">北京周边游</i-option>
-                                    <i-option value="sy">摄影</i-option>
-                                    <i-option value="pmsj">平面设计</i-option>
-                                    <i-option value="rjsj">软件设计</i-option>
-                                    <i-option value="spjj">视频剪辑</i-option>
-                                    <i-option value="pxkc">培训课程</i-option>
-                                    <i-option value="qtfstsp">其他</i-option>
-                                </template>
-                            </i-select>
+                        <form-item label="标签" class="col-md-6 float-left">
+                            <i-select></i-select>
                         </form-item>
-                        <form-item label="img" class="col-md-6 col-xs-12 float-left">
+                        <form-item label="分类" prop="category" class="col-md-6 float-left">
+                            <Cascader :data="cascader" v-model="formValidate.category"></Cascader>
+                        </form-item>
+                        <form-item label="商品美图" class="col-md-6 float-left">
                             <div id="img-upload">
                                 <div class="upload-list" v-for="item in uploadList">
                                     <template v-if="item.status === 'finished'">
@@ -179,6 +115,89 @@ var form = new Vue({
             callback();
         }
         return {
+            cascader: [{
+                value: "sp",
+                label: "食品",
+                children: [
+                    {value: "ls",label: "零食"},
+                    {value: "tc",label: "特产"},
+                    {value: "yp",label: "饮品"},
+                    {value: "qtsp",label: "其他"},
+                ],
+            },{
+                value: "fs",
+                label: "服饰",
+                children: [
+                    {value: "fsxm",label: "服装鞋帽"},
+                    {value: "dzfz",label: "定制服装"},
+                    {value: "gj",label: "挂件"},
+                    {value: "qtfs",label: "其他"},
+                ],
+            },{
+                    value: "shyp",
+                    label: "生活用品",
+                    children: [
+                        {value: "csyp",label: "床上用品"},
+                        {value: "xxyp",label: "洗漱用品"},
+                        {value: "rcyp",label: "日常用品"},
+                        {value: "qtshyp",label: "其他"},
+                    ],
+                },{
+                    value: "xxyp",
+                    label: "学习用品",
+                    children: [
+                        {value: "xjjc",label: "新旧教材"},
+                        {value: "xbbj",label: "学霸笔记"},
+                        {value: "fxzl",label: "复习资料"},
+                        {value: "sjzz",label: "书籍杂志"},
+                        {value: "cgyy",label: "出国英语"},
+                        {value: "qtxxyp",label: "其他"},
+                    ],
+                },{
+                    value: "dzcp",
+                    label: "电子产品",
+                    children: [
+                        {value: "sj",label: "手机"},
+                        {value: "dn",label: "电脑"},
+                        {value: "sjpj",label: "手机配件"},
+                        {value: "dnpj",label: "电脑配件"},
+                        {value: "qtdzcp",label: "其他"},
+                    ],
+                },{
+                    value: "tyyp",
+                    label: "体育用品",
+                    children: [
+                        {value: "qlxg",label: "球类相关"},
+                        {value: "jsqc",label: "健身器材"},
+                        {value: "qttyyp",label: "其他"},
+                    ],
+                },{
+                    value: "yyqc",
+                    label: "音乐器材",
+                    children: [
+                        {value: "xyyq",label: "西洋乐器"},
+                        {value: "mzyq",label: "民族乐器"},
+                        {value: "yqpj",label: "乐器配件"},
+                        {value: "qtyyqc",label: "其他"},
+                    ],
+                },{
+                    value: "fstsp",
+                    label: "非实体商品",
+                    children: [
+                        {value: "hpjh",label: "轰趴聚会"},
+                        {value: "bjzby",label: "北京周边游"},
+                        {value: "sy",label: "摄影"},
+                        {value: "pmsj",label: "平面设计"},
+                        {value: "rjsj",label: "软件设计"},
+                        {value: "spjj",label: "视频剪辑"},
+                        {value: "pxkc",label: "培训课程"},
+                        {value: "qtfstsp",label: "其他"},
+                    ],
+                },{
+                    value: "qt",
+                    label: "其他"
+                }
+            ],
             imgName: '',
             visible: false,
             defaultList: [
@@ -197,8 +216,7 @@ var form = new Vue({
                 type:"{{ $type }}",
                 cost: {{$cost }},
                 remain: {{ $remain }},
-                cat1: "{{ $cat1 }}",
-                cat2: "{{ $cat2 }}",
+                category: ["{{ $cat1 }}", "{{ $cat2 }}"],
                 tags: [{{ $tags }}],
             },
             ruleValidate: {
@@ -232,7 +250,7 @@ var form = new Vue({
                     required: true,
                     message: "required",
                 }],
-                cat2: [{
+                category: [{
                     required: true,
                     message: "required",
                 }],
@@ -253,7 +271,7 @@ var form = new Vue({
                     self.uploadList.forEach(function (item) {
                         formData.uploadList.push(item.name)
                     })
-                    console.log(formData)
+                    //console.log(formData)
                     @php
                         if($id)
                             echo "formData._method='PUT';"
@@ -310,7 +328,7 @@ var form = new Vue({
             });
         },
         handleBeforeUpload () {
-            const checkMost = this.uploadList.length < 4;
+            const checkMost = this.uploadList.length < 5;
             if (!checkMost) {
                 this.$Notice.warning({
                     title: '最多上传5张图片。'

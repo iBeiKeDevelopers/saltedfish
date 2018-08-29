@@ -22,20 +22,25 @@ Route::middleware('auth:api')->get('/logout', function () {
 });
 
 Route::get('/', 'HomeController@index');
-Route::get('home', 'UserPageController@index');
 
-Route::get('goods/id/{id?}', 'Resource\GoodsController@index');
+Route::get('goods/id/{id?}', 'Resource\GoodsController@index')->where('id', '[0-9]+');
 Route::get('goods/category/{cat?}', 'Resource\GoodsController@category');
-Route::get('goods/list/{type}/{uid}', 'Resource\GoodsController@list');
-Route::get('goods/comments/{id}', 'Resource\GoodsController@listComments');
+Route::get('goods/list/{type}/{uid}', 'Resource\GoodsController@list')->where('uid', '[0-9]+');
+Route::get('goods/comments/{id}', 'Resource\GoodsController@listComments')->where('id', '[0-9]+');
 Route::resource('goods', 'Resource\GoodsController');
 
-Route::get('orders/list/{type}/{num?}', 'Resource\OrderController@list')
-    ->where('id', '[0-9]+');
+Route::get('orders/list/{type}/{page?}/{num?}', 'Resource\OrderController@list')->where('id', '[0-9]+');
 Route::resource('orders', 'Resource\OrderController')->middleware('auth');
 
+Route::get('home', 'UserPageController@index');
 Route::get('profile', 'UserPageController@profile');
-Route::resource('users', 'Resource\UserController')->middleware('admin');
+Route::get('user/{uid}/goods', 'UserPageController@showGoods')->where('uid', '[0-9]+');
+Route::get('user/{uid}/orders', 'UserPageController@showOrders')->where('uid', '[0-9]+');
+
+Route::get('user/common', 'Resource\UserController@common');
+Route::get('user/identity', 'Resource\UserController@identity');
+Route::get('user/contact', 'Resource\UserController@contact');
+Route::resource('user', 'Resource\UserController');
 
 //Route::resource('image', 'Resource\ImageController');
 

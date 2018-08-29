@@ -19,10 +19,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('order');
+        return view('orders.index');
     }
 
-    public function list($type = 'buy', $num = '0')
+    public function list($type = 'buy', $page = 1, $num = 6)
     {
         if($type == 'buy') {
             $orders = Order::where('uid', Auth::id())->where('status', '<', '2');
@@ -71,7 +71,7 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(int $id)
     {
         //
     }

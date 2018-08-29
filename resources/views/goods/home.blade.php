@@ -17,46 +17,53 @@
 <div id="singleItem">
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-12 col-xs-12">
+        <div class="col-xs-12">
             <div class="card">
                 <div class="card-header">
                     <breadcrumb separator=">">
-                    <breadcrumb-item to="/">{{ $cat1 }}</breadcrumb-item>
-                    <breadcrumb-item to="/components/breadcrumb">{{ $cat2 }}</breadcrumb-item>
+                    <breadcrumb-item to="/category/{{ $cat1 }}">{{ $cat1 }}</breadcrumb-item>
+                    <breadcrumb-item to="/category/{{ $cat2 }}">{{ $cat2 }}</breadcrumb-item>
                     <breadcrumb-item>{{ $title }}</breadcrumb-item>
                     </breadcrumb>
                 </div>
                 <div class="card-body">
                         <!-- carousel slide -->
-                        <div class="image-slide float-left">
-                            <Carousel v-model="carouselValue" loop>
-                                <template v-for="item in imageList">
-                                    <carousel-item>
-                                        <div class="img-wrapper img-carousel"
-                                            style="background-size:contain;"
-                                            :style="'background-image: url('+item.src+')'">
-                                        </div>
-                                    </carousel-item>
-                                </template>
-                            </Carousel>
+                        <div class="col-lg-6 image-slide float-left">
+                            <div style="col-xs-12">
+                                <Carousel v-model="carouselValue" loop>
+                                    <template v-for="item in imageList">
+                                        <carousel-item>
+                                            <div class="img-wrapper"
+                                                style="background-size:contain;height:30em;"
+                                                :style="'background-image: url('+item.src+')'">
+                                            </div>
+                                        </carousel-item>
+                                    </template>
+                                </Carousel>
+                            </div>
                         </div>
                         <div class="col-xs-12 col-lg-6">
                             <div class="goods-title col-xs-12">
                                 <h1>{{ $title }}</h1>
                             </div>
+                            <div class="goods-cost col-xs-12">
+                                <h1>{{ $cost }}</h1>
+                            </div>
                             <div class="home-padding col-xs-12">
                                 <div class="goods-info col-xs-6">
-                                    <h3>类型：{{ $type?'出售':'租赁' }}</h3>
-                                </div>
-                                <div class="goods-info col-xs-6">
-                                    <h3>价格：{{ $cost }}</h3>
-                                </div>
-                                <div class="goods-info col-xs-12">
-                                    <h3>库存：{{ $remain }}</h3>
+                                    <template v-if="{{ $status }}">
+                                        <div class="float-left">状态：缺货</div>
+                                        </template>
+                                    <template v-else>
+                                        <div class="float-left">状态：{{ $type ? '出售' : '出租' }}</div>
+                                        <div class="float-left">库存：{{ $remain }}</div>
+                                    </template>
                                 </div>
                                 <div class="col-xs-12">
-                                    <i-button type="success" class="float-right">创建订单</i-button>
-                                    <i-button type="info" class="float-right">联系卖家</i-button>
+                                    <button class="btn btn-success" type="button">创建订单</button>
+                                </div>
+                                <div class="col-xs-12">
+                                    <button class="btn btn-link" type="button">联系卖家</button>
                                 </div>
                             </div>
                         </div>
@@ -67,12 +74,12 @@
                     <div>卖家留言</div>
                 </div>
                 <div class="card-body">
-                    <div class="col-xs-12">
-                        <div class="col-xs-4">
+                        <div class="col-xs-4 col-md-2">
                             <img class="img-circle img-thumbnail" src="/storage/admin.png" alt="avatar">
-                        </div class="col-xs-8">
-                        <h3 class="goods-description">{{ $description }}</h3>
-                    </div>
+                        </div>
+                        <div class="col-xs-8 col-md-10">
+                            <p class="goods-description">{{ $description }}</p>
+                        </div>
                 </div>
             </div>
             <div class="card">

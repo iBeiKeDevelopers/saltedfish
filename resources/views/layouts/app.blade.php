@@ -104,6 +104,7 @@
             @yield('content')
         </main>
 
+        <!-- footer -->
         <footer class="container-fluid foot-wrap main-content">
             <div class="container">
                 <p style="text-align:center;">&copy;&nbsp;2018&nbsp;ibeike&nbsp;team</p>

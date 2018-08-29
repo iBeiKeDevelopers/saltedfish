@@ -24,8 +24,8 @@
 <a class="dropdown-item hidden-xs" href="/home">个人中心</a>
 <a class="dropdown-item visible-xs" style="text-align:center;" href="/home">个人中心</a>
 
-<a class="dropdown-item hidden-xs" href="/orders/{{ Auth::id() }}">我的订单</a>
-<a class="dropdown-item visible-xs" style="text-align:center;" href="/orders/{{ Auth::id() }}">我的订单</a>
+<a class="dropdown-item hidden-xs" href="/orders">我的订单</a>
+<a class="dropdown-item visible-xs" style="text-align:center;" href="/orders">我的订单</a>
 @endsection
 
 @section('form')
@@ -127,6 +127,5 @@
 <script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/goodsCards.js') }}"></script>
-<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.js"></script>
 
 @endsection
