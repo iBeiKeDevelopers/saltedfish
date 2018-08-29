@@ -97,8 +97,7 @@
                                     </i-select>
                                 </form-item>
                                 <form-item label="student_id">
-                                    <i-input v-model="content.student_id"
-                                        placeholder="null"></i-input>
+                                    <i-input v-model="content.student_id" placeholder="null"></i-input>
                                 </form-item>
                                 <form-item>
                                     <i-button type="primary" @click="uploadInfo(flag)">提交</i-button>
@@ -109,7 +108,7 @@
                         <template v-else-if="flag == 2">
                             <i-form class="col-xs-12 col-md-9 float-left">
                                 <form-item label="college">
-                                    <i-select v-model="content.college" placeholder="null">
+                                    <i-select v-model="content.college">
                                         <i-option value="tz">土木与资源工程学院</i-option>
                                         <i-option value="yj">冶金与生态工程学院</i-option>
                                         <i-option value="cl">材料科学与工程学院</i-option>
@@ -129,15 +128,15 @@
                                 </form-item>
                                 <form-item label="domitory">
                                     <i-input v-model="content.domitory"
-                                        placeholder="null"></i-input>
+                                        placeholder="数字"></i-input>
                                 </form-item>
                                 <form-item label="room">
                                     <i-input v-model="content.room"
-                                        placeholder="null"></i-input>
+                                        placeholder="数字"></i-input>
                                 </form-item>
                                 <form-item label="phone">
                                     <i-input v-model="content.phone"
-                                        placeholder="null"></i-input>
+                                        placeholder="手机号码"></i-input>
                                 </form-item>
                                 <form-item>
                                     <i-button type="primary" @click="uploadInfo(flag)">提交</i-button>
@@ -177,6 +176,7 @@
                 getInfo(this.urlList[num])
                     .then(function (data) {
                         if(data != 'error') {
+                            console.log(data)
                             self.content = data
                             self.flag = num
                         }

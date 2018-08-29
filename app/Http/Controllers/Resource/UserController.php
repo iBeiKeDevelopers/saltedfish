@@ -6,8 +6,10 @@ use Auth;
 use App\User;
 use App\User\Contact;
 use App\User\Identity;
+use App\Enums\CollegeType as College;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -35,6 +37,8 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $identity = $user->identity;
+        if($identity)
+            $identity->degree = "$identity->degree";
         return $identity ?? [
             'degree'        =>      '',
             'student_id'    =>      '',
@@ -53,6 +57,16 @@ class UserController extends Controller
         ];
     }
 
+    public function avatar(Request $request)
+    {
+        $file = $request->file('file');
+        $ext = $file->getClientOriginalExtension();
+        if(!isLegalExt($ext)) abort(500);
+        $path = $file->store('public/'.date('Y/M'));
+        $user = User::find(Auth::id());
+        $user->avatar = Storage::url($path);
+        $user->save();
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -110,30 +124,32 @@ class UserController extends Controller
             abort(403);
         
         $raw = $request->input();
-        $raw->id = Auth::id();
 
         $word = $request->input('_word', '');
+        $message = validate($raw, $word);
+        if(strlen($message))
+            return [
+                'status'    =>      false,
+                'error'     =>      $message,
+            ];
         switch($word) {
             case 'common':
                 if($user->update($request->input()))
-                    return [
-                        'status'    =>      true
-                    ];
+                    return ['status' => true];
             case 'identity':
                 if(!$identity = Identity::find($user->id))
-                    $res = Identity::create($request->input());
+                    $res = Identity::create($raw);
                 else
-                    $res = $identity->update($request->input());
+                    $res = $identity->update($raw);
                 if($res)
-                    return [
-                        'status'    =>      true
-                    ];
+                    return ['status' => true];
             case 'contact':
-                $conatct = Contact::find($user->id);
-                if($contact->updateOrCreate($request->input()))
-                    return [
-                        'status'    =>      true
-                    ];
+                if(!$contact = Contact::find($user->id))
+                    $res = Contact::create($raw);
+                else
+                    $res = $contact->update($raw);
+                if($res)
+                    return ['status' => true];
             default: abort(405);
         }
 
@@ -153,4 +169,65 @@ class UserController extends Controller
     {
         //
     }
+}
+
+function validate(&$arr, $word) {
+    switch($word) {
+        case 'common':
+            $nick_name = $arr['nick_name'];
+            if(!strlen($nick_name))
+                return "nick name cannot be null!";
+            $arr = [
+                'nick_name' => $nick_name,
+                'id' => Auth::id(),
+            ];
+            return '';
+        case 'identity':
+            if(!in_array($arr['degree'], [0,1,2]))
+                return "error";
+            if(!isStudentId($arr['student_id']))
+                return "invalid student id!";
+            $arr = [
+                'degree' => $arr['degree'],
+                'student_id' => $arr['student_id'],
+                'id' => Auth::id(),
+            ];
+            return '';
+        case 'contact':
+            $college = new College($arr['college']);
+            if(!$college)
+                return "invalid college!";
+            if(!is_numeric($arr['domitory']) || strlen($arr['domitory']) > 3)
+                return "invalid domitory number!";
+            if(!is_numeric($arr['room']) || strlen($arr['room']) > 4 ||strlen($arr['room']) < 3)
+                return "invalid room number!";
+            if(!is_numeric($arr['phone']) || strlen($arr['phone']) != 11)
+                return "invalid phone number!";
+            $arr = [
+                'college' => $arr['college'],
+                'domitory' => $arr['domitory'],
+                'room' => $arr['room'],
+                'phone' => $arr['phone'],
+                'id' => Auth::id(),
+            ];
+            return '';
+        default: return '';
+    }
+}
+
+function isStudentId($number) {
+    if(strlen("$number") != 8)
+        return false;
+    if(!is_numeric($number))
+        return false;
+    return true;
+}
+
+function isLegalExt($ext) {
+    $arr = [
+        'jpg', 'jpeg', 'png',
+    ];
+    if(in_array($ext, $arr))
+        return true;
+    else return false;
 }

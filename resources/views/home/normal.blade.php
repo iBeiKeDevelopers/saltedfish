@@ -30,7 +30,6 @@
 
 @section('form')
 <form class="navbar-form navbar-right form-inline hidden-xs" role="search" method="GET">
-	@csrf
     <div class="form-group col-md-9">
         <input type="text" class="form-control" name="keyword" placeholder="Search">
     </div>

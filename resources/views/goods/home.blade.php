@@ -17,7 +17,7 @@
 <div id="singleItem">
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-xs-12">
+        <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
                     <breadcrumb separator=">">
@@ -91,15 +91,16 @@
                         <ul class="list-group">
                         <template v-if="card.uid">
                             <li class="list-group-item comment col-xs-12">
-                                <div class="col-xs-4">
-                                    <div class="img-wrapper"
-                                        style="background-size: contain;"
+                                <div class="col-md-2 col-xs-4">
+                                    <div class="circle-avatar"
                                         :style="'background-image: url('+card.avatar+')'">
                                     </div>
                                     <h5>@{{ card.uname }}</h5>
                                 </div>
-                                <div>@{{ card.content }}</div>
-                                <div class="goods-meta">@{{ card.created_at }}</div>
+                                <div class="col-md-10 col-xs-8">
+                                    <div>@{{ card.content }}</div>
+                                    <div class="goods-meta">@{{ card.created_at }}</div>
+                                </div>
                             </li>
                         </template>
                         </ul>

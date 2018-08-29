@@ -40,6 +40,7 @@ Route::get('user/{uid}/orders', 'UserPageController@showOrders')->where('uid', '
 Route::get('user/common', 'Resource\UserController@common');
 Route::get('user/identity', 'Resource\UserController@identity');
 Route::get('user/contact', 'Resource\UserController@contact');
+Route::post('user/avatar', 'Resource\UserController@avatar');
 Route::resource('user', 'Resource\UserController');
 
 //Route::resource('image', 'Resource\ImageController');

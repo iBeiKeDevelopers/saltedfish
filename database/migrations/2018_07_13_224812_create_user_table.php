@@ -45,7 +45,7 @@ class CreateUserTable extends Migration
             $table->string('college');
             $table->integer('domitory');
             $table->integer('room');
-            $table->string('phone');
+            $table->string('phone')->unique();
 
             $table->timestamps();
         });

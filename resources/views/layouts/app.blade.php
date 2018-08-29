@@ -72,7 +72,9 @@
                                     骚操作
                                 </a>
                                 <a class="nav-link dropdown hidden-xs" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" v-pre>
-                                    <img src="{{ Auth::user()->avatar ?? '/storage/null.png' }}" class="img-circle img-thumbnail" style="height:50px;">
+                                    <div style="width:50px;">
+                                    <div class="circle-avatar" style="background-image:url('{{ Auth::user()->avatar ?? '/storage/null.png' }}');"></div>
+                                    </div>
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">

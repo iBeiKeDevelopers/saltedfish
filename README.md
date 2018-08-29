@@ -12,6 +12,4 @@ a web site selling goods
 
 - todos:
 - - add tags when create goods
-- - write goods view page
-- - update the max length of the goods title to 15
-- - seperate the css from the styles in html documents
+- - write order page using mescroll

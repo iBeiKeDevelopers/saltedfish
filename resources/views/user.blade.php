@@ -17,20 +17,25 @@
 @endsection
 
 @section('content')
-<script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="/css/upload.css">
+<link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
+<script type="text/javascript" src="/js/axios.min.js"></script>
+<script type="text/javascript" src="/js/vue.js"></script>
+<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.js"></script>
 
-<div class="container">
+<div id="user" class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-lg-8">
             <div class="card">
 				<div class="card-header">
 					<div class="float-left">个人信息</div>
 					<div class="rounded float-right"><a href="profile">编辑</a></div>
 				</div>
 				<div class="card-body">
-					<img class="float-left img-thumbnail" src="{{ Auth::user()->avatar ?? '/storage/null.png' }}" style="max-width:30%;">
-					<div id="profile" class="" style="padding-left:40%">
+					<div class="thumbnail float-left col-xs-3">
+						<img class="img-responsive" src="{{ Auth::user()->avatar ?? '/storage/null.png' }}">
+					</div>
+					<div id="profile" class="col-xs-9 float-left">
 						<table class="table">
   							<tbody>
     							<tr>
@@ -56,9 +61,18 @@
 			</div>
 		</div>
 	</div>
-	<div style="padding:3%"></div>
+	<div class="row justify-content-center">
+        <div class="col-lg-8">
+			<Upload type="drag" action="/user/avatar" :on-success="reload">
+				<div style="padding: 20px">
+            		<Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+            		<p>点击此处更换头像</p>
+        		</div>
+			</Upload>
+		</div>
+	</div>
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-lg-8">
             <div id="list" class="card">
 				<div class="card-header">
 					<div class="float-left">最近订单</div>
@@ -81,9 +95,9 @@
 								<template v-for="item in goodsList">
 									<li class="home-padding list-group-item">
 										<a :href="'/orders/'+item.id">
-											<img :src="item.thumbnail.src" 
-												class="img-thumbnail float-left"
-												style="width:30%" alt="thumbnail">
+											<div :style="'background-image: url('+item.thumbnail.src+')'" 
+												class="img-wrapper float-left"
+												style="width:30%" alt="thumbnail"></div>
 										</a>
 										<div class='pre-scrollable float-left'
 											style='padding-left:5%;width:65%;overflow:hidden;'>
@@ -104,6 +118,12 @@
 														<td>价格</td>
 														<td>￥ @{{ item.cost }}</td>
 													</tr>
+													<template v-if="flag">
+														<tr>
+															<td>买家</td>
+															<td>@{{ item.uid }}</td>
+														</tr>
+													</template>
 												</tbody>
 											</table>
 										</div>
@@ -132,7 +152,7 @@
 
 <script>
 	var orderList = new Vue({
-		el: "#list",
+		el: "#user",
 		data: {
 			uid: 1,//{{ Auth::id() }},
 			content: "",
@@ -145,19 +165,22 @@
 		},
 		methods: {
 			showOrderBuy : function () {
-				getList("orders/list/buy/2")
+				getList("orders/list/buy/1/2")
 					.then(res => {
 						this.goodsList = res
 					})
 				this.flag = 0
 			},
 			showOrderSell: function () {
-				getList("orders/list/sell/2")
+				getList("orders/list/sell/1/2")
 					.then(res => {
 						this.goodsList = res
 					})
 				this.flag = 1
 			},
+			reload: function () {
+				window.location.reload()
+			}
 		},
 	})
 
