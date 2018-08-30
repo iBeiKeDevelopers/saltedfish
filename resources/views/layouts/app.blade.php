@@ -27,10 +27,10 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel main">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             
             <div class="container">
-                <a href="{{ url('/') }}">
+                <a class="main" href="{{ url('/') }}">
                     <img id="logo" src="/storage/app/ibuy_logo.png" class="img-responsive" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -75,7 +75,7 @@
 						<div class="card-header card-header-center">
 							@{{ card.header }}
 						</div>
-						<div class="card-body main-background">
+						<div class="card-body main-background main-list">
 							<!-- normalCallback -->
 							<template v-if="card.status === true">
 								<template v-for="item in card.content">

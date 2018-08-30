@@ -7,25 +7,30 @@
 }
 
 .circle-avatar {
-    max-width:100%; 
-    width:100%; 
-    height:auto; 
+    max-width:100%;
+    width:100%;
+    height:auto;
     display:block;
     
     padding-top:100%;
-    border-radius:50%; 
+    border-radius:50%;
     
-    background-position-y:center; 
-    background-position-x:center; 
-    background-repeat:no-repeat; 
+    background-position-y:center;
+    background-position-x:center;
+    background-repeat:no-repeat;
     
-    background-size:cover; 
+    background-size:cover;
     
-    margin:0 auto; 
-    top:0; 
-    left:0; 
-    right:0; 
-    bottom:0; 
+    margin:0 auto;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.main-list {
+    padding: 20px 30px;
+    box-shadow: 3px 3px 5px #c4c4c4;
 }
 
 .img-wrapper {
@@ -74,5 +79,11 @@
 @media (max-width: 992px) {
     .image-slide {
         width:100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .main {
+        background-color: inherit;
     }
 }

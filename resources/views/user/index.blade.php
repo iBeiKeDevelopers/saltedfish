@@ -3,7 +3,7 @@
 @section('title', '个人中心')
 
 @section('dropdown')
-<a class="dropdown-item hidden-xs" href="/user/orders">我的订单</a>
+<a class="dropdown-item hidden-xs" href="/user/{{ Auth::id() }}/orders">我的订单</a>
 <a class="dropdown-item visible-xs" style="text-align:center;" href="/user/orders">我的订单</a>
 
 <a class="dropdown-item hidden-xs" href="/user/{{ Auth::id() }}/goods">我的商品</a>

@@ -35,9 +35,11 @@ class GoodsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function list(int $uid)
+    public function list(int $uid, int $page = 1, int $num = 4)
     {
-        $goods = Goods::where('owner', $uid)->get();
+        $goods = Goods::where('owner', $uid)
+            ->orderBy('updated_at', 'desc')
+            ->skip($page*$num)->take($num)->get();
         foreach($goods as $g) {
             $g->thumbnail;
             $g->browse;
