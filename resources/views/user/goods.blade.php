@@ -3,11 +3,11 @@
 @section('title', '个人中心')
 
 @section('dropdown')
+<a class="dropdown-item hidden-xs" href="/home">个人中心</a>
+<a class="dropdown-item visible-xs" style="text-align:center;" href="/home">个人中心</a>
+
 <a class="dropdown-item hidden-xs" href="/user/{{ Auth::id() }}/orders">我的订单</a>
 <a class="dropdown-item visible-xs" style="text-align:center;" href="/user/orders">我的订单</a>
-
-<a class="dropdown-item hidden-xs" href="/user/{{ Auth::id() }}/goods">我的商品</a>
-<a class="dropdown-item visible-xs" style="text-align:center;" href="/user/{{ Auth::id() }}/goods">我的商品</a>
 
 <a class="dropdown-item hidden-xs" href="/goods/create">上传商品</a>
 <a class="dropdown-item visible-xs" style="text-align:center;" href="/goods/create">上传商品</a>
@@ -57,30 +57,49 @@
 										<a :href="'/goods/'+item.id">
 											<div :style="'background-image: url('+item.thumbnail.src+')'" 
 												class="img-wrapper float-left"
-												style="width:30%" alt="thumbnail"></div>
+												style="width:20%;padding-top:20%;" alt="thumbnail"></div>
 										</a>
-										<div class='pre-scrollable float-left'
-											style='padding-left:5%;width:65%;overflow:hidden;'>
-											<table class='table table-striped table-condensed'>
+										<div class='table-responsive float-left'
+											style='padding-left:5%;width:55%;overflow:hidden;margin: 5% 0;'>
+											<table class='table table-condensed'>
+												<thead>
+                                                    <tr>
+													    <td>@{{ item.title }}</td>
+                                                    </tr>
+												</thead>
 												<tbody>
 													<tr>
-														<td>标题</td>
-														<td>@{{ item.title }}</td>
-													</tr>
-													<tr>
-														<td>类型</td>
 														<td>
-															<template v-if="item.type">租赁</template>
-															<template v-else>出售</template>
+															<template v-if="item.type">
+                                                                租赁&nbsp;@{{ item.cost }}/天
+                                                            </template>
+															<template v-else>
+                                                                出售&nbsp;@{{ item.cost }}
+                                                            </template>
+                                                            &nbsp;&nbsp;
+                                                            库存
+                                                            @{{ item.remain }}
 														</td>
-													</tr>
-													<tr>
-														<td>价格</td>
-														<td>￥ @{{ item.cost }}</td>
 													</tr>
 												</tbody>
 											</table>
 										</div>
+                                        <div class="float-left hidden-xs" style="width:25%;padding: 0 5%;margin: 5% 0;">
+                                            <table class="table-condensed">
+                                                <tr>
+                                                    <td>
+                                                        <img class="img-icon" src="/storage/find.png">
+                                                        <a :href="'/goods/'+item.id">查看</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <img class="img-icon" src="/storage/edit.png">
+                                                        <a :href="'/goods/'+item.id+'/edit'">修改</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
 									</li>
                                 </ul>
                             </div>

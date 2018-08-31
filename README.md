@@ -11,5 +11,6 @@ a web site selling goods
 ## 4 Todos
 
 - todos:
+- - write order page
+- - write goods pages
 - - add tags when create goods
-- - write order page using mescroll

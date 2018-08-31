@@ -17,7 +17,7 @@
 <div id="singleItem">
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-xs-12">
             <div class="card">
                 <div class="card-header">
                     <breadcrumb separator=">">
@@ -34,7 +34,7 @@
                                     <template v-for="item in imageList">
                                         <carousel-item>
                                             <div class="img-wrapper"
-                                                style="background-size:contain;height:30em;"
+                                                style="background-size:contain;padding-top:50%;"
                                                 :style="'background-image: url('+item.src+')'">
                                             </div>
                                         </carousel-item>
