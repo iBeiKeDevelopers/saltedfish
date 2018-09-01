@@ -36,78 +36,57 @@
                     </breadcrumb>
                 </div>
                 <div class="card-body">
-                    <i-menu
-                        theme="light"
-                        active-name="0"
-                        mode="horizontal"
-                        @on-select="changeFlag">
-                        <menu-item class="col-xs-6" style="text-align:center;" name="0">
-                            出售
-                        </menu-item>
-                        <menu-item class="col-xs-6" style="text-align:center;" name="1">
-                            租赁
-                        </menu-item>
-                    </i-menu>
-                    <div>
-                        <!-- sell -->
-                        <template v-if="flag == 0">
-                            <div id="mescroll" style="max-height:700px;overflow:scroll">
-                                <ul id="datalist" class="list-group" style="overflow-y:hidden;">
-                                    <li class="list-group-item" v-for="item in pdlist">
-										<a :href="'/goods/'+item.id">
-											<div :style="'background-image: url('+item.thumbnail.src+')'" 
-												class="img-wrapper float-left"
-												style="width:20%;padding-top:20%;" alt="thumbnail"></div>
-										</a>
-										<div class='table-responsive float-left'
-											style='padding-left:5%;width:55%;overflow:hidden;margin: 5% 0;'>
-											<table class='table table-condensed'>
-												<thead>
-                                                    <tr>
-													    <td>@{{ item.title }}</td>
-                                                    </tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>
-															<template v-if="item.type">
-                                                                租赁&nbsp;@{{ item.cost }}/天
-                                                            </template>
-															<template v-else>
-                                                                出售&nbsp;@{{ item.cost }}
-                                                            </template>
-                                                            &nbsp;&nbsp;
-                                                            库存
-                                                            @{{ item.remain }}
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-                                        <div class="float-left hidden-xs" style="width:25%;padding: 0 5%;margin: 5% 0;">
-                                            <table class="table-condensed">
-                                                <tr>
-                                                    <td>
-                                                        <img class="img-icon" src="/storage/find.png">
-                                                        <a :href="'/goods/'+item.id">查看</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img class="img-icon" src="/storage/edit.png">
-                                                        <a :href="'/goods/'+item.id+'/edit'">修改</a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-									</li>
-                                </ul>
-                            </div>
-                        </template>
-                        <!-- rent -->
-                        <template v-else-if="flag == 1">
-                            <div id="mescroll1"></div>
-                        </template>
+                    <div id="mescroll" style="max-height:700px;overflow:scroll">
+                        <ul id="datalist" class="list-group" style="overflow-y:hidden;">
+                            <li class="list-group-item" v-for="item in pdlist">
+								<a :href="'/goods/'+item.id">
+									<div :style="'background-image: url('+item.thumbnail.src+')'" 
+										class="img-wrapper float-left"
+										style="width:20%;padding-top:20%;" alt="thumbnail"></div>
+								</a>
+								<div class='table-responsive float-left'
+									style='padding-left:5%;width:55%;overflow:hidden;margin: 5% 0;'>
+									<table class='table table-condensed'>
+										<thead>
+                                            <tr>
+											    <td>@{{ item.title }}</td>
+                                            </tr>
+				    					</thead>
+										<tbody>
+											<tr>
+												<td>
+													<template v-if="item.type">
+                                                        租赁&nbsp;@{{ item.cost }}/天
+                                                    </template>
+													<template v-else>
+                                                        出售&nbsp;@{{ item.cost }}
+                                                    </template>
+                                                    &nbsp;&nbsp;
+                                                    库存
+                                                    @{{ item.remain }}
+												</td>
+											</tr>
+										</tbody>
+									</table>
+							    </div>
+                                <div class="float-left hidden-xs" style="width:25%;padding: 0 5%;margin: 5% 0;">
+                                    <table class="table-condensed">
+                                        <tr>
+                                            <td>
+                                                <img class="img-icon" src="/storage/find.png">
+                                                <a :href="'/goods/'+item.id">查看</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img class="img-icon" src="/storage/edit.png">
+                                                <a :href="'/goods/'+item.id+'/edit'">修改</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+							</li>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -27,7 +27,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav id="navbar-first" class="navbar navbar-expand-md navbar-light navbar-laravel">
             
             <div class="container">
                 <a class="main" href="{{ url('/') }}">
@@ -38,12 +38,7 @@
                 </button>
 
 
-                <div class="container col-md-8 col-lg-9">
-                    <div class="navbar-nav col-md-2 float-left">
-                        <div class="dropdown">
-                            @yield('button')
-                        </div>
-                    </div>
+                <div style="width:80%;margin-right:5%;">
                     @yield('form')
                 </div>
                 
@@ -101,7 +96,9 @@
             </div>
             
         </nav>
-        
+
+        @yield('navbar')
+
         <main class="py-4">
             @yield('content')
         </main>

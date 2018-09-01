@@ -178,6 +178,7 @@ class GoodsController extends Controller
         //return $goods;
         $browse->view++;
         $browse->save();
+        $goods->cost = number_format($goods->cost, 2);
         return view('goods.home',$goods);
     }
 

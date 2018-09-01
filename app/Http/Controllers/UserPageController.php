@@ -6,6 +6,7 @@ use Auth;
 use App\Models\Goods;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Enums\GoodsType as Type;
 
 class UserPageController extends Controller
 {
@@ -36,13 +37,14 @@ class UserPageController extends Controller
         $model = Goods::where('owner', Auth::id());
         if($type == 'sell')
             return [
-                'size'  =>  $model->where('type', $type)
+                'size'  =>  $model->where('type', 0)
                                 ->orderBy('status', 'asc')
                                 ->count(),
             ];
+        else abort(404);
     }
 
-    public function getGoodsList(int $page = 1, int $num = 4) {
-        return redirect('/api/goods/list/'.Auth::id()."/$page/$num");
+    public function getGoodsList(int $page = 1, int $num = 4, string $type = '') {
+        return redirect('/api/goods/list/'.Auth::id()."/$page/$num/$type");
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '贝壳人自己的商城')
+@section('title', '查看商品')
 
 @section('dropdown')
 <a class="dropdown-item hidden-xs" href="/home">个人中心</a>
@@ -10,22 +10,46 @@
 <a class="dropdown-item visible-xs" style="text-align:center;" href="/orders">我的订单</a>
 @endsection
 
+@section('navbar')
+<nav class="navbar navbar-expand-lg navbar-light hidden-xs hidden-sm">
+    <div class="container">
+		<div class="
+				navbar-header
+				second-header
+				main-default main-shadow
+			"
+			style="width:10%">
+            <div>商品分类</div>
+        </div>
+		<ul class="
+				mr-auto
+				nav navbar-nav navbar-left
+				navbar-second
+				main-gradient main-shadow
+			" style="width:90%">
+	        <li><a  href="/goods/category/食品">食品</a></li>
+	        <li><a href="/goods/category/服饰">服饰</a></li>
+	        <li><a href="/goods/category/生活用品">生活用品</a></li>
+	        <li><a href="/goods/category/学习用品">学习用品</a></li>
+	        <li><a href="/goods/category/电子产品">电子产品</a></li>
+	        <li><a href="/goods/category/体育用品">体育用品</a></li>
+	        <li><a href="/goods/category/音乐器材">音乐器材</a></li>
+	        <li><a href="/goods/category/非实体商品">非实体商品</a></li>
+            <li><a href="/goods/all">所有商品</a></li>
+        </ul>
+    </div>
+</nav>
+@endsection
+
 @section('content')
 <meta name="goods_id" content="{{ $id }}">
 <link href="http://unpkg.com/iview/dist/styles/iview.css" rel="stylesheet">
 <link href="{{ asset('css/goodsShow.css') }}" rel="stylesheet">
-<div id="singleItem">
-<div class="container">
+
+<div id="singleItem" class="container">
     <div class="row justify-content-center">
         <div class="col-xs-12">
             <div class="card">
-                <div class="card-header">
-                    <breadcrumb separator=">">
-                    <breadcrumb-item to="/category/{{ $cat1 }}">{{ $cat1 }}</breadcrumb-item>
-                    <breadcrumb-item to="/category/{{ $cat2 }}">{{ $cat2 }}</breadcrumb-item>
-                    <breadcrumb-item>{{ $title }}</breadcrumb-item>
-                    </breadcrumb>
-                </div>
                 <div class="card-body">
                         <!-- carousel slide -->
                         <div class="col-lg-6 image-slide float-left">
@@ -43,43 +67,45 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-lg-6">
-                            <div class="goods-title col-xs-12">
-                                <h1>{{ $title }}</h1>
+                            <div class="goods-title left-align col-xs-12">
+                                {{ $title }}
                             </div>
-                            <div class="goods-cost col-xs-12">
-                                <h1>{{ $cost }}</h1>
+                            <div class="goods-cost left-align col-xs-12 main-default main-content">
+                                {{ $cost }}
                             </div>
-                            <div class="home-padding col-xs-12">
-                                <div class="goods-info col-xs-6">
+                            <div class="left-align col-xs-12">
+                                <div class="goods-info left-align col-xs-6">
                                     <template v-if="{{ $status }}">
                                         <div class="float-left">状态：缺货</div>
                                         </template>
                                     <template v-else>
-                                        <div class="float-left">状态：{{ $type ? '出售' : '出租' }}</div>
+                                        <div class="float-left">状态：{{ $type ? '出售' : '出租' }}&nbsp;&nbsp;</div>
                                         <div class="float-left">库存：{{ $remain }}</div>
                                     </template>
                                 </div>
-                                <div class="col-xs-12">
-                                    <button class="btn btn-success" type="button">创建订单</button>
+                                <div class="left-align col-xs-12">
+                                    <button id="btn-gradient" class="btn btn-lg" type="button">创建订单</button>
                                 </div>
-                                <div class="col-xs-12">
+                                <div class="left-align col-xs-12">
                                     <button class="btn btn-link" type="button">联系卖家</button>
                                 </div>
                             </div>
                         </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
+            <div class="card main-background">
+                <div class="card-header main-gradient">
                     <div>卖家留言</div>
                 </div>
                 <div class="card-body">
+                    <div class="background-default">
                         <div class="col-xs-4 col-md-2">
                             <img class="img-circle img-thumbnail" src="/storage/admin.png" alt="avatar">
                         </div>
                         <div class="col-xs-8 col-md-10">
                             <p class="goods-description">{{ $description }}</p>
                         </div>
+                    </div>
                 </div>
             </div>
             <div class="card">
@@ -126,7 +152,6 @@
             <div style="padding-top:5%;"></div>
         </div>
     </div>
-</div>
 </div>
 
 <script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>

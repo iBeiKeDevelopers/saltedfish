@@ -26,7 +26,7 @@ Route::get('/user/info/{user}', function (App\User $user) {
     return $user;
 });
 
-Route::get('goods/list/{uid}/{page?}/{num?}', 'API\GoodsController@list');
+Route::get('goods/list/{uid}/{page?}/{num?}/{type?}', 'API\GoodsController@list');
 Route::get('goods/new/{num?}', 'API\GoodsController@new');
 Route::get('goods/hot/{num?}', 'API\GoodsController@hot');
 Route::get('goods/random/{num?}', 'API\GoodsController@random');

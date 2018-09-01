@@ -43,7 +43,7 @@ Route::get('user/{uid}/goods', 'UserPageController@showGoods')
 Route::get('user/{uid}/orders', 'UserPageController@showOrders')
     ->where('uid', '[0-9]+');
 Route::get('user/goods/{type}/totalsize', 'UserPageController@totalsize');
-Route::get('user/goods/{page?}/{num?}', 'UserPageController@getGoodsList')
+Route::get('user/goods/{page?}/{num?}/{type?}', 'UserPageController@getGoodsList')
     ->where('page', '[0-9]+')
     ->where('num', '[0-9]+');
 

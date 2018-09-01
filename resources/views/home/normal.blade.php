@@ -2,22 +2,35 @@
 
 @section('title', '贝壳人自己的商城')
 
-@section('button')
-<a class="navbar-brand mr-auto hidden-xs" data-toggle="dropdown" href="#">
-    商品分类<span class="caret"></span>
-</a>
-<div class="dropdown-menu"  aria-labelledby="navbarDropdown">
-	<a class="dropdown-item" href="/goods/category/食品">食&nbsp;&nbsp;&nbsp;&nbsp;品</a>
-	<a class="dropdown-item" href="/goods/category/服饰">服&nbsp;&nbsp;&nbsp;&nbsp;饰</a>
-	<a class="dropdown-item" href="/goods/category/生活用品">生活用品</a>
-	<a class="dropdown-item" href="/goods/category/学习用品">学习用品</a>
-	<a class="dropdown-item" href="/goods/category/电子产品">电子产品</a>
-	<a class="dropdown-item" href="/goods/category/体育用品">体育用品</a>
-	<a class="dropdown-item" href="/goods/category/音乐器材">音乐器材</a>
-	<a class="dropdown-item" href="/goods/category/非实体商品">非实体商品</a>
-	<li class="divider"></li>
-	<a class="dropdown-item" href="/goods/all">所有商品</a>
-</div>
+@section('navbar')
+<nav class="navbar navbar-expand-lg navbar-light hidden-xs hidden-sm">
+    <div class="container">
+		<div class="
+				navbar-header
+				second-header
+				main-default main-shadow
+			"
+			style="width:10%">
+            <div>商品分类</div>
+        </div>
+		<ul class="
+				mr-auto
+				nav navbar-nav navbar-left
+				navbar-second
+				main-gradient main-shadow
+			" style="width:90%">
+	        <li><a  href="/goods/category/食品">食品</a></li>
+	        <li><a href="/goods/category/服饰">服饰</a></li>
+	        <li><a href="/goods/category/生活用品">生活用品</a></li>
+	        <li><a href="/goods/category/学习用品">学习用品</a></li>
+	        <li><a href="/goods/category/电子产品">电子产品</a></li>
+	        <li><a href="/goods/category/体育用品">体育用品</a></li>
+	        <li><a href="/goods/category/音乐器材">音乐器材</a></li>
+	        <li><a href="/goods/category/非实体商品">非实体商品</a></li>
+            <li><a href="/goods/all">所有商品</a></li>
+        </ul>
+    </div>
+</nav>
 @endsection
 
 @section('dropdown')
@@ -29,11 +42,16 @@
 @endsection
 
 @section('form')
-<form class="navbar-form navbar-right form-inline hidden-xs" role="search" method="GET">
-    <div class="form-group col-md-9">
+<form id="form" class="navbar-form navbar-right
+		form-inline
+		hidden-xs
+		main-gradient"
+	role="search"
+	method="GET">
+    <div class="form-group" style="width:80%;">
         <input type="text" class="form-control" name="keyword" placeholder="Search">
     </div>
-    <button type="submit" class="btn btn-default col-xs-3">搜索</button>
+    <button type="submit" class="btn btn-search">搜索</button>
 </form>
 @endsection
 
@@ -75,7 +93,7 @@
 						<div class="card-header card-header-center">
 							@{{ card.header }}
 						</div>
-						<div class="card-body main-background main-list">
+						<div class="card-body main-background main-list main-shadow">
 							<!-- normalCallback -->
 							<template v-if="card.status === true">
 								<template v-for="item in card.content">

@@ -1,13 +1,32 @@
+#singleItem {
+    box-shadow: 0 5px 10px -5px #C4C4C4,
+        0 -5px 10px -5px #C4C4C4;
+}
+
+#btn-gradient {
+    background: linear-gradient(to right, #FFB333 , #FF9A3B);
+    color: white;
+    padding: 10px 35px;
+}
+
+.left-align {
+    padding-left: 0;
+}
+
 .goods-title {
-    text-align: center;
-    font-size: 1.5em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    height: 2.5em;
+    font-size: 3em;
+    height: 3em;
+}
+
+.goods-cost {
+    padding-left: 5px;
+    font-size: 4em;
 }
 
 .goods-info {
-    font-size: 1em;
+    padding: 10px 0;
+    font-size: 1.5em;
+    color: #868686;
 }
 
 .comment-meta {

@@ -1,5 +1,26 @@
+#navbar-first {
+    margin-bottom: 0;
+}
+
 #logo {
     height: 70px;
+}
+
+/* same with main-shadow in theme.css */
+#form {
+    box-shadow: 3px 3px 5px #C4C4C4;
+    width: 100%;
+    padding: 5px;   
+}
+
+.navbar-form .form-group input {
+    width: 100%;
+}
+
+.btn-search {
+    width:20%;
+    background-color:inherit;
+    color: white;
 }
 
 .circle-avatar {
@@ -24,13 +45,22 @@
     bottom:0;
 }
 
+.second-header {
+    padding:10px 15px;
+    text-align: center;
+    color: #FF9A3B;
+}
+
+.navbar-second li a {
+    color: white;
+}
+
 .img-carousel {
     width:100%;
 }
 
 .main-list {
     padding: 20px 30px;
-    box-shadow: 3px 3px 5px #c4c4c4;
 }
 
 .img-wrapper {
@@ -58,17 +88,6 @@
     background-color: #FFFFFF;
     padding-bottom: 1em;
     text-align: center;
-    font-size: 1.5em;
-}
-
-.goods-title {
-    height: 1em;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.goods-cost {
     font-size: 1.5em;
 }
 

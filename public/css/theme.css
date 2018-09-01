@@ -1,6 +1,16 @@
 .main {
     background-color: #FF9A3B;
-    color: #FFFFFF;
+}
+
+.main-gradient {
+    background: -webkit-linear-gradient(left, #FFB333 , #FF9A3B);
+    background: -o-linear-gradient(right, #FFB333, #FF9A3B);
+    background: -moz-linear-gradient(right, #FFB333, #FF9A3B);
+    background: linear-gradient(to right, #FFB333 , #FF9A3B);
+}
+
+.main-shadow {
+    box-shadow: 3px 3px 5px #C4C4C4;
 }
 
 .main-content {
@@ -17,6 +27,10 @@
 
 .main-background {
     background-color: #F4F4F4;
+}
+
+.background-default {
+    background-color: #FFFFFF;
 }
 
 .main-default {

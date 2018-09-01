@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Goods;
 use App\Models\Browse as GoodsBrowse;
 use Illuminate\Http\Request;
+use App\Enums\GoodsType as Type;
 use App\Http\Controllers\Controller;
 
 class GoodsController extends Controller
@@ -35,11 +36,17 @@ class GoodsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function list(int $uid, int $page = 1, int $num = 4)
+    public function list(int $uid, int $page = 1, int $num = 4, string $type = 'sell')
     {
-        $goods = Goods::where('owner', $uid)
-            ->orderBy('updated_at', 'desc')
-            ->skip($page*$num)->take($num)->get();
+        $goods = Goods::where('owner', $uid);
+        $arr = [
+            'sell' => 0,
+            'rent' => 1,
+        ];
+        if($type == 'sell' || $type == 'rent')
+            $goods = $goods->where('type', $arr[$type]);
+            
+        $goods = $goods->orderBy('updated_at', 'desc')->skip(($page-1)*$num)->take($num)->get();
         foreach($goods as $g) {
             $g->thumbnail;
             $g->browse;
@@ -47,9 +54,13 @@ class GoodsController extends Controller
         return $goods;
     }
 
+    public function getUserGoods($uid, $page, $num, $type)
+    {
+
+    }
+
     public function new($num = 4)
     {
-        $num = 
         $goods = Goods::latest()->take($num)->get();
         foreach($goods as $g) {
             $g->thumbnail;
