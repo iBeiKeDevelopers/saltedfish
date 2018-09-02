@@ -52,3 +52,5 @@ Route::get('user/identity', 'Resource\UserController@identity');
 Route::get('user/contact', 'Resource\UserController@contact');
 Route::post('user/avatar', 'Resource\UserController@avatar');
 Route::resource('user', 'Resource\UserController');
+
+Route::post('comments/submit', 'CommentController@submit');

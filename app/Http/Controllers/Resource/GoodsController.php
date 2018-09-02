@@ -213,6 +213,7 @@ class GoodsController extends Controller
         $goods->list = $list;
         $goods->tags = '';
         $goods->url  = "/goods/$id";
+        $goods->description = str_replace("\n", " ", $goods->description);
         return view('goods.form', $goods);
     }
 

@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class OrderFinished
+class OrderCancelAgreedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

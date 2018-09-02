@@ -91,6 +91,17 @@
     font-size: 1.5em;
 }
 
+.goods-title {
+    height: 1em;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.goods-cost {
+    font-size: 1.5em;
+}
+
 .image-slide {
     width:50%;
 }

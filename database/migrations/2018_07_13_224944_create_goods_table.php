@@ -48,7 +48,7 @@ class CreateGoodsTable extends Migration
             $table->string('avatar')->nullable();
             $table->text('content');
 
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamps();
         });
 
         Schema::create('goods_tags', function (Blueprint $table) {

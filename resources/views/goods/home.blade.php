@@ -74,12 +74,12 @@
                                 {{ $cost }}
                             </div>
                             <div class="left-align col-xs-12">
-                                <div class="goods-info left-align col-xs-6">
+                                <div class="goods-info left-align col-xs-12">
                                     <template v-if="{{ $status }}">
                                         <div class="float-left">状态：缺货</div>
                                         </template>
                                     <template v-else>
-                                        <div class="float-left">状态：{{ $type ? '出售' : '出租' }}&nbsp;&nbsp;</div>
+                                        <div class="float-left">状态：{{ $type ? '出租' : '出售' }}&nbsp;&nbsp;</div>
                                         <div class="float-left">库存：{{ $remain }}</div>
                                     </template>
                                 </div>
@@ -93,14 +93,16 @@
                         </div>
                 </div>
             </div>
-            <div class="card main-background">
+            <div class="home-padding"></div>
+            <div class="card main-background main-shadow">
                 <div class="card-header main-gradient">
-                    <div>卖家留言</div>
+                    <div class="card-title">卖家留言</div>
                 </div>
                 <div class="card-body">
-                    <div class="background-default">
+                    <div class="col-xs-12 background-default">
                         <div class="col-xs-4 col-md-2">
-                            <img class="img-circle img-thumbnail" src="/storage/admin.png" alt="avatar">
+                            <div class="circle-avatar" style="background-image:url('{{ App\User::find($owner)->avatar ?? '/storage/null.png' }}');margin-top:10px;" alt="avatar"></div>
+                            <div class="uname">{{ App\User::find($owner)->nick_name }}</div>
                         </div>
                         <div class="col-xs-8 col-md-10">
                             <p class="goods-description">{{ $description }}</p>
@@ -108,9 +110,10 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    <div>商品评论</div>
+            <div class="home-padding"></div>          
+            <div class="card main-background main-shadow">
+                <div class="card-header main-gradient">
+                    <div class="crad-title">商品评论</div>
                 </div>
                 <div class="card-body">
                     <template v-for="card in commentList">
@@ -121,9 +124,9 @@
                                     <div class="circle-avatar"
                                         :style="'background-image: url('+card.avatar+')'">
                                     </div>
-                                    <h5>@{{ card.uname }}</h5>
+                                    <div class="uname">@{{ card.uname }}</div>
                                 </div>
-                                <div class="col-md-10 col-xs-8">
+                                <div class="goods-comment col-md-10 col-xs-8">
                                     <div>@{{ card.content }}</div>
                                     <div class="goods-meta">@{{ card.created_at }}</div>
                                 </div>
@@ -132,24 +135,23 @@
                         </ul>
                     </template>
                     <div>
-                        <i-form>
-                        <i-col span="2">评论</i-col>
-                        <i-col span="16">
-                            <form-item>
-                                <i-input placeholder="说些什么..."></i-input>
+                        <i-form action="">
+                        <i-col span="18">
+                            <form-item prop="content">
+                                <i-input v-model="content" placeholder="说些什么..."></i-input>
                             </form-item>
                         </i-col>
-                        <i-col span="2">&nbsp;</i-col>
-                        <i-col span="4">
+                        <i-col span="1">&nbsp;</i-col>
+                        <i-col span="5">
                             <form-item>
-                                <i-button type="primary">提交</i-button>
+                                <i-button id="btn-submit" style="width:100%" type="primary" @click="submitComment">提交</i-button>
                             </form-item>
                         </i-col>
                         </i-form>
                     </div>
                 </div>
             </div>
-            <div style="padding-top:5%;"></div>
+            <div class="home-padding"></div>            
         </div>
     </div>
 </div>

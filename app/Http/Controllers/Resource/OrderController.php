@@ -73,7 +73,7 @@ class OrderController extends Controller
      */
     public function show(int $id)
     {
-        //
+        return view('orders.home');
     }
 
     /**
