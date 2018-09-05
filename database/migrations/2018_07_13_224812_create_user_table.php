@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+use App\Events\MigrateEvent;
+
 class CreateUserTable extends Migration
 {
     /**
@@ -24,11 +26,18 @@ class CreateUserTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        event(new MigrateEvent('ibuy_user_common'));
+        
         DB::update('ALTER TABLE ibuy_users_common AUTO_INCREMENT = 3001');
         App\User::create([
             'nick_name' => 'ibuy管理员',
             'email' => 'admin@admin.com',
             'avatar' => '/storage/admin.png',
+            'password' => Hash::make('aaaaaaaa'),
+        ]);
+        App\User::create([
+            'nick_name' => 'ibuy用户',
+            'email' => 'user@123.com',
             'password' => Hash::make('aaaaaaaa'),
         ]);
 
@@ -39,6 +48,7 @@ class CreateUserTable extends Migration
 
             $table->timestamps();
         });
+        event(new MigrateEvent('ibuy_user_identity'));
 
         Schema::create('users_contact', function (Blueprint $table) {
             $table->integer('id')->unique();
@@ -49,6 +59,7 @@ class CreateUserTable extends Migration
 
             $table->timestamps();
         });
+        event(new MigrateEvent('ibuy_user_contact'));
 
         Schema::create('users_extend', function (Blueprint $table) {
             $table->integer('id')->unique();
@@ -57,6 +68,7 @@ class CreateUserTable extends Migration
 
             $table->timestamps();
         });
+        event(new MigrateEvent('ibuy_user_extend'));
     }
 
     /**

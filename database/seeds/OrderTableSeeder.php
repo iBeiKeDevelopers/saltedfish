@@ -18,7 +18,7 @@ class OrderTableSeeder extends Seeder
             'title'     =>      $good->title,
             'owner'     =>      $good->owner,
             'cost'      =>      $good->cost,
-            'uid'       =>      random_int(50,101),
+            'uid'       =>      3001,
             'status'    =>      random_int(0,2),
         ]);
     }

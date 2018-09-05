@@ -54,3 +54,10 @@ Route::post('user/avatar', 'Resource\UserController@avatar');
 Route::resource('user', 'Resource\UserController');
 
 Route::post('comments/submit', 'CommentController@submit');
+
+Route::get('chat-online/{id}', 'ChatController@index');
+Route::post('chat-online/{id}', 'ChatController@send');
+
+Route::get('test', function () {
+    return view('test');
+})->middleware('auth');

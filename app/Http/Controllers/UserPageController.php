@@ -10,7 +10,6 @@ use App\Enums\GoodsType as Type;
 
 class UserPageController extends Controller
 {
-    //
     public function __construct()
     {
         $this->middleware('auth');

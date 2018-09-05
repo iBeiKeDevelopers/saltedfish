@@ -142,7 +142,6 @@
 
 <!-- scripts -->
 <script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/goodsCards.js') }}"></script>
 
 @endsection

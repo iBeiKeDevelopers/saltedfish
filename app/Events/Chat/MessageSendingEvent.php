@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Chat;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
@@ -10,18 +10,29 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class Event implements ShouldBroadcast
+class MessageSendingEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $message;
+
+    private $from;
+
+    private $to;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($arr)
     {
-        //
+        if(!isset($arr['message'])) abort(500, "message missing");
+        if(!isset($arr['to']) || !isset($arr['from'])) abort(500, "user missing");
+
+        $this->message = $arr['message'];
+        $this->from = $arr['from'];
+        $this->to = $arr['to'];
     }
 
     /**
@@ -31,6 +42,11 @@ class Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('my-event');
+        return new PrivateChannel('App.Chat.'.$this->to);
+    }
+
+    public function broadcastAs()
+    {
+        return "message.from.".$this->from;
     }
 }

@@ -8,6 +8,8 @@ use App\Models\Image;
 use App\Models\Browse;
 use App\Models\Comment;
 
+use App\Events\GoodsBrowsedEvent as browseEvent;
+
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\File;
@@ -174,10 +176,9 @@ class GoodsController extends Controller
     public function show($id)
     {
         $goods = Goods::find($id);
-        $browse = Browse::find($id);
-        //return $goods;
-        $browse->view++;
-        $browse->save();
+        
+        event(new browseEvent(Browse::find($id)));
+        
         $goods->cost = number_format($goods->cost, 2);
         return view('goods.home',$goods);
     }

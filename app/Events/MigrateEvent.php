@@ -10,18 +10,19 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class Event implements ShouldBroadcast
+class MigrateEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $table;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $table)
     {
-        //
+        $this->table = $table;
     }
 
     /**
@@ -31,6 +32,6 @@ class Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('my-event');
+        return new PrivateChannel('App.admin');
     }
 }

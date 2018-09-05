@@ -31,6 +31,17 @@ class CreateGoodsTable extends Migration
             $table->softDeletes();
         });
 
+        App\Models\Goods::create([
+            'title'     =>      'test1',
+            'owner'     =>      3001,
+            'type'      =>      0,
+            'cost'      =>      12,
+            'remain'    =>      34,
+            'description'=>     'none',
+            'cat1'      =>      'sp',
+            'cat2'      =>      'yp',
+        ]);
+
         Schema::create('goods_image', function (Blueprint $table) {
             $table->increments('id');
 

@@ -39,4 +39,5 @@ Route::post('image', 'API\ImageController@store');
 Route::get('image/delete/{key}', 'API\ImageController@destroy');
 Route::get('image/{key}', 'API\ImageController@show');
 
-
+Route::get('order/{id}/status', 'API\OrderController@getStatus')
+    ->where('id', '[0-9]+');

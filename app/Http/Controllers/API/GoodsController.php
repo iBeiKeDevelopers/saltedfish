@@ -110,10 +110,9 @@ class GoodsController extends Controller
      */
     public function show($id)
     {
-        //return Auth::auth();
         $good = Goods::findOrFail($id);
         $good->images;
-        $good->comments;
+        //$good->comments;
         return $good;
     }
 

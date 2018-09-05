@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Browse;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class Event implements ShouldBroadcast
+class GoodsBrowsedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,18 +20,8 @@ class Event implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Browse $browse)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('my-event');
+        $this->browse = $browse;
     }
 }

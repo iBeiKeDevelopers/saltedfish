@@ -15,8 +15,8 @@
 <link href="{{ asset('mescroll/mescroll.css') }}" rel="stylesheet">
 
 <script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
 
+<meta name="id" content="{{ $id }}">
 <div id="order" class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -59,7 +59,6 @@
 
 
 <script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
 <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.js"></script>
 
 <script type="text/javascript" src="{{ asset('js/order.js') }}"></script>

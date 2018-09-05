@@ -113,7 +113,7 @@
             <div class="home-padding"></div>          
             <div class="card main-background main-shadow">
                 <div class="card-header main-gradient">
-                    <div class="crad-title">商品评论</div>
+                    <div class="card-title">商品评论</div>
                 </div>
                 <div class="card-body">
                     <template v-for="card in commentList">
@@ -157,7 +157,6 @@
 </div>
 
 <script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/vue.js') }}"></script>
 
 <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.js"></script>
 
