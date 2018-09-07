@@ -56,7 +56,8 @@ Route::resource('user', 'Resource\UserController');
 Route::post('comments/submit', 'CommentController@submit');
 
 Route::get('chat-online/{id}', 'ChatController@index');
-Route::post('chat-online/{id}', 'ChatController@send');
+Route::post('chat-online/{id}', 'ChatController@sendMessageto');
+Route::get('chat/history/{id}', 'ChatController@showHistory');
 
 Route::get('test', function () {
     return view('test');

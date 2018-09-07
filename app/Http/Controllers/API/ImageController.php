@@ -45,7 +45,7 @@ class ImageController extends Controller
         $img = Storage::get($path);
         Storage::delete($path);
 
-        $key = uniqid();
+        $key = uniqid('image_');
         cache([$key => $img], 30);
         return [
             'name' => $key,
@@ -60,7 +60,10 @@ class ImageController extends Controller
      */
     public function show($key)
     {
-        return cache($key);
+        if(starts_with($key, 'image_'))
+            return cache($key);
+        else
+            abort(500, "not image!");
     }
 
     /**

@@ -203,7 +203,7 @@ class GoodsController extends Controller
 
         $list = [];
         foreach($images as $img) {
-            $key = uniqid();
+            $key = uniqid('image_');
             $content = Storage::get($img->path);
             cache([$key => $content], 30);
             array_push($list, [

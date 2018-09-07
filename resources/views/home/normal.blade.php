@@ -77,71 +77,13 @@
 			    <img src="storage/banner/3.jpg" class="img-carousel img-responsive" alt="Third slide">
 		    </div>
 	    </div>
-    </div> 
+    </div>
 </div>
+<home-card></home-card>
+@endsection
+
+@section('scripts')
 <script>
 	$('.carousel').carousel('cycle')
 </script>
-
-<!-- goods -->
-<div id="goodsCards">
-	<template v-for="card in goodsList">
-		<div class="container home-padding">
-    		<div class="row justify-content-center">
-        		<div class="col-md-12">
-					<div class="card">
-						<div class="card-header card-header-center">
-							@{{ card.header }}
-						</div>
-						<div class="card-body main-background main-list main-shadow">
-							<!-- normalCallback -->
-							<template v-if="card.status === true">
-								<template v-for="item in card.content">
-									<div class="thumbnail col-md-3 col-xs-6 float-left">
-										<a :href="'/goods'+'/'+item.id">
-											<div class='img-wrapper'
-												:style="'background-image: url('+item.thumbnail.src+')'">
-											</div>
-										</a>
-										<div class='caption'>
-											<h4 class='goods-title'>
-												@{{ item.title }}
-											</h4>
-											<h5 class='goods-cost main-content'>
-												￥ @{{ item.cost }}
-											</h5>
-										</div>
-									</div>
-								</template>
-							</template>
-							<!-- emptyCallback -->
-							<template v-else-if="card.status === false">
-								<div class='text-info'>
-									网络出了点小问题，刷新试试～
-								</div>
-							</template>
-							<!-- errorCallback -->
-							<template v-else-if="card.content === []">
-								<div class="img-wrapper"
-									style="height:22em;
-										background-image: url('/storage/404.png')">
-								</div>
-							</template>
-							<template v-else>
-								<div class='text-info'>
-									喊后端工程师来修！
-								</div>
-							</template>
-						</div>
-					</div>
-				</div>
-			</template>
-		</div>
-	</template>
-</div>
-
-<!-- scripts -->
-<script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/goodsCards.js') }}"></script>
-
 @endsection

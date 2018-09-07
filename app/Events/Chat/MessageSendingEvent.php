@@ -16,9 +16,11 @@ class MessageSendingEvent implements ShouldBroadcast
 
     public $message;
 
-    private $from;
+    public $type;
 
-    private $to;
+    public $from;
+
+    public $to;
 
     /**
      * Create a new event instance.
@@ -28,9 +30,11 @@ class MessageSendingEvent implements ShouldBroadcast
     public function __construct($arr)
     {
         if(!isset($arr['message'])) abort(500, "message missing");
+        if(!isset($arr['type'])) abort(500, "message type missing");
         if(!isset($arr['to']) || !isset($arr['from'])) abort(500, "user missing");
 
         $this->message = $arr['message'];
+        $this->type = $arr['type'];
         $this->from = $arr['from'];
         $this->to = $arr['to'];
     }

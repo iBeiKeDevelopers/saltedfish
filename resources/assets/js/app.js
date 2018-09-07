@@ -15,8 +15,13 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+import iview from 'iview';
+import 'iview/dist/styles/iview.css';
+Vue.use(iview);
 
-//const app = new Vue({
-//    el: '#app'
-//});
+Vue.component('home-card', require('./components/HomeCardContainer.vue'));
+Vue.component('chat-room', require('./components/ChatRoom.vue'));
+
+const app = new Vue({
+    el: '#app',
+});

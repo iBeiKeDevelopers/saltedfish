@@ -13,8 +13,18 @@ class CreateChatTable extends Migration
      */
     public function up()
     {
-        Schema::create('chat', function (Blueprint $table) {
+        // Schema::create('chat_rooms', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->timestamps();
+        // });
+
+        Schema::create('chat_history', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->string('content');
+            $table->string('type');
+            $table->integer('from');
+            $table->integer('to');
             $table->timestamps();
         });
     }
@@ -26,6 +36,7 @@ class CreateChatTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chat');
+        //Schema::dropIfExists('chat_rooms');
+        Schema::dropIfExists('chat_history');
     }
 }
