@@ -8,7 +8,7 @@
                         <ul class="list-group chat-board" v-if="status === true">
                             <template v-for="bubble in history">
                                 <li class="list-group-item" style="margin-top:5%;" :key="bubble.content">
-                                    <Bubble :data="bubble"></Bubble>
+                                    <Bubble :data="bubble" :avatar="(bubble.direct == 'to')?this_avatar:that_avatar"></Bubble>
                                 </li>
                             </template>
                         </ul>
@@ -36,13 +36,15 @@
 </template>
 
 <script>
-import { Col, Input, Button } from 'iview'
 import Bubble from './ChatBubble'
 
 export default {
     components: {
-        Col, Input, Button, Bubble
+        Bubble
     },
+    props: [
+        'this_avatar', 'that_avatar',
+    ],
     data() {
         return {
             id: 0,
@@ -62,6 +64,8 @@ export default {
 
         this.loadHistory()
         this.listenHandler()
+        console.log(this.this_avatar)
+        console.log(this.that_avatar)
     },
     methods: {
         sendMessage(message) {

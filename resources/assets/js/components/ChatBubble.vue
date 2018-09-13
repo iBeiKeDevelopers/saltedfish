@@ -3,7 +3,7 @@
         <template v-if="data.type == 'text'">
             <Tooltip :placement="(data.direct == 'to')?'left':'right'+'-start'" always>
                 
-                <div>头像</div>
+                <img class="img-thumbnail img-circle img-responsive bubble-avatar" :src="avatar">
                 <div slot="content">
                     <p class="bubble-text">{{ data.content }}</p>
                 </div>
@@ -20,7 +20,7 @@ export default {
         Tooltip,
     },
     props: [
-        'data',
+        'data', 'avatar'
     ],
     data() {
         return {
@@ -36,5 +36,8 @@ export default {
 <style>
     .bubble-text {
         white-space: normal;
+    }
+    .bubble-avatar {
+        width: 50px;
     }
 </style>

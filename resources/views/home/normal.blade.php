@@ -79,6 +79,7 @@
 	    </div>
     </div>
 </div>
+
 <home-card></home-card>
 @endsection
 

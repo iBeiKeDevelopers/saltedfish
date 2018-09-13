@@ -92,19 +92,7 @@ class GoodsController extends Controller
      */
     public function create()
     {
-        return view('goods.form', [
-            "id" => 0,
-            "title" => "",
-            "description" => "",
-            "type" =>"",
-            "cost" => 0,
-            "remain" => 0,
-            "cat1" => "",
-            "cat2" => "",
-            "tags" => null,
-            "url" => "/goods",
-            "list" => [],
-        ]);
+        return view('goods.form');
     }
 
     /**
@@ -191,30 +179,7 @@ class GoodsController extends Controller
      */
     public function edit($id)
     {
-        $goods = Goods::find($id);
-        if(!$goods)
-            abort(404);
-
-        if($goods->owner != Auth::id())
-            abort(403);
-
-        $images = $goods->images;
-        //return $images;
-
-        $list = [];
-        foreach($images as $img) {
-            $key = uniqid('image_');
-            $content = Storage::get($img->path);
-            cache([$key => $content], 30);
-            array_push($list, [
-                'url'       =>          $img->src,
-                'name'      =>          $key,
-            ]);
-        }
-        $goods->list = $list;
-        $goods->tags = '';
-        $goods->url  = "/goods/$id";
-        $goods->description = str_replace("\n", " ", $goods->description);
+        $goods = Goods::findOrFail($id);
         return view('goods.form', $goods);
     }
 
@@ -248,14 +213,13 @@ class GoodsController extends Controller
             
             $goodsModel->save();
 
-            
             $dir = 'public/'.date('Y/M');
             foreach($raw['uploadList'] as $name) {
                 $content = Cache::pull($name);
-                Storage::put("public/tmp/$name.tmp", $content);
-                $path = Storage::putFile($dir, new File("./storage/tmp/$name.tmp"));
+                Storage::put("public/tmp/$name", $content);
+                $path = Storage::putFile($dir, new File("./storage/tmp/$name"));
 
-                $res = Image::insert([
+                $res = Image::create([
                     'gid'       =>      $id,
                     'path'      =>      $path,
                     'src'       =>      Storage::url($path),
@@ -286,13 +250,30 @@ class GoodsController extends Controller
      */
     public function destroy(int $id)
     {
-        //
+        $uid = Auth::id();
+        $goods = Goods::find($id);
+        if($uid != $goods->owner)
+            return [
+                'status'    =>      false,
+                'error'     =>      'no access',
+            ];
+        
+        return [
+            'status'        =>      $goods->delete(),
+        ];
     }
 }
 
+/**
+ * function to check whether a valid good form
+ * 
+ * @param array
+ * @return string | boolean
+ */
 function isValid($goods) {
     if($goods['uploadList'] == [])
         return "please upload at list one image!";
+
     if(!is_string($goods["title"]))
         return "title is not a string";
     else if(strlen($goods["title"]) > 20)
@@ -351,7 +332,6 @@ function isValid($goods) {
 
     if($goods["type"] > 99999)
     return "number is no larger than 100 000!";
-
 
     //todo: tags
     return true;

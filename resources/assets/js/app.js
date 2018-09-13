@@ -21,7 +21,14 @@ Vue.use(iview);
 
 Vue.component('home-card', require('./components/HomeCardContainer.vue'));
 Vue.component('chat-room', require('./components/ChatRoom.vue'));
+Vue.component('goods-form', require('./components/GoodsForm.vue'));
+Vue.component('user-list', require('./components/UserList.vue'));
 
 const app = new Vue({
     el: '#app',
+    methods: {
+        reload() {
+            window.location.reload()
+        }
+    },
 });

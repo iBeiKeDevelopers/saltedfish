@@ -21,10 +21,14 @@ class ChatController extends Controller
     }
 
     public function index($id) {
-        if($id == Auth::id() || !User::find($id))
+        if($id == Auth::id())
             abort(404);
+        
+        $that = User::findOrFail($id);
+
         return view('chat',[
-            'id'        =>          $id,
+            'id'            =>          $id,
+            'avatar'   =>          $that->avatar,
         ]);
     }
 

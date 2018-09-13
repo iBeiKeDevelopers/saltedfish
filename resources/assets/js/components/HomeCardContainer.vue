@@ -37,9 +37,7 @@ export default {
         }
     },
     created() {
-        debugger
         self = this
-        setTimeout('', 10000)
         this.goodsList.forEach(function (item) {
             axios.get(item.url)
             .then((res) => {
