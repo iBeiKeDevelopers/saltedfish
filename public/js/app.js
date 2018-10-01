@@ -99782,8 +99782,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         };
     },
     mounted: function mounted() {
-        var _this = this;
-
         self = this;
         this.uploadList = this.$refs.upload.fileList;
         this.setTags();
@@ -99791,10 +99789,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         console.log(this.id);
         if (this.id) {
             axios.get('/api/goods/' + this.id).then(function (res) {
-                _this.formValidate = res.data;
-                _this.formValidate.type = toString(res.data.type);
-                _this.formValidate.category = [res.data.cat1, res.data.cat2];
-                _this.uploadList = [];
+                self.formValidate = res.data;
+                self.formValidate.type = res.data.type.tostring();
+                self.formValidate.category = [res.data.cat1, res.data.cat2];
+                self.uploadList = [];
                 res.data.images.forEach(function (img) {
                     self.uploadList.push({
                         name: img.src,
@@ -99808,16 +99806,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
     methods: {
         handleSubmit: function handleSubmit(name) {
-            var _this2 = this;
+            var _this = this;
 
             console.log(this.uploadList);
             this.$refs[name].validate(function (valid) {
                 if (valid) {
-                    self = _this2;
+                    self = _this;
                     var formData = self.formValidate;
                     formData.uploadList = [];
                     self.uploadList.forEach(function (item) {
-                        formData.uploadList.push(item.src);
+                        formData.uploadList.push(item.name);
                     });
 
                     var url;
