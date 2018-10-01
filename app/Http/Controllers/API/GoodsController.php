@@ -54,11 +54,6 @@ class GoodsController extends Controller
         return $goods;
     }
 
-    public function getUserGoods($uid, $page, $num, $type)
-    {
-
-    }
-
     public function new($num = 4)
     {
         $goods = Goods::latest()->take($num)->get();

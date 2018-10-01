@@ -92,7 +92,9 @@ class GoodsController extends Controller
      */
     public function create()
     {
-        return view('goods.form');
+        return view('goods.form', [
+            'id'    =>      0,
+        ]);
     }
 
     /**
@@ -125,11 +127,14 @@ class GoodsController extends Controller
                 $dir = 'public/'.date('Y/M');
                 foreach($raw['uploadList'] as $name) {
                     $content = Cache::pull($name);
-                    Storage::put("public/tmp/$name.tmp", $content);
-                    
-                    $path = Storage::putFile($dir, new File("./storage/tmp/$name.tmp"));
-                    Storage::delete("public/tmp/$name.tmp");
+                    $ext = $content[1];
+                    return $name;
 
+                    Storage::put("public/tmp/$name", $content[0]);
+                    $path = Storage::putFile($dir, new File("./storage/tmp/$name.$ext"));
+                    Storage::delete("public/tmp/$name.$ext");
+
+                    return $path;
                     $res = Image::insert([
                         'gid'       =>      $id,
                         'path'      =>      $path,
@@ -179,8 +184,9 @@ class GoodsController extends Controller
      */
     public function edit($id)
     {
-        $goods = Goods::findOrFail($id);
-        return view('goods.form', $goods);
+        return view('goods.form', [
+            'id'    =>      $id,
+        ]);
     }
 
     /**

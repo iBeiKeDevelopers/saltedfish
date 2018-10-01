@@ -98628,7 +98628,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         self = this;
-        setTimeout('', 10000);
         this.goodsList.forEach(function (item) {
             axios.get(item.url).then(function (res) {
                 item.content = res.data;
@@ -99679,8 +99678,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         var moneyCheck = function moneyCheck(rule, value, callback) {
-            regFloat = /[0-9]+.[0-9]+/;
-            regInteger = /[0-9]+/;
+            var regFloat = /[0-9]+\.[0-9]+/;
+            var regInteger = /[0-9]+/;
             if (!regFloat.test(value) && !regInteger.test(value)) callback(new Error("请输入数字！"));
             callback();
         };
@@ -99734,15 +99733,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 @endforeach*/
             ],
             uploadList: [],
-            formValidate: {/*
-                           id: {{ $id }},
-                           title: "{{ $title }}",
-                           description: "{{ $description }}",
-                           type:"{{ $type }}",
-                           cost: {{$cost }},
-                           remain: {{ $remain }},
-                           category: ["{{ $cat1 }}", "{{ $cat2 }}"],
-                           tags: [],*/
+            formValidate: {
+                id: 0,
+                title: "",
+                description: "",
+                type: "",
+                cost: "",
+                remain: "",
+                category: [],
+                tags: []
             },
             ruleValidate: {
                 title: [{
@@ -99783,25 +99782,56 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         };
     },
     mounted: function mounted() {
+        var _this = this;
+
+        self = this;
         this.uploadList = this.$refs.upload.fileList;
         this.setTags();
+
+        console.log(this.id);
+        if (this.id) {
+            axios.get('/api/goods/' + this.id).then(function (res) {
+                _this.formValidate = res.data;
+                _this.formValidate.type = toString(res.data.type);
+                _this.formValidate.category = [res.data.cat1, res.data.cat2];
+                _this.uploadList = [];
+                res.data.images.forEach(function (img) {
+                    self.uploadList.push({
+                        name: img.src,
+                        url: img.src
+                    });
+                });
+                console.log(self.uploadList);
+            });
+        }
     },
 
     methods: {
         handleSubmit: function handleSubmit(name) {
-            var _this = this;
+            var _this2 = this;
 
+            console.log(this.uploadList);
             this.$refs[name].validate(function (valid) {
                 if (valid) {
-                    self = _this;
-                    formData = self.formValidate;
+                    self = _this2;
+                    var formData = self.formValidate;
                     formData.uploadList = [];
                     self.uploadList.forEach(function (item) {
-                        formData.uploadList.push(item.name);
+                        formData.uploadList.push(item.src);
                     });
+
+                    var url;
+                    if (self.id == "0") {
+                        // creating goods
+                        url = "/goods";
+                    } else {
+                        // editing goods
+                        url = "/goods/" + self.id;
+                        formData._method = "PUT";
+                    }
+
                     //console.log(formData)
-                    if (_this.id) formData._method = 'PUT';
-                    axios.post('{{ $url }}', formData).then(function (res) {
+                    axios.post(url, formData).then(function (res) {
                         if (res.data.status === true) {
                             setTimeout(function () {
                                 self.$Message.success('上传成功!');
@@ -99812,7 +99842,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                         self.$Message.error('上传失败！');
                     });
                 } else {
-                    _this.$Message.error('请检查!');
+                    self.$Message.error('请检查!');
                 }
             });
         },
@@ -99887,7 +99917,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             return checkMost;
         },
         setTags: function setTags() {
-            axios.get('/api/goods/1').then(function (res) {});
+            this.id = document.getElementsByTagName('meta')['id'].content;
+            axios.get('/api/goods/' + this.id).then(function (res) {});
         }
     }
 });

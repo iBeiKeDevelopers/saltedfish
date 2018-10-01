@@ -3,13 +3,16 @@
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
-			"appId": "6db6151118f73a82",
-			"key": "5a10d671bfaa03314b6c1703d98c304c"
+			"appId": "98ff72d550c2e040",
+			"key": "37cc9ff538dc71117dc2e6671b4b2ccc"
 		}
 	],
-	"database": "sqlite",
+	"database": "redis",
 	"databaseConfig": {
-		"redis": {},
+		"redis": {
+			"port": "6379",
+			"host": "192.168.199.193"
+		},
 		"sqlite": {
 			"databasePath": "/database/laravel-echo-server.sqlite"
 		}
@@ -27,6 +30,6 @@
 		"allowCors": true,
 		"allowOrigin": "http://localhost:80",
 		"allowMethods": "GET",
-		"allowHeaders": "Orgin"
+		"allowHeaders": "Origin"
 	}
 }

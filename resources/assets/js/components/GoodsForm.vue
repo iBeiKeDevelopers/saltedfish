@@ -1,102 +1,102 @@
 <template>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-12 col-xs-12">
-            <div class="card">
-                <div class="home-padding hidden-xs"></div>
-				<div class="card-header">要上传啥赶紧填，麻溜利索的！</div>
-                <div id="form" class="card-body">
-                    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" >
-                        <div class="col-xs-12" style="z-index:1">
-                            <FormItem label="商品名称" prop="title">
-                                <Input v-model="formValidate.title" clearable></Input>
-                            </FormItem>
-                            <FormItem label="商品描述" prop="description">
-                                <Input v-model="formValidate.description" type="textarea" :autosize="{minRows: 5, maxRows: 8}"></Input>
-                            </FormItem>
-                        </div>
-                        <FormItem label="价格" prop="cost" class="col-lg-6 col-md-6 float-left">
-                            <Input v-model="formValidate.cost" clearable>
-                                <Icon type="logo-yen" slot="prepend"></Icon>
-                            </Input>
-                        </FormItem>
-                        <FormItem label="库存" prop="remain" class="col-md-6 float-left">
-                            <Input v-model="formValidate.remain" clearable>
-                                <Icon type="md-filing" slot="prepend"></Icon>
-                            </Input>
-                        </FormItem>
-                        <FormItem label="类型" prop="type" class="col-md-6 float-left">
-                            <Select v-model="formValidate.type">
-                                <Option value="0">出售</Option>
-                                <Option value="1">租赁</Option>
-                            </Select>
-                        </FormItem>
-                        <FormItem label="分类" prop="category" class="col-md-6 float-left">
-                            <Cascader :data="cascader" v-model="formValidate.category"></Cascader>
-                        </FormItem>
-                        <FormItem label="商品美图" class="col-xs-12 float-left">
-                            <div id="img-upload">
-                                <div class="upload-list" v-for="item in uploadList" :key="item.name">
-                                    <template v-if="item.status === 'finished'">
-                                        <img :src="item.url">
-                                        <div class="upload-list-cover">
-                                            <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
-                                            <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-                                        <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-                                    </template>
-                                </div>
-                                <Upload
-                                    ref="upload"
-                                    :show-upload-list="false"
-                                    :default-file-list="defaultList"
-                                    :on-success="handleSuccess"
-                                    :format="['jpg','jpeg','png']"
-                                    :max-size="1024"
-                                    :on-format-error="handleFormatError"
-                                    :on-exceeded-size="handleMaxSize"
-                                    :before-upload="handleBeforeUpload"
-                                    multiple
-                                    type="drag"
-                                    action="/api/image"
-                                    style="display: inline-block;width:58px;">
-                                    <div style="width: 58px;height:58px;line-height: 58px;">
-                                        <Icon type="ios-camera" size="20"></Icon>
-                                    </div>
-                                </Upload>
-                                <Modal title="View Image" v-model="visible">
-                                    <img :src="'/api/image/'+imgName" v-if="visible" class="img-rounded img-responsive">
-                                </Modal>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-12 col-xs-12">
+                <div class="card">
+                    <div class="home-padding hidden-xs"></div>
+                    <div class="card-header">要上传啥赶紧填，麻溜利索的！</div>
+                    <div id="form" class="card-body">
+                        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" >
+                            <div class="col-xs-12" style="z-index:1">
+                                <FormItem label="商品名称" prop="title">
+                                    <Input v-model="formValidate.title" clearable></Input>
+                                </FormItem>
+                                <FormItem label="商品描述" prop="description">
+                                    <Input v-model="formValidate.description" type="textarea" :autosize="{minRows: 5, maxRows: 8}"></Input>
+                                </FormItem>
                             </div>
-                        </FormItem>
-                        <FormItem label="标签" class="col-md-6 float-left">
-                            <Select multiple filterable v-model="formValidate.tags" placeholder="可多选">
-                                <Option value=""></Option>
-                            </Select>
-                        </FormItem>
-                        <FormItem label="自定义标签" class="col-md-6 float-left">
-                            <Input v-model="formValidate.newtags" placeholder="标签以空格间隔"></Input>
-                        </FormItem>
-                        <FormItem class="col-xs-12">
-                            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
-                            <Button @click="handleReset('formValidate')">取消</Button>
-                        </FormItem>
-                    </Form>
+                            <FormItem label="价格" prop="cost" class="col-lg-6 col-md-6 float-left">
+                                <Input v-model="formValidate.cost" clearable>
+                                    <Icon type="logo-yen" slot="prepend"></Icon>
+                                </Input>
+                            </FormItem>
+                            <FormItem label="库存" prop="remain" class="col-md-6 float-left">
+                                <Input v-model="formValidate.remain" clearable>
+                                    <Icon type="md-filing" slot="prepend"></Icon>
+                                </Input>
+                            </FormItem>
+                            <FormItem label="类型" prop="type" class="col-md-6 float-left">
+                                <Select v-model="formValidate.type">
+                                    <Option value="0">出售</Option>
+                                    <Option value="1">租赁</Option>
+                                </Select>
+                            </FormItem>
+                            <FormItem label="分类" prop="category" class="col-md-6 float-left">
+                                <Cascader :data="cascader" v-model="formValidate.category"></Cascader>
+                            </FormItem>
+                            <FormItem label="商品美图" class="col-xs-12 float-left">
+                                <div id="img-upload">
+                                    <div class="upload-list" v-for="item in uploadList" :key="item.name">
+                                        <template v-if="item.status === 'finished'">
+                                            <img :src="item.url">
+                                            <div class="upload-list-cover">
+                                                <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
+                                                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+                                        </template>
+                                    </div>
+                                    <Upload
+                                        ref="upload"
+                                        :show-upload-list="false"
+                                        :default-file-list="defaultList"
+                                        :on-success="handleSuccess"
+                                        :format="['jpg','jpeg','png']"
+                                        :max-size="1024"
+                                        :on-format-error="handleFormatError"
+                                        :on-exceeded-size="handleMaxSize"
+                                        :before-upload="handleBeforeUpload"
+                                        multiple
+                                        type="drag"
+                                        action="/api/image"
+                                        style="display: inline-block;width:58px;">
+                                        <div style="width: 58px;height:58px;line-height: 58px;">
+                                            <Icon type="ios-camera" size="20"></Icon>
+                                        </div>
+                                    </Upload>
+                                    <Modal title="View Image" v-model="visible">
+                                        <img :src="'/api/image/'+imgName" v-if="visible" class="img-rounded img-responsive">
+                                    </Modal>
+                                </div>
+                            </FormItem>
+                            <FormItem label="标签" class="col-md-6 float-left">
+                                <Select multiple filterable v-model="formValidate.tags" placeholder="可多选">
+                                    <Option value=""></Option>
+                                </Select>
+                            </FormItem>
+                            <FormItem label="自定义标签" class="col-md-6 float-left">
+                                <Input v-model="formValidate.newtags" placeholder="标签以空格间隔"></Input>
+                            </FormItem>
+                            <FormItem class="col-xs-12">
+                                <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+                                <Button @click="handleReset('formValidate')">取消</Button>
+                            </FormItem>
+                        </Form>
+                    </div>
                 </div>
-			</div>
-		</div>
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
     data () {
         const moneyCheck = (rule, value, callback) => {
-            regFloat = /[0-9]+.[0-9]+/
-            regInteger = /[0-9]+/
+            var regFloat = /[0-9]+\.[0-9]+/
+            var regInteger = /[0-9]+/
             if(!regFloat.test(value) && !regInteger.test(value))
                 callback(new Error("请输入数字！"))
             callback();
@@ -198,15 +198,15 @@ export default {
                 @endforeach*/
             ],
             uploadList: [],
-            formValidate: {/*
-                id: {{ $id }},
-                title: "{{ $title }}",
-                description: "{{ $description }}",
-                type:"{{ $type }}",
-                cost: {{$cost }},
-                remain: {{ $remain }},
-                category: ["{{ $cat1 }}", "{{ $cat2 }}"],
-                tags: [],*/
+            formValidate: {
+                id: 0,
+                title: "",
+                description: "",
+                type: "",
+                cost: "",
+                remain: "",
+                category: [],
+                tags: [],
             },
             ruleValidate: {
                 title: [{
@@ -247,24 +247,51 @@ export default {
         }
     },
     mounted () {
+        self = this
         this.uploadList = this.$refs.upload.fileList
         this.setTags()
+        
+        console.log(this.id)
+        if(this.id) {
+            axios.get('/api/goods/' + this.id)
+            .then((res) => {
+                self.formValidate = res.data
+                self.formValidate.type = res.data.type.tostring()
+                self.formValidate.category = [res.data.cat1, res.data.cat2]
+                self.uploadList = []
+                res.data.images.forEach((img) => {
+                    self.uploadList.push({
+                        name: img.src,
+                        url: img.src,
+                    })
+                })
+                console.log(self.uploadList)
+            })
+        }
     },
     methods: {
         handleSubmit (name) {
+            console.log(this.uploadList)
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     self = this
-                    formData = self.formValidate
+                    var formData = self.formValidate
                     formData.uploadList = []
-                    self.uploadList.forEach(function (item) {
+                    self.uploadList.forEach((item) => {
                         formData.uploadList.push(item.name)
                     })
+
+                    var url
+                    if(self.id == "0") { // creating goods
+                        url = "/goods"
+                    }else { // editing goods
+                        url = "/goods/" + self.id
+                        formData._method = "PUT"
+                    }
+
                     //console.log(formData)
-                    if(this.id)
-                        formData._method='PUT'
-                    axios.post('{{ $url }}', formData)
-                        .then(function (res) {
+                    axios.post(url, formData)
+                        .then((res) => {
                             if(res.data.status === true) {
                                 setTimeout(() => {
                                     self.$Message.success('上传成功!')                                    
@@ -277,7 +304,7 @@ export default {
                             self.$Message.error('上传失败！');
                         })
                 } else {
-                    this.$Message.error('请检查!');
+                    self.$Message.error('请检查!');
                 }
             })
         },
@@ -335,7 +362,8 @@ export default {
             return checkMost;
         },
         setTags() {
-            axios.get('/api/goods/1')
+            this.id = document.getElementsByTagName('meta')['id'].content
+            axios.get('/api/goods/' + this.id)
                 .then(function (res) {
                 })
         },

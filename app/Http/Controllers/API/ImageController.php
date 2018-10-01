@@ -46,7 +46,7 @@ class ImageController extends Controller
         Storage::delete($path);
 
         $key = uniqid('image_');
-        cache([$key => $img], 30);
+        cache([$key => [$img, $ext]], 30);
         return [
             'name' => $key,
         ];
@@ -61,7 +61,7 @@ class ImageController extends Controller
     public function show($key)
     {
         if(starts_with($key, 'image_'))
-            return cache($key);
+            return cache($key)[0];
         else
             abort(500, "not image!");
     }

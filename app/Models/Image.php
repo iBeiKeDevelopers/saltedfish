@@ -11,4 +11,6 @@ class Image extends Model
     protected $fillable = [
         'gid', 'path', 'src',
     ];
+
+    public $timestamps = false;
 }
