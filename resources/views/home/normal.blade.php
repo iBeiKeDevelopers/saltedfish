@@ -58,7 +58,7 @@
 @section('content')
 <!-- banner -->
 <div class="container">
-    <div id="banner" class="carousel slide">
+    <div id="banner" class="carousel slide" data-ride="carousel">
 	    <!-- carousel indicators -->
 	    <ol class="carousel-indicators">
 		    <li data-target="#banner" data-slide-to="0" class="active"></li>
@@ -85,6 +85,6 @@
 
 @section('scripts')
 <script>
-	$('.carousel').carousel('cycle')
+	$('#banner').carousel('cycle')
 </script>
 @endsection

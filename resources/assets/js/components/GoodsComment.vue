@@ -12,11 +12,11 @@
                             <div class="circle-avatar"
                                 :style="'background-image: url('+card.avatar+')'">
                             </div>
-                            <div class="uname">@{{ card.uname }}</div>
+                            <div class="uname">{{ card.uname }}</div>
                         </div>
                         <div class="goods-comment col-md-10 col-xs-8">
-                            <div>@{{ card.content }}</div>
-                            <div class="goods-meta">@{{ card.created_at }}</div>
+                            <div>{{ card.content }}</div>
+                            <div class="goods-meta">{{ card.created_at }}</div>
                         </div>
                     </li>
                 </template>
@@ -71,7 +71,7 @@ export default {
         },
         submitComment() {
             self = this
-            id = self.id
+            var id = self.id
             if(id === 0)
                 self.$Message.error('error!')
             
