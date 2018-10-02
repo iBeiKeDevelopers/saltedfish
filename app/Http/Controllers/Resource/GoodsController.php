@@ -128,13 +128,11 @@ class GoodsController extends Controller
                 foreach($raw['uploadList'] as $name) {
                     $content = Cache::pull($name);
                     $ext = $content[1];
-                    return $name;
 
-                    Storage::put("public/tmp/$name", $content[0]);
+                    Storage::put("public/tmp/$name.$ext", $content[0]);
                     $path = Storage::putFile($dir, new File("./storage/tmp/$name.$ext"));
                     Storage::delete("public/tmp/$name.$ext");
 
-                    return $path;
                     $res = Image::insert([
                         'gid'       =>      $id,
                         'path'      =>      $path,
@@ -170,7 +168,7 @@ class GoodsController extends Controller
     {
         $goods = Goods::find($id);
         
-        event(new browseEvent(Browse::find($id)));
+        event(new browseEvent(Browse::firstOrNew(['gid' => $id])));
         
         $goods->cost = number_format($goods->cost, 2);
         return view('goods.home',$goods);

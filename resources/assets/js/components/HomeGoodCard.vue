@@ -58,7 +58,7 @@ export default {
 		'card',
 	],
 	mounted() {
-		console.log('HomeGoodCard mounted')
+		//console.log('HomeGoodCard mounted')
 	}
 }
 </script>

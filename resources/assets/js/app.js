@@ -23,6 +23,8 @@ Vue.component('home-card', require('./components/HomeCardContainer.vue'));
 Vue.component('chat-room', require('./components/ChatRoom.vue'));
 Vue.component('goods-form', require('./components/GoodsForm.vue'));
 Vue.component('user-list', require('./components/UserList.vue'));
+Vue.component('goods-carousel', require('./components/GoodsCarousel.vue'));
+Vue.component('goods-comment', require('./components/GoodsComment.vue'));
 
 const app = new Vue({
     el: '#app',

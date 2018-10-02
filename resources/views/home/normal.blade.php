@@ -68,10 +68,10 @@
 	    <!-- carousel item -->
 	    <div class="carousel-inner">
 		    <div class="item active">
-			    <img src="storage/banner/1.jpg" class="img-carousel img-responsive" alt="First slide">
+			    <img src="storage/banner/2.jpg" class="img-carousel img-responsive" alt="First slide">
 		    </div>
 		    <div class="item img-responsive">
-			    <img src="storage/banner/2.jpg" class="img-carousel img-responsive" alt="Second slide">
+			    <img src="storage/banner/1.jpg" class="img-carousel img-responsive" alt="Second slide">
 		    </div>
 		    <div class="item img-responsive">
 			    <img src="storage/banner/3.jpg" class="img-carousel img-responsive" alt="Third slide">

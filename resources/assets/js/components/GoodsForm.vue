@@ -256,22 +256,26 @@ export default {
             axios.get('/api/goods/' + this.id)
             .then((res) => {
                 self.formValidate = res.data
-                self.formValidate.type = res.data.type.tostring()
+                self.formValidate.type = res.data.type.toString()
                 self.formValidate.category = [res.data.cat1, res.data.cat2]
-                self.uploadList = []
+            })
+            axios.post('/api/image/id/' + this.id, {
+                _method: "PUT",
+            })
+            .then((res) => {
                 res.data.images.forEach((img) => {
                     self.uploadList.push({
-                        name: img.src,
-                        url: img.src,
+                        name: img,
+                        url: '/api/image/' + img,
+                        showProgress: false,
+                        status: "finished",
                     })
                 })
-                console.log(self.uploadList)
             })
         }
     },
     methods: {
         handleSubmit (name) {
-            console.log(this.uploadList)
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     self = this
@@ -289,7 +293,6 @@ export default {
                         formData._method = "PUT"
                     }
 
-                    //console.log(formData)
                     axios.post(url, formData)
                         .then((res) => {
                             if(res.data.status === true) {

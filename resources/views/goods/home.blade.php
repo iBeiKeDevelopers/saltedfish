@@ -43,7 +43,6 @@
 
 @section('content')
 <meta name="goods_id" content="{{ $id }}">
-<link href="http://unpkg.com/iview/dist/styles/iview.css" rel="stylesheet">
 <link href="{{ asset('css/goodsShow.css') }}" rel="stylesheet">
 
 <div id="singleItem" class="container">
@@ -53,18 +52,7 @@
                 <div class="card-body">
                         <!-- carousel slide -->
                         <div class="col-lg-6 image-slide float-left">
-                            <div style="col-xs-12">
-                                <Carousel v-model="carouselValue" loop>
-                                    <template v-for="item in imageList">
-                                        <carousel-item>
-                                            <div class="img-wrapper"
-                                                style="background-size:contain;padding-top:50%;"
-                                                :style="'background-image: url('+item.src+')'">
-                                            </div>
-                                        </carousel-item>
-                                    </template>
-                                </Carousel>
-                            </div>
+                            <goods-carousel></goods-carousel>
                         </div>
                         <div class="col-xs-12 col-lg-6">
                             <div class="goods-title left-align col-xs-12">
@@ -110,55 +98,10 @@
                     </div>
                 </div>
             </div>
-            <div class="home-padding"></div>          
-            <div class="card main-background main-shadow">
-                <div class="card-header main-gradient">
-                    <div class="card-title">商品评论</div>
-                </div>
-                <div class="card-body">
-                    <template v-for="card in commentList">
-                        <ul class="list-group">
-                        <template v-if="card.uid">
-                            <li class="list-group-item comment col-xs-12">
-                                <div class="col-md-2 col-xs-4">
-                                    <div class="circle-avatar"
-                                        :style="'background-image: url('+card.avatar+')'">
-                                    </div>
-                                    <div class="uname">@{{ card.uname }}</div>
-                                </div>
-                                <div class="goods-comment col-md-10 col-xs-8">
-                                    <div>@{{ card.content }}</div>
-                                    <div class="goods-meta">@{{ card.created_at }}</div>
-                                </div>
-                            </li>
-                        </template>
-                        </ul>
-                    </template>
-                    <div>
-                        <i-form action="">
-                        <i-col span="18">
-                            <form-item prop="content">
-                                <i-input v-model="content" placeholder="说些什么..."></i-input>
-                            </form-item>
-                        </i-col>
-                        <i-col span="1">&nbsp;</i-col>
-                        <i-col span="5">
-                            <form-item>
-                                <i-button id="btn-submit" style="width:100%" type="primary" @click="submitComment">提交</i-button>
-                            </form-item>
-                        </i-col>
-                        </i-form>
-                    </div>
-                </div>
-            </div>
+            <div class="home-padding"></div>
+            <goods-comment></goods-comment>
             <div class="home-padding"></div>            
         </div>
     </div>
 </div>
-
-<script type="text/javascript" src="{{ asset('js/axios.min.js') }}"></script>
-
-<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.js"></script>
-
-<script src="{{ asset('js/goodsShow.js') }}"></script>
 @endsection

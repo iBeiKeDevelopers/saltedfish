@@ -35,6 +35,7 @@ Route::apiResource('goods', 'API\GoodsController', ['except' => [
 ],]);
 
 Route::get('image/id/{gid}', 'API\ImageController@index');
+Route::put('image/id/{gid}', 'API\ImageController@cache');
 Route::post('image', 'API\ImageController@store');
 Route::get('image/delete/{key}', 'API\ImageController@destroy');
 Route::get('image/{key}', 'API\ImageController@show');

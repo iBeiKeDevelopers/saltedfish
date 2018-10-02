@@ -24,6 +24,29 @@ class ImageController extends Controller
     }
 
     /**
+     * Cache all the images of the good
+     */
+    public function cache(int $gid)
+    {
+        $images = Image::where('gid', $gid)->get();
+
+        $list = [];
+        foreach($images as $item) {
+            $path = $item->path;
+            $img = Storage::get($path);
+            //Storage::delete($path);
+
+            $key = uniqid('image_');
+            $ext = substr(strrchr($path, '.'), 1);
+            cache([$key => [$img, $ext]], 30);
+            array_push($list, $key);
+        }
+        return [
+            'images' => $list,
+        ];
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
