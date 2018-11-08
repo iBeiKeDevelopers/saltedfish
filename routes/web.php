@@ -32,12 +32,12 @@ Route::get('goods/comments/{id}', 'Resource\GoodsController@listComments')
     ->where('id', '[0-9]+');
 Route::resource('goods', 'Resource\GoodsController');
 
-Route::get('orders/list/{type}/{page?}/{num?}', 'Resource\OrderController@list')
-    ->where('id', '[0-9]+');
+Route::get('orders/list/{type}', 'Resource\OrderController@list');
 Route::resource('orders', 'Resource\OrderController');
 
 Route::get('home', 'UserPageController@index');
 Route::get('profile', 'UserPageController@profile');
+
 Route::get('user/{uid}/goods', 'UserPageController@showGoods')
     ->where('uid', '[0-9]+');
 Route::get('user/{uid}/orders', 'UserPageController@showOrders')

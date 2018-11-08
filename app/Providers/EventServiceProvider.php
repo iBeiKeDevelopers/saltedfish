@@ -19,6 +19,18 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Chat\MessageSendingEvent' => [
             'App\Listeners\Chat\MessageSentListener',
         ],
+        'App\Events\OrderCreatedEvent' => [
+            'App\Listeners\OrderCreatedListener',
+        ],
+        'App\Events\OrderCanceledEvent' => [
+            'App\Listeners\OrderCanceledListener',
+        ],
+        'App\Events\OrderSendingEvent' => [
+            'App\Listeners\OrderSendingListener',
+        ],
+        'App\Events\OrderShippedEvent' => [
+            'App\Listeners\OrderShippedListener',
+        ],
     ];
 
     /**

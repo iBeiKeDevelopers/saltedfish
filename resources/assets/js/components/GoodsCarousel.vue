@@ -1,7 +1,7 @@
 <template>
     <div style="col-xs-12">
         <Carousel v-model="carouselValue" loop>
-            <template v-for="item in imageList">
+            <template v-for="item in imageList" v-if="status">
                 <CarouselItem :key="item.id">
                     <img :src="item.src">
                 </CarouselItem>
@@ -15,8 +15,15 @@ export default {
     data() {
         return {
             id: 0,
-            imageList: [],
+            imageList: [{
+                id: 1,
+                src: "/storage/1.jpg",
+            },{
+                id: 2,
+                src: "/storage/2.jpg",
+            },],
             carouselValue: 0,
+            status: false,
         }
     },
     mounted() {
@@ -30,6 +37,8 @@ export default {
             axios.get('/api/image/id/' + this.id)
             .then((res) => {
                 self.imageList = res.data
+                self.status = true
+                console.log(self.imageList)
             })
         },
     }

@@ -45,11 +45,25 @@ class GoodsController extends Controller
     {
         switch($cat) {
             case 'all':
-                $goods = 0;
+                return view('goods.index');
             case '食品':
                 return "aaa";
+            case '服饰':
+                return "aaa";
+            case '生活用品':
+                return "aaa";
+            case '学习用品':
+                return "aaa";
+            case '电子产品':
+                return "aaa";
+            case '体育用品':
+                return "aaa";
+            case '音乐器材':
+                return "aaa";
+            case '非实体商品':
+                return "aaa";
             default:
-                return redirect('/goods/all');
+                return redirect('/goods/category/all');
         }
 
         return view('goods.index', [
@@ -171,6 +185,7 @@ class GoodsController extends Controller
         event(new browseEvent(Browse::firstOrNew(['gid' => $id])));
         
         $goods->cost = number_format($goods->cost, 2);
+        $goods->images;
         return view('goods.home',$goods);
     }
 

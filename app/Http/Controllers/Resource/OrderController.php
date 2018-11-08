@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Resource;
 
 use Auth;
+use App\Models\Goods;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Events\OrderCreatedEvent as Created;
+use App\Events\OrderSendingEvent as Sending;
+use App\Events\OrderShippedEvent as Shipped;
+use App\Events\OrderCanceledEvent as Canceled;
 
 class OrderController extends Controller
 {
@@ -22,22 +27,22 @@ class OrderController extends Controller
         return view('orders.index');
     }
 
-    public function list($type = 'buy', $page = 1, $num = 6)
+    public function list($type = 'buy')
     {
+        $uid = Auth::id();
         if($type == 'buy') {
-            $orders = Order::where('uid', Auth::id())->where('status', '<', '2');
-        }else if($type != 'order') {
-            $orders = Order::where('owner', Auth::id());
+            $orders = Order::where('uid', $uid)->where('status', '<', '2');
+        }else if($type == 'sell') {
+            $orders = Order::where('owner', $uid);
+        }else if($type == 'finished') {
+            $orders = Order::where('uid', $uid)->where('status', '>', '1');
         }else
             abort(404);
 
-        if($num == 0)
-            $orders = $orders->get();
-        else
-            $orders = $orders->take($num)->get();
+        $orders = $orders->get();
         
-        foreach($orders as $ord) {
-            $ord->thumbnail;
+        foreach($orders as $item) {
+            $item->thumbnail;
         }
         
         return $orders;
@@ -62,7 +67,29 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $num = $request->input('amount', 0);
+        $gid = $request->input('goods_id', 0);
+        if($num === 0)
+            abort(403, 'number of the items can not be zero!');
+        $goods = Goods::findOrFail($gid);
+
+        if($goods->owner == Auth::id()) {
+            // return 'Not OK';
+        }
+
+        $order = Order::create([
+            'gid'       =>      $gid,
+            'title'     =>      $goods->title,
+            'owner'     =>      $goods->owner,
+            'uid'       =>      Auth::id(),
+            'cost'      =>      $goods->cost,
+            'amount'    =>      $num,
+        ]);
+        if($order->id > 0) {
+            Event(new Created($order));
+            return 'OK';
+        }
+        return 'Not OK';
     }
 
     /**
@@ -93,22 +120,30 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Order  $order
+     * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, itn $id)
     {
-        //
+        $order = Order::find($id);
+        if($order->status == 0)
+            Event(new Sending($order));
+        else if($order->status == 1)
+            Event(new Shipped($order));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Order  $order
+     * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(int $id)
     {
-        //
+        $order = Order::find($id);
+        if($order->uid != Auth::id())
+            abort(404);
+
+        Event(new Canceled($order));
     }
 }

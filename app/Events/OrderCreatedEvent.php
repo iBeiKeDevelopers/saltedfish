@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -13,6 +14,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class OrderCreatedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $order;
 
     /**
      * Create a new event instance.

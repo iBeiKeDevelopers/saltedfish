@@ -21,7 +21,8 @@ class CreateOrderTable extends Migration
             $table->integer('owner');
             $table->integer('uid');
             $table->float('cost');
-            $table->integer('status');
+            $table->integer('amount')->default(1);
+            $table->integer('status')->default(0);
 
             $table->timestamps();
             $table->softdeletes();

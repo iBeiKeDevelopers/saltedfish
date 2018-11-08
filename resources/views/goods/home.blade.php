@@ -45,14 +45,24 @@
 <meta name="goods_id" content="{{ $id }}">
 <link href="{{ asset('css/goodsShow.css') }}" rel="stylesheet">
 
-<div id="singleItem" class="container">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-xs-12">
             <div class="card">
                 <div class="card-body">
                         <!-- carousel slide -->
                         <div class="col-lg-6 image-slide float-left">
-                            <goods-carousel></goods-carousel>
+                            <div style="col-xs-12">
+                                    <Carousel loop>
+                                        @foreach ($images as $img)
+                                            <Carousel-Item>
+                                                <div class="img-wrapper img-carousel"
+                                                    style="background-image:url({{ $img['src'] }})"
+                                                ></div>
+                                            </Carousel-Item>
+                                        @endforeach
+                                    </Carousel>
+                                </div>
                         </div>
                         <div class="col-xs-12 col-lg-6">
                             <div class="goods-title left-align col-xs-12">
@@ -63,7 +73,7 @@
                             </div>
                             <div class="left-align col-xs-12">
                                 <div class="goods-info left-align col-xs-12">
-                                    <template v-if="{{ $status }}">
+                                    <template v-if="{{ $status }} === 0">
                                         <div class="float-left">状态：缺货</div>
                                         </template>
                                     <template v-else>
@@ -71,9 +81,12 @@
                                         <div class="float-left">库存：{{ $remain }}</div>
                                     </template>
                                 </div>
-                                <div class="left-align col-xs-12">
-                                    <button id="btn-gradient" class="btn btn-lg" type="button">创建订单</button>
-                                </div>
+                                <goods-order
+                                    img-url="{{ $images[0]['src'] }}"
+                                    cost="{{ $cost }}"
+                                    remain="{{ $remain }}"
+                                    gid="{{ $id }}"
+                                ></goods-order>
                                 <div class="left-align col-xs-12">
                                     <button class="btn btn-link" type="button">联系卖家</button>
                                 </div>

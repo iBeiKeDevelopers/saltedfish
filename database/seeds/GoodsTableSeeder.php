@@ -27,8 +27,8 @@ class GoodsTableSeeder extends Seeder
         $name = random_int(1,3) . '.jpg';
         DB::table('goods_image')->insert([
             'gid'           =>      $gid,
-            'path'          =>      'storage/'.$name,
-            'src'           =>      'storage/'.$name,
+            'path'          =>      '\/storage/'.$name,
+            'src'           =>      '\/storage/'.$name,
         ]);
 
         DB::table('goods_comments')->insert([
@@ -60,8 +60,8 @@ class GoodsTableSeeder extends Seeder
         $name = random_int(1,3) . '.jpg';
         DB::table('goods_image')->insert([
             'gid'           =>      $gid,
-            'path'          =>      '/storage'.'/'.$name,
-            'src'           =>      '/storage'.'/'.$name,
+            'path'          =>      '\/storage/'.$name,
+            'src'           =>      '\/storage/'.$name,
         ]);
 
         DB::table('goods_browse')->insert([

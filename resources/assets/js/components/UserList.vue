@@ -22,18 +22,20 @@
 							<template v-if="Array.isArray(goodsList)">
 								<template v-for="item in goodsList">
 									<li :key="item.id" class="home-padding list-group-item">
-										<a :href="'/orders/'+item.id">
-											<div :style="'background-image: url('+item.thumbnail.src+')'" 
-												class="img-wrapper float-left"
-												style="width:30%" alt="thumbnail"></div>
-										</a>
-										<div class='pre-scrollable float-left'
-											style='padding-left:5%;width:65%;overflow:hidden;'>
+										<div class="col-xs-12 col-md-6 float-left">
+											<a :href="'/orders/'+item.id">
+												<div :style="'background-image: url('+item.thumbnail.src+')'" 
+													class="img-wrapper float-left"
+													alt="thumbnail"></div>
+											</a>
+										</div>
+										<div class='col-xs-12 col-md-6 pre-scrollable float-left'
+											style='overflow:hidden;'>
 											<table class='table table-striped table-condensed'>
 												<tbody>
 													<tr>
 														<td>标题</td>
-														<td>@{{ item.title }}</td>
+														<td>{{ item.title }}</td>
 													</tr>
 													<tr>
 														<td>类型</td>
@@ -44,12 +46,12 @@
 													</tr>
 													<tr>
 														<td>价格</td>
-														<td>￥ @{{ item.cost }}</td>
+														<td>￥ {{ item.cost }}</td>
 													</tr>
 													<template v-if="flag">
 														<tr>
 															<td>买家</td>
-															<td>@{{ item.uid }}</td>
+															<td>{{ item.uid }}</td>
 														</tr>
 													</template>
 												</tbody>

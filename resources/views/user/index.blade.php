@@ -72,7 +72,3 @@
     <user-list></user-list>
 </div>
 @endsection
-
-@section('script')
-<script type="text/javascript" src="http://unpkg.com/iview/dist/iview.js"></script>
-@endsection

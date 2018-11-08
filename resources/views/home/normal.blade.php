@@ -19,7 +19,7 @@
 				navbar-second
 				main-gradient main-shadow
 			" style="width:90%">
-	        <li><a  href="/goods/category/食品">食品</a></li>
+	        <li><a href="/goods/category/食品">食品</a></li>
 	        <li><a href="/goods/category/服饰">服饰</a></li>
 	        <li><a href="/goods/category/生活用品">生活用品</a></li>
 	        <li><a href="/goods/category/学习用品">学习用品</a></li>
@@ -27,7 +27,7 @@
 	        <li><a href="/goods/category/体育用品">体育用品</a></li>
 	        <li><a href="/goods/category/音乐器材">音乐器材</a></li>
 	        <li><a href="/goods/category/非实体商品">非实体商品</a></li>
-            <li><a href="/goods/all">所有商品</a></li>
+            <li><a href="/goods/category/all">所有商品</a></li>
         </ul>
     </div>
 </nav>
@@ -84,6 +84,8 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap/bootstrap.js') }}"></script>
 <script>
 	$('#banner').carousel('cycle')
 </script>
