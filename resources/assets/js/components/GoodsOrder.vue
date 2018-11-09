@@ -52,10 +52,12 @@ export default {
                 goods_id: self.gid,
             })
             .then((res) => {
-                if(res.data === 'OK')
-                    self.$Message.success('OK')
+                if(res.data === 'OK') {
+                    self.$Message.success('订单创建成功，3秒后刷新页面。')
+                    setTimeout('window.location.reload()', 3000)
+                }
                 else
-                    self.$Message.error('Not OK')
+                    self.$Message.error(res.data)
             })
             this.amount = 1
         },

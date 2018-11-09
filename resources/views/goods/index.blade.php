@@ -61,6 +61,7 @@
         <div class="col-xs-12">
             <div class="card">
                 <div class="card-body">
+					<goods-card :card="{url: ''}"></goods-card>
                 </div>
             </div>
         </div>

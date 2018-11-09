@@ -97,14 +97,14 @@ export default {
 	},
 	methods: {
 		showOrderBuy : function () {
-			this.getList("orders/list/buy/1/2")
+			this.getList("orders/get/buy")
 			.then(res => {
 				this.goodsList = res
 			})
 			this.flag = 0
 		},
 		showOrderSell: function () {
-			this.getList("orders/list/sell/1/2")
+			this.getList("orders/get/sell")
 			.then(res => {
 				this.goodsList = res
 			})

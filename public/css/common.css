@@ -102,13 +102,17 @@
     font-size: 1.5em;
 }
 
+.goods-amount {
+    font-size: 1.5em;
+}
+
 .image-slide {
     width:50%;
 }
 
 .img-icon {
     margin: 0 10px;
-    width:15px;
+    width:12px;
     height:auto;
 }
 

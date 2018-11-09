@@ -26,6 +26,7 @@ Vue.component('user-list', require('./components/UserList.vue'));
 Vue.component('user-profile', require('./components/UserProfile.vue'));
 
 Vue.component('goods-form', require('./components/GoodsForm.vue'));
+Vue.component('goods-card', require('./components/HomeGoodCard.vue'));
 Vue.component('goods-carousel', require('./components/GoodsCarousel.vue'));
 Vue.component('goods-order', require('./components/GoodsOrder.vue'));
 Vue.component('goods-comment', require('./components/GoodsComment.vue'));

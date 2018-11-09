@@ -45,23 +45,50 @@ class GoodsController extends Controller
     {
         switch($cat) {
             case 'all':
-                return view('goods.index');
+                return view('goods.index', [
+                    'title'     =>      '全部商品',
+                    'cat'      =>      'all',
+                ]);
             case '食品':
-                return "aaa";
+                return view('goods.index', [
+                    'title'     =>      $cat,
+                    'cat'      =>      'sp',
+                ]);
             case '服饰':
-                return "aaa";
+                return view('goods.index', [
+                    'title'     =>      $cat,
+                    'cat'      =>      'fs',
+                ]);
             case '生活用品':
-                return "aaa";
+                return view('goods.index', [
+                    'title'     =>      $cat,
+                    'cat'      =>      'shyp',
+                ]);
             case '学习用品':
-                return "aaa";
+                return view('goods.index', [
+                    'title'     =>      $cat,
+                    'cat'      =>      'xxyp',
+                ]);
             case '电子产品':
-                return "aaa";
+                return view('goods.index', [
+                    'title'     =>      $cat,
+                    'cat'      =>      'dzcp',
+                ]);
             case '体育用品':
-                return "aaa";
+                return view('goods.index', [
+                    'title'     =>      $cat,
+                    'cat'      =>      'tyyp',
+                ]);
             case '音乐器材':
-                return "aaa";
+                return view('goods.index', [
+                    'title'     =>      $cat,
+                    'cat'      =>      'yyqc',
+                ]);
             case '非实体商品':
-                return "aaa";
+                return view('goods.index', [
+                    'title'     =>      $cat,
+                    'cat'      =>      'fstsp',
+                ]);
             default:
                 return redirect('/goods/category/all');
         }
@@ -186,6 +213,7 @@ class GoodsController extends Controller
         
         $goods->cost = number_format($goods->cost, 2);
         $goods->images;
+        //return $goods;
         return view('goods.home',$goods);
     }
 

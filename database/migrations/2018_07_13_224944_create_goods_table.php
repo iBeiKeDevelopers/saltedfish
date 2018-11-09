@@ -19,9 +19,8 @@ class CreateGoodsTable extends Migration
             $table->string('title');
             $table->string('owner');
             $table->integer('type');
-            $table->integer('status')->default(0);
             $table->float('cost');
-            $table->integer('remain');
+            $table->integer('remain')->default(0);
             $table->text('description');
             $table->string('cat1');
             $table->string('cat2');

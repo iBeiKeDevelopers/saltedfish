@@ -29,8 +29,8 @@ class OrderCreatedListener
     {
         $order = $event->order;
         $goods = Goods::findOrFail($order->gid);
-        if($goods->remain > $order->amount) {
-            $goods->remain -= $order->amount;
+        if((int)$goods->remain >= (int)$order->amount) {
+            $goods->remain -= (int)$order->amount;
             $goods->save();
         }else {
             abort(403, 'Too much than remain!');

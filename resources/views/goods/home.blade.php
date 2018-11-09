@@ -73,7 +73,7 @@
                             </div>
                             <div class="left-align col-xs-12">
                                 <div class="goods-info left-align col-xs-12">
-                                    <template v-if="{{ $status }} === 0">
+                                    <template v-if="{{ $remain }} <= 0">
                                         <div class="float-left">状态：缺货</div>
                                         </template>
                                     <template v-else>

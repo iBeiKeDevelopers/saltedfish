@@ -119,6 +119,9 @@
 
 <script>
 export default {
+    props: [
+        'userId',
+    ],
     data() {
         return {
             flag: 1,
@@ -163,7 +166,7 @@ export default {
             self.content._word = getWordOf(num)
             console.log(self.content)
             axios.post(
-                    '/user/{{ Auth::id() }}',
+                    '/user/' + self.userId,
                     self.content
                 )
                 .then(function (res) {

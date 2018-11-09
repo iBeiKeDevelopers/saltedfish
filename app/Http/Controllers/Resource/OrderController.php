@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Resource;
 
 use Auth;
+use Carbon\Carbon;
 use App\Models\Goods;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Events\OrderCreatedEvent as Created;
 use App\Events\OrderSendingEvent as Sending;
 use App\Events\OrderShippedEvent as Shipped;
+use App\Events\OrderDeletedEvent as Deleted;
 use App\Events\OrderCanceledEvent as Canceled;
 
 class OrderController extends Controller
@@ -39,14 +41,42 @@ class OrderController extends Controller
         }else
             abort(404);
 
-        $orders = $orders->get();
+        $orders = $orders->orderBy('status', 'desc')->get();
         
         foreach($orders as $item) {
             $item->thumbnail;
         }
         
         return $orders;
+    }
+
+    /**
+     * Return query result of orders within 3 days
+     * 
+     * @param string $type
+     * @return array $orders
+     */
+    public function get($type)
+    {
+        $uid = Auth::id();
+        if($type == 'buy') {
+            $orders = Order::where('uid', $uid)->where('status', '<', '2');
+        }else if($type == 'sell') {
+            $orders = Order::where('owner', $uid);
+        }else if($type == 'finished') {
+            $orders = Order::where('uid', $uid)->where('status', '>', '1');
+        }else
+            abort(404);
+
+        $last = Carbon::now()->addDays(-3);
+
+        $orders = $orders->whereDate('created_at', '>', $last)->get();
         
+        foreach($orders as $item) {
+            $item->thumbnail;
+        }
+
+        return $orders;
     }
 
     /**
@@ -56,7 +86,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        abort(404);
     }
 
     /**
@@ -74,7 +104,7 @@ class OrderController extends Controller
         $goods = Goods::findOrFail($gid);
 
         if($goods->owner == Auth::id()) {
-            // return 'Not OK';
+            // return 'Not yourself!';
         }
 
         $order = Order::create([
@@ -123,12 +153,19 @@ class OrderController extends Controller
      * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, itn $id)
+    public function update(Request $request, int $id)
     {
         $order = Order::find($id);
-        if($order->status == 0)
+
+        if($request->input('operation', '') === 'cancel')
+            Event(new Canceled($order));
+        else if(
+            $order->status == 0 &&
+            $request->input('operation', '') === 'confirm' &&
+            $order->owner === Auth::id()
+        )
             Event(new Sending($order));
-        else if($order->status == 1)
+        else if($order->status == 1 && $request->input('operation', '') === 'shipped')
             Event(new Shipped($order));
     }
 
@@ -143,7 +180,7 @@ class OrderController extends Controller
         $order = Order::find($id);
         if($order->uid != Auth::id())
             abort(404);
-
-        Event(new Canceled($order));
+            
+        Event(new Deleted($order));
     }
 }

@@ -2,51 +2,65 @@
     <div id="mescroll" style="max-height:700px;overflow:scroll">
         <ul id="datalist" class="list-group" style="overflow-y:hidden;">
             <li class="list-group-item" v-for="item in pdlist" :key="item.id">
-                <a :href="'/goods/'+item.id">
-                    <div :style="'background-image: url('+item.thumbnail.src+')'" 
-                        class="img-wrapper float-left"
-                        style="width:20%;padding-top:20%;" alt="thumbnail"></div>
-                </a>
-                <div class='table-responsive float-left'
-                    style='padding-left:5%;width:55%;overflow:hidden;margin: 5% 0;'>
-                    <table class='table table-condensed'>
-                        <thead>
-                            <tr>
-                                <td>@{{ item.title }}</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <template v-if="item.type">
-                                        租赁&nbsp;@{{ item.cost }}/天
-                                    </template>
-                                    <template v-else>
-                                        出售&nbsp;@{{ item.cost }}
-                                    </template>
-                                    &nbsp;&nbsp;
-                                    库存
-                                    @{{ item.remain }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col-3 hidden-xs float-left">
+                    <a :href="'/goods/'+item.id">
+                        <div :style="'background-image: url('+item.thumbnail.src+')'" 
+                            class="img-wrapper"
+                            alt="thumbnail"></div>
+                    </a>
                 </div>
-                <div class="float-left hidden-xs" style="width:25%;padding: 0 5%;margin: 5% 0;">
-                    <table class="table-condensed">
-                        <tr>
-                            <td>
-                                <img class="img-icon" src="/storage/find.png">
-                                <a :href="'/goods/'+item.id">查看</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img class="img-icon" src="/storage/edit.png">
-                                <a :href="'/goods/'+item.id+'/edit'">修改</a>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="col-xs-9 col-md-6 float-left">
+                    <div class='table float-left'
+                        style='overflow:hidden;'>
+                        <table class='table table-condensed'>
+                            <thead>
+                                <tr>
+                                    <td>{{ item.title }}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <template v-if="item.type">
+                                            租赁价：{{ item.cost }}/天
+                                        </template>
+                                        <template v-else>
+                                            出售价：{{ item.cost }}&nbsp;元
+                                        </template>
+                                        &nbsp;&nbsp;
+                                        库存
+                                        {{ item.remain }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-3 float-left">
+                    <div class="table float-left">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <a :href="'/goods/'+item.id">
+                                            <img class="img-icon" src="/storage/find.png">
+                                        </a>
+                                        <a class="hidden-xs" :href="'/goods/'+item.id">查看</a>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a :href="'/goods/'+item.id">
+                                            <img class="img-icon" src="/storage/edit.png">
+                                        </a>
+                                        <a class="hidden-xs" :href="'/goods/'+item.id">修改</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </li>
         </ul>

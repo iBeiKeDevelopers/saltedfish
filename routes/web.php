@@ -33,6 +33,7 @@ Route::get('goods/comments/{id}', 'Resource\GoodsController@listComments')
 Route::resource('goods', 'Resource\GoodsController');
 
 Route::get('orders/list/{type}', 'Resource\OrderController@list');
+Route::get('orders/get/{type}', 'Resource\OrderController@get');
 Route::resource('orders', 'Resource\OrderController');
 
 Route::get('home', 'UserPageController@index');

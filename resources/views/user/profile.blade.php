@@ -27,7 +27,7 @@
                     <breadcrumb-item>个人信息编辑</breadcrumb-item>
                     </breadcrumb>
                 </div>
-				<user-profile></user-profile>
+                <user-profile user-id="{{ Auth::id() }}"></user-profile>
             </div>
         </div>
     </div>
