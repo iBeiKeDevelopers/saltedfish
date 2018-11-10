@@ -42,20 +42,28 @@
 @endsection
 
 @section('form')
-<form id="form" class="navbar-form navbar-right
-		form-inline
-		hidden-xs
-		main-gradient"
-	role="search"
-	method="GET">
-    <div class="form-group" style="width:80%;">
-        <input type="text" class="form-control" name="keyword" placeholder="Search">
-    </div>
-    <button type="submit" class="btn btn-search">搜索</button>
-</form>
+<search-form url="/goods/category/all"></search-form>
 @endsection
 
 @section('content')
+<div class="container visible-xs">
+	<form id="form"
+		class="navbar-right
+            form-inline
+            main-gradient"
+        role="search"
+        method="GET"
+		action="/goods/category/all"
+	>
+        <div class="form-group" style="width:80%;margin-bottom:0;">
+            <input type="text" class="form-control" name="keyword" placeholder="Search">
+		</div>
+		<div class="form-group" style="width:20%;margin-bottom:0;">
+			<button type="submit" class="btn btn-search">搜索</button>
+		</div>
+	</form>
+	<div class="home-padding"></div>
+</div>
 <!-- banner -->
 <div class="container">
     <div id="banner" class="carousel slide" data-ride="carousel">

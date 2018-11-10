@@ -3,7 +3,7 @@
         <button id="btn-gradient" class="btn btn-lg" type="button" @click="modal = true">创建订单</button>
         <Modal
             v-model="modal"
-            title="New Order"
+            title="创建订单"
             @on-ok="ok"
             @on-cancel="cancel"
         >
@@ -16,7 +16,7 @@
                     </div>
                 </FormItem>
                 <FormItem class="col-6 float-left">
-                    <p>￥ {{ cost }}</p>
+                    <h4><strong><span>合计</span>&nbsp;<span class="font-default">￥ {{ (cost*amount).toFixed(2) }}</span></strong></h4>
                     <p>库存{{ remain }}件</p>
                 </FormItem>
                 <FormItem class="col-12">
@@ -53,8 +53,12 @@ export default {
             })
             .then((res) => {
                 if(res.data === 'OK') {
-                    self.$Message.success('订单创建成功，3秒后刷新页面。')
-                    setTimeout('window.location.reload()', 3000)
+                    self.$Message.success('订单创建成功。')
+                    //setTimeout('window.location.reload()', 3000)
+                }
+                else if(res.data === 'phone number missing') {
+                    self.$Message.error('请先填写手机号！')
+                    setTimeout('window.location.href = "/profile"', 3000)
                 }
                 else
                     self.$Message.error(res.data)

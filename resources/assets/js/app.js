@@ -19,6 +19,7 @@ import iview from 'iview';
 import 'iview/dist/styles/iview.css';
 Vue.use(iview);
 
+Vue.component('search-form', require('./components/SearchForm.vue'));
 Vue.component('home-card', require('./components/HomeCardContainer.vue'));
 Vue.component('chat-room', require('./components/ChatRoom.vue'));
 
@@ -31,6 +32,7 @@ Vue.component('goods-carousel', require('./components/GoodsCarousel.vue'));
 Vue.component('goods-order', require('./components/GoodsOrder.vue'));
 Vue.component('goods-comment', require('./components/GoodsComment.vue'));
 Vue.component('goods-scroll', require('./components/GoodsScroll.vue'));
+Vue.component('goods-contact', require('./components/GoodsContact.vue'));
 
 Vue.component('order-index', require('./components/OrderIndex.vue'));
 

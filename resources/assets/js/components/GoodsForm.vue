@@ -4,7 +4,7 @@
             <div class="col-lg-8 col-md-12 col-xs-12">
                 <div class="card">
                     <div class="home-padding hidden-xs"></div>
-                    <div class="card-header">要上传啥赶紧填，麻溜利索的！</div>
+                    <div class="card-header">商品上传</div>
                     <div id="form" class="card-body">
                         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" >
                             <div class="col-xs-12" style="z-index:1">
@@ -71,14 +71,14 @@
                                     </Modal>
                                 </div>
                             </FormItem>
-                            <FormItem label="标签" class="col-md-6 float-left">
+                            <!--<FormItem label="标签" class="col-md-6 float-left">
                                 <Select multiple filterable v-model="formValidate.tags" placeholder="可多选">
                                     <Option value=""></Option>
                                 </Select>
                             </FormItem>
                             <FormItem label="自定义标签" class="col-md-6 float-left">
                                 <Input v-model="formValidate.newtags" placeholder="标签以空格间隔"></Input>
-                            </FormItem>
+                            </FormItem>-->
                             <FormItem class="col-xs-12">
                                 <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
                                 <Button @click="handleReset('formValidate')">取消</Button>

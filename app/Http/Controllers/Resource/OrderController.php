@@ -46,6 +46,18 @@ class OrderController extends Controller
         foreach($orders as $item) {
             $item->thumbnail;
         }
+
+        if($type == 'buy') {
+            foreach($orders as $item) {
+                $item->phone = $item->seller->phone ?? '';
+                unset($item->seller);
+            }
+        }else if($type == 'sell') {
+            foreach($orders as $item) {
+                $item->phone = $item->buyer->phone ?? '';
+                unset($item->buyer);
+            }
+        }
         
         return $orders;
     }
@@ -104,7 +116,12 @@ class OrderController extends Controller
         $goods = Goods::findOrFail($gid);
 
         if($goods->owner == Auth::id()) {
-            // return 'Not yourself!';
+            return '自己的商品不能买哟～';
+        }
+
+        $contact = \App\User\Contact::find(Auth::id());
+        if($contact == null || $contact->phone == null) {
+            return 'phone number missing';
         }
 
         $order = Order::create([

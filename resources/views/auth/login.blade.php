@@ -56,7 +56,7 @@
                                 </button>
 
                                 <a class="btn btn-link" href="{{ route('register') }}">
-                                    贝城社区帐号登录
+                                    使用贝城社区帐号注册
                                 </a>
                             </div>
                         </div>

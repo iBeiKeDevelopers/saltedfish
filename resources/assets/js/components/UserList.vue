@@ -19,7 +19,7 @@
 					</div>
 					<div>
 						<ul class="list-group">
-							<template v-if="Array.isArray(goodsList)">
+							<template v-if="goodsList.length">
 								<template v-for="item in goodsList">
 									<li :key="item.id" class="home-padding list-group-item">
 										<div class="col-xs-12 col-md-6 float-left">
@@ -61,7 +61,7 @@
 								</template>
 							</template>
 							<!-- error -->
-							<template v-else-if="goodsList == 'error'">
+							<template v-else-if="goodsList === 'error'">
 								<li class="home-padding list-group-item">
 									error!
 								</li>

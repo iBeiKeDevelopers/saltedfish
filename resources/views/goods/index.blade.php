@@ -60,8 +60,14 @@
     <div class="row justify-content-center">
         <div class="col-xs-12">
             <div class="card">
+                <div class="card-header">
+                    <breadcrumb separator=">">
+                    <breadcrumb-item to="/">分类</breadcrumb-item>
+					<breadcrumb-item>{{ $title }}</breadcrumb-item>
+                    </breadcrumb>
+                </div>
                 <div class="card-body">
-					<goods-card :card="{url: ''}"></goods-card>
+					
                 </div>
             </div>
         </div>

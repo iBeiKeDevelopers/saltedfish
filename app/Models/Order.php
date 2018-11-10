@@ -28,4 +28,12 @@ class Order extends Model
     public function thumbnail() {
         return $this->hasOne('App\Models\Image', 'gid', 'gid');
     }
+
+    public function buyer() {
+        return $this->hasOne('App\User\Contact', 'id', 'uid');
+    }
+
+    public function seller() {
+        return $this->hasOne('App\User\Contact', 'id', 'owner');
+    }
 }

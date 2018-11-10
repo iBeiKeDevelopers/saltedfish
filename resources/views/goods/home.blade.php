@@ -87,9 +87,7 @@
                                     remain="{{ $remain }}"
                                     gid="{{ $id }}"
                                 ></goods-order>
-                                <div class="left-align col-xs-12">
-                                    <button class="btn btn-link" type="button">联系卖家</button>
-                                </div>
+                                <goods-contact></goods-contact>
                             </div>
                         </div>
                 </div>

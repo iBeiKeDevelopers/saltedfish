@@ -41,62 +41,70 @@ class GoodsController extends Controller
             ]);
     }
 
-    public function category($cat = 'all')
+    public function category(Request $request, $cat = 'all')
     {
         switch($cat) {
             case 'all':
-                return view('goods.index', [
+                $data = [
                     'title'     =>      '全部商品',
                     'cat'      =>      'all',
-                ]);
+                ];
+                break;
             case '食品':
-                return view('goods.index', [
+                $data = [
                     'title'     =>      $cat,
                     'cat'      =>      'sp',
-                ]);
+                ];
+                break;
             case '服饰':
-                return view('goods.index', [
+                $data = [
                     'title'     =>      $cat,
                     'cat'      =>      'fs',
-                ]);
+                ];
+                break;
             case '生活用品':
-                return view('goods.index', [
+                $data = [
                     'title'     =>      $cat,
                     'cat'      =>      'shyp',
-                ]);
+                ];
+                break;
             case '学习用品':
-                return view('goods.index', [
+                $data = [
                     'title'     =>      $cat,
                     'cat'      =>      'xxyp',
-                ]);
+                ];
+                break;
             case '电子产品':
-                return view('goods.index', [
+                $data = [
                     'title'     =>      $cat,
                     'cat'      =>      'dzcp',
-                ]);
+                ];
+                break;
             case '体育用品':
-                return view('goods.index', [
+                $data = [
                     'title'     =>      $cat,
                     'cat'      =>      'tyyp',
-                ]);
+                ];
+                break;
             case '音乐器材':
-                return view('goods.index', [
+                $data = [
                     'title'     =>      $cat,
                     'cat'      =>      'yyqc',
-                ]);
-            case '非实体商品':
-                return view('goods.index', [
+                ];
+                break;
+                case '非实体商品':
+                $data = [
                     'title'     =>      $cat,
                     'cat'      =>      'fstsp',
-                ]);
+                ];
+                break;
             default:
                 return redirect('/goods/category/all');
         }
 
-        return view('goods.index', [
-            'goods'     =>      $goods,
-            'thumbnail' =>      $goods->thumbnail,
-        ]);
+        $data['keyword'] = $request->input('keyword', '');
+
+        return view('goods.index', $data);
     }
 
     /**
@@ -146,6 +154,9 @@ class GoodsController extends Controller
      */
     public function store(Request $request)
     {
+        $contact = \App\User\Contact::find(Auth::id());
+        if($contact == [] || $contact->phone == null)
+            return "<h2>请先填写联系方式！</h2><script>setTimeout('window.location.href = '/profile'', 5000)</script>";
         $raw = $request->all();
         $message = isValid($raw);
         if($message === true) {

@@ -12,6 +12,8 @@
 */
 Auth::routes();
 
+Route::post('/register/new', 'RegisterController');
+
 Route::get('/user/info', function () {
     return Auth::user();
 });
@@ -61,5 +63,8 @@ Route::post('chat-online/{id}', 'ChatController@sendMessageto');
 Route::get('chat/history/{id}', 'ChatController@showHistory');
 
 Route::get('test', function () {
-    return view('test');
-})->middleware('auth');
+    $user = Illuminate\Support\Facades\DB::connection('mysql_city')->table('members')->where('email', '3441132598@qq.com')->get()[0];
+    echo $user->password . '<br>';
+    echo md5(md5('').$user->salt) . '<br>';
+    return $user->email;
+});

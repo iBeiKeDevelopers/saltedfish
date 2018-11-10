@@ -7,37 +7,34 @@
 					    {{ card.header }}
 					</div>
                     <div class="card-body main-background main-list main-shadow">
-					<!-- normal -->
-					<template v-if="card.status == true">
-
-                        <!-- nothing -->
-						<template v-if="card.content == []">
-	    					<div class="img-wrapper"
-		    					style="height:22em;
-	    							background-image: url('/storage/404.png')">
-    						</div>
-			    		</template>
-                        <!-- normal -->
-                        <template v-else>
-		    				<template v-for="item in card.content">
-    							<div class="thumbnail col-md-3 col-xs-6 float-left" :key="item.id">
-									<a :href="'/goods'+'/'+item.id">
-									    <div class='img-wrapper'
-										    :style="'background-image: url('+item.thumbnail.src+')'">
-									    </div>
-								    </a>
-										<div class='caption'>
-									    <h4 class='goods-title'>
-										    {{ item.title }}
-									    </h4>
-									    <h5 class='goods-cost main-content'>
-										    ￥ {{ item.cost }}
-										</h5>
-								    </div>
-							    </div>
-						    </template>
-                        </template>
-                        
+						<!-- normal -->
+						<template v-if="card.status == true">
+							<!-- nothing -->
+							<template v-if="card.content.length === 0">
+								<div class="img-wrapper col-12"
+									style="background-image: url('/storage/404.png')">
+								</div>
+							</template>
+							<!-- normal -->
+							<template v-else>
+								<template v-for="item in card.content">
+									<div class="thumbnail col-md-3 col-xs-6 float-left" :key="item.id">
+										<a :href="'/goods'+'/'+item.id">
+											<div class='img-wrapper'
+												:style="'background-image: url('+item.thumbnail.src+')'">
+											</div>
+										</a>
+											<div class='caption'>
+											<h4 class='goods-title'>
+												{{ item.title }}
+											</h4>
+											<h5 class='goods-cost main-content'>
+												￥ {{ item.cost }}
+											</h5>
+										</div>
+									</div>
+								</template>
+							</template>
 						</template>
 						<!-- empty -->
 						<template v-else-if="card.status == false">

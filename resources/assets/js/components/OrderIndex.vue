@@ -39,13 +39,18 @@
                                         ></div>
                                     </div>
                                     <div class="col-xs-12 col-lg-6">
-                                        <div><h1 class="goods-title font-default">{{ item.title }}</h1></div>
-                                        <div class="goods-cost font-dark">￥&nbsp;{{ item.cost }}</div>
+                                        <div><h1 class="goods-title">{{ item.title }}</h1></div>
+                                        <div class="goods-cost font-dark">合计：￥&nbsp;{{ (item.cost*item.amount).toFixed(2) }}</div>
                                         <div class="goods-amount">数量：{{ item.amount }}</div>
                                         <div class="goods-status">
-                                            状态：{{ getStatus(item.status) }}
+                                            状态：<span class="font-default">{{ getStatus(item.status) }}</span>
                                         </div>
-                                        <div>创建时间：{{ item.created_at }}</div>
+                                        <div class="goods-contact">
+                                            联系方式：{{ item.phone }}
+                                        </div>
+                                        <div>
+                                            创建时间：{{ item.created_at }}
+                                        </div>
                                         <div>
                                             <!-- Waiting for the confirm of seller -->
                                             <template v-if="item.status == 0">
@@ -55,7 +60,15 @@
                                             <!-- To be shipped -->
                                             <template v-else-if="item.status == 1">
                                                 <Button @click="cancel(item.id)">取消订单</Button>
-                                                <Button @click="shipped(item.id)">确认收货</Button>
+                                                <Button @click="modal_shipped = true">确认收货</Button>
+                                                <Modal
+                                                    v-model="modal_shipped"
+                                                    title="确认收货"
+                                                    @on-ok="shipped(item.id)"
+                                                >
+                                                    <h class="font-dark">确认商品无误后，</h>
+                                                    <p>请尽快完成交易</p>
+                                                </Modal>
                                             </template>
                                         </div>
                                     </div>
@@ -77,13 +90,18 @@
                                         ></div>
                                     </div>
                                     <div class="col-xs-12 col-lg-6">
-                                        <div><h1 class="goods-title font-default">{{ item.title }}</h1></div>
-                                        <div class="goods-cost font-dark">￥&nbsp;{{ item.cost }}</div>
+                                        <div><h1 class="goods-title">{{ item.title }}</h1></div>
+                                        <div class="goods-cost font-dark">合计：￥&nbsp;{{ (item.cost*item.amount).toFixed(2) }}</div>
                                         <div class="goods-amount">数量：{{ item.amount }}</div>
                                         <div class="goods-status">
-                                            状态：{{ getStatus(item.status) }}
+                                            状态：<span class="font-default">{{ getStatus(item.status) }}</span>
                                         </div>
-                                        <div>创建时间：{{ item.created_at }}</div>
+                                        <div class="goods-contact">
+                                            联系方式：{{ item.phone }}
+                                        </div>
+                                        <div>
+                                            创建时间：{{ item.created_at }}
+                                        </div>
                                         <div>
                                             <!-- To be confirmed and sent -->
                                             <template v-if="item.status == 0">
@@ -93,12 +111,12 @@
                                                     title="确认订单"
                                                     @on-ok="confirm(item.id)"
                                                 >
-                                                    <h style="color:red;">确认订单无误后，</h>
+                                                    <h class="font-dark">确认订单无误后，</h>
                                                     <p>请尽快将商品送至买家手中</p>
                                                 </Modal>
                                             </template>
                                             <template v-else-if="item.status === 3 || item.status === 4">
-                                                <Button @click="modal_delete = true">删除</Button>
+                                                <!--<Button @click="modal_delete = true">删除</Button>-->
                                             </template>
                                         </div>
                                     </div>
@@ -120,11 +138,11 @@
                                         ></div>
                                     </div>
                                     <div class="col-12">
-                                        <div><h1 class="goods-title font-default">{{ item.title }}</h1></div>
-                                        <div class="goods-cost font-dark">￥&nbsp;{{ item.cost }}</div>
+                                        <div><h1 class="goods-title">{{ item.title }}</h1></div>
+                                        <div class="goods-cost font-dark">合计：￥&nbsp;{{ (item.cost*item.amount).toFixed(2) }}</div>
                                         <div class="goods-amount">数量：{{ item.amount }}</div>
                                         <div class="goods-status">
-                                            状态：{{ getStatus(item.status) }}
+                                            状态：<span class="font-default">{{ getStatus(item.status) }}</span>
                                         </div>
                                         <div>创建时间：{{ item.created_at }}</div>
                                         <div>
@@ -137,15 +155,16 @@
                                                 @on-ok="comment(item.id)"
                                             >
                                                 <p>没这功能（暂时）</p>
+                                                <p>程序员跑路了～</p>
                                             </Modal>
                                             <!-- Delete -->
-                                            <Button @click="modal_delete = true">删除</Button>
+                                            <!--<Button @click="modal_delete = true">删除</Button>-->
                                             <Modal
                                                 v-model="modal_delete"
                                                 title="删除"
                                                 @on-ok="deletes(item.id)"
                                             >
-                                                <h3 style="color:red;">订单删除后在记录中将不再显示。</h3>
+                                                <h3 class="font-dark">订单删除后在记录中将不再显示。</h3>
                                             </Modal>
                                         </div>
                                     </div>
@@ -167,6 +186,7 @@ export default {
             modal_delete: false,
             modal_comment: false,
             modal_confirm: false,
+            modal_shipped: false,
             itemList: [
                 {
                     url: '/orders/list/buy',
